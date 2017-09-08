@@ -10,7 +10,8 @@ public enum TestUnit
     TypeD,
     TypeE,
     TypeE1,
-    TypeE2
+    TypeE2,
+    TypeE3,
 }
 
 public class UnitTrigger : MonoBehaviour {
