@@ -12,6 +12,10 @@ public enum TestUnit
     TypeE1,
     TypeE2,
     TypeE3,
+    TypeE4,
+    TypeE5,
+    TypeE6,
+    TypeG,
 }
 
 public class UnitTrigger : MonoBehaviour {
