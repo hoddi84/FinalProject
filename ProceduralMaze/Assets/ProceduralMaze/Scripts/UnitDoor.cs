@@ -13,7 +13,7 @@ public class UnitDoor : MonoBehaviour {
 	private void Update() 
 	{
 		if (Input.GetKeyDown(KeyCode.E)) {
-			StartCoroutine(RotateDoor(45));
+			StartCoroutine(UnitUtilities.RotateRoundAxis(5f, 45, Axis.X, door));
 		}
 	}
 
@@ -27,23 +27,5 @@ public class UnitDoor : MonoBehaviour {
 		{
 			return false;
 		}
-	}
-
-	private IEnumerator RotateDoor(float angle) {
-
-		Vector3 startPos = door.transform.eulerAngles;
-		Vector3 endPos = door.transform.eulerAngles;
-		endPos.y += angle;
-
-		float elapsedTime = 0f;
-		float seconds = 5.0f;
-
-		while (elapsedTime < seconds)
-		{
-			door.transform.eulerAngles = Vector3.Lerp(startPos, endPos, (elapsedTime/seconds));
-			elapsedTime += Time.deltaTime;
-			yield return new WaitForEndOfFrame();
-		}
-		door.transform.eulerAngles = endPos;
 	}
 }
