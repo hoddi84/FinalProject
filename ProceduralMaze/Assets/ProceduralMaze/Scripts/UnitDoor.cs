@@ -10,21 +10,34 @@ public class UnitDoor : MonoBehaviour {
 	private Action onDoorClosed = null;
 	private Action onDoorOpen = null;
 
+	private const float MAX_ROTATION_DIFF = 0.1f;
+
 	private void Update() 
 	{
 		if (Input.GetKeyDown(KeyCode.E)) {
-			StartCoroutine(UnitUtilities.RotateRoundAxis(5f, 45, Axis.X, door));
+			StartCoroutine(UnitUtilities.RotateRoundAxis(5f, 45, Axis.Y, door));
+		}
+		if (Input.GetKeyDown(KeyCode.R)) 
+		{
+			IsDoorClosed();
 		}
 	}
 
 	private bool IsDoorClosed() 
 	{
-		if (frame.transform.forward == door.transform.forward) 
+		float frameRotation = frame.transform.eulerAngles.y;
+		float doorRotation = door.transform.eulerAngles.y;
+
+		float rotationDiff = Math.Abs(frameRotation - doorRotation);
+
+		if (rotationDiff < MAX_ROTATION_DIFF) 
 		{
+			print("true");
 			return true;
 		}
 		else 
 		{
+			print("false");
 			return false;
 		}
 	}
