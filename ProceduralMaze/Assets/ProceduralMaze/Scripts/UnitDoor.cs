@@ -7,29 +7,43 @@ public class UnitDoor : MonoBehaviour {
 
 	public GameObject frame;
 	public GameObject door;
-	private Action onDoorRotChanged = null;
+	private Action onDoorClosed = null;
+	private Action onDoorOpen = null;
 
 	private void Update() 
 	{
-		if(Input.GetKeyDown(KeyCode.E)) {
-			test();
-			// TODO 
-			// Fix bandwidth recurrency failure.
+		if (Input.GetKeyDown(KeyCode.E)) {
+			StartCoroutine(RotateDoor(45));
 		}
 	}
-	private void test() 
-	{
-		print("Frame" + frame.transform.forward);
-		print("Door" + door.transform.forward);
-	}
-
-
-
 
 	private bool IsDoorClosed() 
 	{
-		return false;
+		if (frame.transform.forward == door.transform.forward) 
+		{
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
 	}
 
+	private IEnumerator RotateDoor(float angle) {
 
+		Vector3 startPos = door.transform.eulerAngles;
+		Vector3 endPos = door.transform.eulerAngles;
+		endPos.y += angle;
+
+		float elapsedTime = 0f;
+		float seconds = 5.0f;
+
+		while (elapsedTime < seconds)
+		{
+			door.transform.eulerAngles = Vector3.Lerp(startPos, endPos, (elapsedTime/seconds));
+			elapsedTime += Time.deltaTime;
+			yield return new WaitForEndOfFrame();
+		}
+		door.transform.eulerAngles = endPos;
+	}
 }

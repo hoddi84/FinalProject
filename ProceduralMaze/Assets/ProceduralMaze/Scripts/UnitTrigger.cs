@@ -35,7 +35,7 @@ public class UnitTrigger : MonoBehaviour {
     public TestUnit isType;
     public TestUnit toType;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.tag == PLAYER)
         {
