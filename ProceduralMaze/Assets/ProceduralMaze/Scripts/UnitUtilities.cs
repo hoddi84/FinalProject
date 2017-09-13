@@ -10,6 +10,16 @@ public enum Axis {
 }
 public class UnitUtilities : MonoBehaviour {
 
+	/// <summary>
+	/// A helper method to rotate objects.
+	/// </summary>
+	/// <param name="rotationTime">The time in seconds for the rotation to complete.</param>
+	/// <param name="rotationAngle">The angle of which to rotate the object.</param>
+	/// <param name="rotationAxis">The axis of rotation.</param>
+	/// <param name="objToRotate">The gameObject to rotate.</param>
+	/// <param name="onDone">Event for when the rotation has finished.</param>
+	/// <param name="delay">Delay before rotation starts.</param>
+	/// <returns></returns>
 	public static IEnumerator RotateRoundAxis(float rotationTime, float rotationAngle, Axis rotationAxis, GameObject objToRotate, Action onDone = null, float delay = 0) {
 
 		Vector3 startPos = objToRotate.transform.eulerAngles;
