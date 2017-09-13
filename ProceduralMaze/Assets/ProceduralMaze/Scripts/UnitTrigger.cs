@@ -23,6 +23,9 @@ public enum TestUnit
     TypeE5,
     TypeE6,
     TypeF,
+    TypeF1,
+    TypeF2,
+    TypeF3,
     TypeG,
 }
 
