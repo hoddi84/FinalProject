@@ -19,6 +19,9 @@ public class UnitDoor : MonoBehaviour {
 	private Action onDoneMoving = null;
 	private const float MAX_ROTATION_DIFF = 0.1f;
 
+	public AudioClip openDoor;
+	public AudioClip closeDoor;
+
 	private void Awake()
 	{
 		onDoorClosed += OnDoorClosed;
