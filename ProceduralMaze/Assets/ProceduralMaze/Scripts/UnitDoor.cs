@@ -8,7 +8,8 @@ public class UnitDoor : MonoBehaviour {
 	public GameObject doorFrame;
 	public GameObject rotatingDoor;
 	private float currentDoorRotation;
-	public float rotationTime = 5f;
+	public float rotationTimeOpening = 5f;
+	public float rotationTimeClosing = .2f;
 	public float rotationAngle = 65f;
 	private Axis rotationAxis = Axis.Y;
 
@@ -19,8 +20,10 @@ public class UnitDoor : MonoBehaviour {
 	private Action onDoneMoving = null;
 	private const float MAX_ROTATION_DIFF = 0.1f;
 
-	public AudioClip openDoor;
-	public AudioClip closeDoor;
+	// Sounds
+	public AudioClip openSqueek;
+	public AudioClip openHandle;
+	public AudioClip closeSlam;
 
 	private void Awake()
 	{
@@ -49,18 +52,19 @@ public class UnitDoor : MonoBehaviour {
 			isDoorBusy = true;
 			if (!isDoorOpen) 
 			{
-				StartCoroutine(UnitUtilities.RotateRoundAxis(rotationTime, rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+				AudioSource.PlayClipAtPoint(openHandle, doorFrame.transform.position);
+				StartCoroutine(UnitUtilities.RotateRoundAxis(rotationTimeOpening, rotationAngle, rotationAxis, rotatingDoor, onDoneMoving, openHandle.length));
 			}
 			else 
 			{
-				StartCoroutine(UnitUtilities.RotateRoundAxis(rotationTime, -rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+				StartCoroutine(UnitUtilities.RotateRoundAxis(rotationTimeClosing, -rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
 			}
 		}
 	}
 
 	/// <summary>
-	/// Sends information to listeners when the door is open,
-	/// and when the door is closed.
+	/// Sends information to listeners when the door is being opened,
+	/// and when the door has been closed.
 	/// </summary>
 	private void CheckDoorState() 
 	{
@@ -100,11 +104,13 @@ public class UnitDoor : MonoBehaviour {
 	private void OnDoorOpen() 
 	{
 		print("The door is now open");
+		AudioSource.PlayClipAtPoint(openSqueek, doorFrame.transform.position);
 	}
 
 	private void OnDoorClosed()
 	{
 		print("The door is now closed");
+		AudioSource.PlayClipAtPoint(closeSlam, doorFrame.transform.position);
 	}
 
 	private void OnDoneMoving() 

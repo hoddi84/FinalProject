@@ -325,10 +325,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorFrame: {fileID: 157577360}
   rotatingDoor: {fileID: 102021662}
-  currentDoorRotation: 0
-  rotationTime: 5
+  rotationTimeOpening: 5
+  rotationTimeClosing: 1
   rotationAngle: 65
-  rotationAxis: 1
+  openSqueek: {fileID: 8300000, guid: fdc3c0c16346a234fa4276eb21d2449e, type: 3}
+  openHandle: {fileID: 8300000, guid: 0e30376b66007e44ba7fcc591ffc1b76, type: 3}
+  closeSlam: {fileID: 8300000, guid: 6939b15faffbf984da5e7915ae69c64d, type: 3}
 --- !u!1 &793615188
 GameObject:
   m_ObjectHideFlags: 0
