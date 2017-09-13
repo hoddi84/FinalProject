@@ -7,17 +7,16 @@ public class UnitDoor : MonoBehaviour {
 
 	public GameObject doorFrame;
 	public GameObject rotatingDoor;
-	public float currentDoorRotation;
+	private float currentDoorRotation;
 	public float rotationTime = 5f;
 	public float rotationAngle = 65f;
-	public Axis rotationAxis = Axis.Y;
+	private Axis rotationAxis = Axis.Y;
 
 	private bool isDoorOpen = false;
 	private bool isDoorBusy = false;
 	private Action onDoorClosed = null;
 	private Action onDoorOpen = null;
 	private Action onDoneMoving = null;
-
 	private const float MAX_ROTATION_DIFF = 0.1f;
 
 	private void Awake()
