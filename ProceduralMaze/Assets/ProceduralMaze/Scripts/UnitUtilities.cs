@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public enum Axis {
 }
 public class UnitUtilities : MonoBehaviour {
 
-	public static IEnumerator RotateRoundAxis(float rotationTime, float rotationAngle, Axis rotationAxis, GameObject objToRotate) {
+	public static IEnumerator RotateRoundAxis(float rotationTime, float rotationAngle, Axis rotationAxis, GameObject objToRotate, Action onDone = null) {
 
 		Vector3 startPos = objToRotate.transform.eulerAngles;
 		Vector3 endPos = objToRotate.transform.eulerAngles;
@@ -36,5 +37,10 @@ public class UnitUtilities : MonoBehaviour {
 			yield return new WaitForEndOfFrame();
 		}
 		objToRotate.transform.eulerAngles = endPos;
+
+		if (onDone != null) 
+		{
+			onDone();
+		}
 	}
 }

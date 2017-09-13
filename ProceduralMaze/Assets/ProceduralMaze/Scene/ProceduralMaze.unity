@@ -323,8 +323,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143b4ecbe9cd3a24d8d894d3a2f4a72c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frame: {fileID: 157577360}
-  door: {fileID: 102021662}
+  doorFrame: {fileID: 157577360}
+  rotatingDoor: {fileID: 102021662}
+  currentDoorRotation: 0
+  rotationTime: 5
+  rotationAngle: 65
+  rotationAxis: 1
 --- !u!1 &793615188
 GameObject:
   m_ObjectHideFlags: 0
