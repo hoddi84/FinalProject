@@ -26,6 +26,7 @@ public class UnitManager : MonoBehaviour {
     public GameObject[] unitF1;
     public GameObject[] unitF2;
     public GameObject[] unitF3;
+    public GameObject[] unitF4;
     public GameObject[] unitG;
 
     Dictionary<TestUnit, GameObject> pathDict = new Dictionary<TestUnit, GameObject>();
@@ -158,6 +159,11 @@ public class UnitManager : MonoBehaviour {
 
                 CheckInstantiatedUnit(trigger, TestUnit.TypeF3, unitF3);
                 break;
+
+            case TestUnit.TypeF4:
+
+                CheckInstantiatedUnit(trigger, TestUnit.TypeF4, unitF4);
+                break;
         }
     }
 
@@ -169,10 +175,12 @@ public class UnitManager : MonoBehaviour {
         {
             int rndIndex = UnityEngine.Random.Range(0, unit.Length);
             tmp = Instantiate(unit[rndIndex]);
+            ForceDisableUnit(trigger);
         }
         else
         {
-            InstantiateExistingUnit(type);
+            InstantiateExistingUnit(type, trigger);
+            ForceDisableUnit(trigger);
         }
 
         if (tmp != null)
@@ -186,7 +194,7 @@ public class UnitManager : MonoBehaviour {
         }
     }
 
-    private void InstantiateExistingUnit(TestUnit type)
+    private void InstantiateExistingUnit(TestUnit type, UnitTrigger trigger)
     {
         GameObject t;
         pathDict.TryGetValue(type, out t);
@@ -200,6 +208,18 @@ public class UnitManager : MonoBehaviour {
         {
             DeregisterListeners(t);
             t.SetActive(false);
+        }     
+    }
+    
+    private void ForceDisableUnit(UnitTrigger trigger)
+    {
+        if (trigger.fromType == trigger.isType) 
+        {
+            GameObject tmp = null;
+            pathDict.TryGetValue(trigger.isType, out tmp);
+
+            DeregisterListeners(tmp);
+            tmp.SetActive(false);
         }
     }
 

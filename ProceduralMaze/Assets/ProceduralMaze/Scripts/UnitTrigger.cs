@@ -26,6 +26,7 @@ public enum TestUnit
     TypeF1,
     TypeF2,
     TypeF3,
+    TypeF4,
     TypeG,
 }
 
