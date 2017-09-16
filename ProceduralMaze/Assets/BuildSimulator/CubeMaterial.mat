@@ -56,8 +56,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
+    - _CamChanger: 100
+    - _ColorDistr: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DirChanger: 0.13
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -74,5 +77,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 1, g: 0, b: 0, a: 0}
-    - _Color2: {r: 0, g: 0.2965517, b: 1, a: 0}
+    - _Color2: {r: 0.6965517, g: 1, b: 0, a: 0}
+    - _Color3: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Point: {r: 14.98, g: 0, b: 0, a: 1}

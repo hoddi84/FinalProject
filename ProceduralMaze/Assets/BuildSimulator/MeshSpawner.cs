@@ -13,6 +13,8 @@ public class MeshSpawner : MonoBehaviour {
     private ComputeBuffer argsBuffer;
     private uint[] args = new uint[5] { 0, 0, 0, 0, 0 };
 
+    public bool render = false;
+
     void Start() {
 
         argsBuffer = new ComputeBuffer(1, args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
@@ -26,7 +28,10 @@ public class MeshSpawner : MonoBehaviour {
             UpdateBuffers();
 
         // Render
-        Graphics.DrawMeshInstancedIndirect(instanceMesh, 0, instanceMaterial, new Bounds(Vector3.zero, new Vector3(300.0f, 300.0f, 300.0f)), argsBuffer);
+        if (render) 
+        {
+            Graphics.DrawMeshInstancedIndirect(instanceMesh, 0, instanceMaterial, new Bounds(Vector3.zero, new Vector3(300.0f, 300.0f, 300.0f)), argsBuffer);
+        }
     }
 
     void UpdateBuffers() {
@@ -48,10 +53,10 @@ public class MeshSpawner : MonoBehaviour {
             //float size = Random.Range(0.05f, 0.25f);
             //positions[i] = new Vector4(Mathf.Sin(angle) * distance, height, Mathf.Cos(angle) * distance, size);
 
-			float x = Random.Range(0, 100);
-			float y = Random.Range(0, 50);
-			float z = Random.Range(0, 100);
-			float size = .1f;
+			float x = Random.Range(0, 100f);
+			float y = Random.Range(0, 50f);
+			float z = Random.Range(0, 100f);
+			float size = Random.Range(0, 0.2f);
 
 			positions[i] = new Vector4(x, y, z, size);
         }

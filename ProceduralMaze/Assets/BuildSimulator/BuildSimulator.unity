@@ -224,9 +224,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a98a551e47571604587e15468eb5258d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instanceCount: 100000
+  instanceCount: 300000
   instanceMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   instanceMaterial: {fileID: 2100000, guid: 8e7be352627abd74896ff53dfb9e2b63, type: 2}
+  render: 1
 --- !u!4 &2000125501
 Transform:
   m_ObjectHideFlags: 0

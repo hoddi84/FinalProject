@@ -1,10 +1,21 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
  Shader "Instanced/InstancedShader" {
     Properties {
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Color1 ("Color1", Color) = (0,1,0,0)
         _Color2 ("Color2", Color) = (0,0,0,0)
+        _Color3 ("Color3", Color) = (0,0,0,0)
+        _DirChanger ("Dir Changer", Float) = 1.0
+        _ColorDistr ("Color Distriution", Range(0, 100000)) = 0
+        _CamChanger ("Cam Changer", Range(0, 5000)) = 0
+        _Point ("Point", Vector) = (0.0, 0.0, 0.0, 1.0)
     }
     SubShader {
 
@@ -26,6 +37,11 @@
             sampler2D _MainTex;
             float4 _Color1;
             float4 _Color2;
+            float4 _Color3;
+            float _DirChanger;
+            uint _ColorDistr;
+            uint _CamChanger;
+            float4 _Point;
 
         #if SHADER_TARGET >= 45
             StructuredBuffer<float4> positionBuffer;
@@ -56,15 +72,17 @@
                 float4 data = 0;
             #endif
 
-                if (instanceID < 100) {
+                if (instanceID < _ColorDistr) {
                     v.color = _Color2;
                 }
                 else {
                     v.color = _Color1;
                 }
 
-                float rotation = data.w * data.w * _Time * .5f;
-                rotate2D(data.xz, rotation);
+                //float rotation = data.w * data.w * _Time.y;
+                //rotate2D(data.xz, rotation);
+                //data.xz = sinh(data.xz * _Time.x * 0.01);
+                data.y = sinh(data.y * _DirChanger) * _Time.x * 0.01;
 
                 float3 localPosition = v.vertex.xyz * data.w;
                 float3 worldPosition = data.xyz + localPosition;
@@ -87,6 +105,7 @@
 
             fixed4 fragmentProgram (v2f i) : SV_Target
             {
+
                 fixed shadow = SHADOW_ATTENUATION(i);
                 fixed4 albedo = tex2D(_MainTex, i.uv_MainTex);
                 float3 lighting = i.diffuse * shadow + i.ambient;
