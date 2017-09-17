@@ -8,6 +8,11 @@ public class MeshSpawner : MonoBehaviour {
     public Mesh instanceMesh;
     public Material instanceMaterial;
 
+    public GameObject ball;
+    private BallMovement ballMovement;
+    private Color ballColor1;
+    private Color ballColor2;
+
     private int cachedInstanceCount = -1;
     private ComputeBuffer positionBuffer;
     private ComputeBuffer argsBuffer;
@@ -16,6 +21,9 @@ public class MeshSpawner : MonoBehaviour {
     public bool render = false;
 
     void Start() {
+
+        ballMovement = ball.GetComponent<BallMovement>();
+        ballMovement.onCollision += ChangeCubeColor;
 
         argsBuffer = new ComputeBuffer(1, args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
         UpdateBuffers();
@@ -30,6 +38,8 @@ public class MeshSpawner : MonoBehaviour {
         // Render
         if (render) 
         {
+            Vector3 newPos = new Vector3(ball.transform.position.x, ball.transform.position.y, ball.transform.position.z + 300);
+            instanceMaterial.SetVector("_Point", newPos);
             Graphics.DrawMeshInstancedIndirect(instanceMesh, 0, instanceMaterial, new Bounds(Vector3.zero, new Vector3(300.0f, 300.0f, 300.0f)), argsBuffer);
         }
     }
@@ -54,7 +64,7 @@ public class MeshSpawner : MonoBehaviour {
             //positions[i] = new Vector4(Mathf.Sin(angle) * distance, height, Mathf.Cos(angle) * distance, size);
 
 			float x = Random.Range(0, 100f);
-			float y = Random.Range(0, 50f);
+			float y = Random.Range(0, 100f);
 			float z = Random.Range(0, 100f);
 			float size = Random.Range(0, 0.2f);
 
@@ -70,6 +80,14 @@ public class MeshSpawner : MonoBehaviour {
         argsBuffer.SetData(args);
 
         cachedInstanceCount = instanceCount;
+    }
+
+    void ChangeCubeColor()
+    {
+        ballColor1 = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), 1);
+        ballColor2 = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), 1);
+        instanceMaterial.SetColor("_BallColor1", ballColor1);
+        instanceMaterial.SetColor("_BallColor2", ballColor2);
     }
 
     void OnDisable() {

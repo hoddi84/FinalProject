@@ -11,14 +11,13 @@
 
  Shader "Instanced/InstancedShader" {
     Properties {
-        _MainTex ("Albedo (RGB)", 2D) = "white" {}
-        _Color1 ("Color1", Color) = (0,1,0,0)
-        _Color2 ("Color2", Color) = (0,0,0,0)
-        _Color3 ("Color3", Color) = (0,0,0,0)
+        //_MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _BallColor1 ("Ball Color 1", Color) = (0,1,0,0)
+        _BallColor2 ("Ball Color 2", Color) = (0,0,0,0)
+        _CubeColor ("Cube Color", Color) = (0,0,0,0)
         _DirChanger ("Dir Changer", Range(-1.0000, 1.0000)) = 0.00
-        _ColorDistr ("Color Distriution", Range(0, 100000)) = 0
-        _CamChanger ("Cam Changer", Range(0.00, 150.00)) = 0.00
-        _Point ("Point", Vector) = (0.0, 0.0, 0.0, 1.0)
+        _BallSize ("Ball Size", Range(0.00, 150.00)) = 0.00
+        _Point ("Ball Origin", Vector) = (0.0, 0.0, 0.0, 1.0)
     }
     SubShader {
 
@@ -37,13 +36,12 @@
             #include "UnityLightingCommon.cginc"
             #include "AutoLight.cginc"
 
-            sampler2D _MainTex;
-            float4 _Color1;
-            float4 _Color2;
-            float4 _Color3;
+            //sampler2D _MainTex;
+            float4 _BallColor1;
+            float4 _BallColor2;
+            float4 _CubeColor;
             float _DirChanger;
-            uint _ColorDistr;
-            uint _CamChanger;
+            uint _BallSize;
             float4 _Point;
 
         #if SHADER_TARGET >= 45
@@ -53,7 +51,7 @@
             struct v2f
             {
                 float4 pos : SV_POSITION;
-                float2 uv_MainTex : TEXCOORD0;
+                //float2 uv_MainTex : TEXCOORD0;
                 float3 ambient : TEXCOORD1;
                 float3 diffuse : TEXCOORD2;
                 float3 color : TEXCOORD3;
@@ -63,15 +61,25 @@
             void ChangeColors(inout appdata_full v, uint instanceID)
             {
                 if (instanceID < 100000) {
-                    v.color = _Color1;
+                    v.color = _BallColor1;
                 }
                 else if (instanceID >= 100000 && instanceID < 200000)
                 {
-                    v.color = _Color2;
+                    v.color = _BallColor2;
                 }
                 else if (instanceID >= 200000)
                 {
-                    v.color = _Color2;
+                    v.color = _BallColor2;
+                }
+            }
+
+            void ResizeBall(float4 data, inout appdata_full v)
+            {
+                float dist = distance(_Point, data.xyz);
+
+                if (dist > _BallSize)
+                {
+                    v.color = _CubeColor;
                 }
             }
 
@@ -92,15 +100,10 @@
 
                 ChangeColors(v, instanceID);
 
-                float dist = distance(_Point, data.xyz);
+                ResizeBall(data, v);
 
-                if (dist > _CamChanger)
-                {
-                    v.color = _Color3;
-                }
-
-                //float rotation = data.w * data.w * _Time.y;
-                //rotate2D(data.xz, rotation);
+                float rotation = data.w * data.w * _Time.x;
+                rotate2D(data.xz, rotation);
                 //data.xz = sinh(data.xz * _Time.x * 0.01);
                 //data.y = sinh(data.y * _DirChanger) * _Time.x * 0.01;
 
@@ -115,7 +118,7 @@
 
                 v2f o;
                 o.pos = mul(UNITY_MATRIX_VP, float4(worldPosition, 1.0f));
-                o.uv_MainTex = v.texcoord;
+                //o.uv_MainTex = v.texcoord;
                 o.ambient = ambient;
                 o.diffuse = diffuse;
                 o.color = color;
@@ -133,9 +136,10 @@
                 //float3 origin = UnityObjectToViewPos(_Point.xyz);
 
                 fixed shadow = SHADOW_ATTENUATION(i);
-                fixed4 albedo = tex2D(_MainTex, i.uv_MainTex);
+                //fixed4 albedo = tex2D(_MainTex, i.uv_MainTex);
                 float3 lighting = i.diffuse * shadow + i.ambient;
-                fixed4 output = fixed4(albedo.rgb * i.color * lighting, albedo.w);
+                //fixed4 output = fixed4(albedo.rgb * i.color * lighting, albedo.w);
+                fixed4 output = fixed4(i.color * lighting, 1);
                 UNITY_APPLY_FOG(i.fogCoord, output);
                 return output;
             }
