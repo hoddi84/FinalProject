@@ -1,4 +1,7 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
@@ -12,9 +15,9 @@
         _Color1 ("Color1", Color) = (0,1,0,0)
         _Color2 ("Color2", Color) = (0,0,0,0)
         _Color3 ("Color3", Color) = (0,0,0,0)
-        _DirChanger ("Dir Changer", Float) = 1.0
+        _DirChanger ("Dir Changer", Range(-1.0000, 1.0000)) = 0.00
         _ColorDistr ("Color Distriution", Range(0, 100000)) = 0
-        _CamChanger ("Cam Changer", Range(0, 5000)) = 0
+        _CamChanger ("Cam Changer", Range(0.00, 150.00)) = 0.00
         _Point ("Point", Vector) = (0.0, 0.0, 0.0, 1.0)
     }
     SubShader {
@@ -57,6 +60,21 @@
                 SHADOW_COORDS(4)
             };
 
+            void ChangeColors(inout appdata_full v, uint instanceID)
+            {
+                if (instanceID < 100000) {
+                    v.color = _Color1;
+                }
+                else if (instanceID >= 100000 && instanceID < 200000)
+                {
+                    v.color = _Color2;
+                }
+                else if (instanceID >= 200000)
+                {
+                    v.color = _Color2;
+                }
+            }
+
             void rotate2D(inout float2 v, float r)
             {
                 float s, c;
@@ -72,17 +90,19 @@
                 float4 data = 0;
             #endif
 
-                if (instanceID < _ColorDistr) {
-                    v.color = _Color2;
-                }
-                else {
-                    v.color = _Color1;
+                ChangeColors(v, instanceID);
+
+                float dist = distance(_Point, data.xyz);
+
+                if (dist > _CamChanger)
+                {
+                    v.color = _Color3;
                 }
 
                 //float rotation = data.w * data.w * _Time.y;
                 //rotate2D(data.xz, rotation);
                 //data.xz = sinh(data.xz * _Time.x * 0.01);
-                data.y = sinh(data.y * _DirChanger) * _Time.x * 0.01;
+                //data.y = sinh(data.y * _DirChanger) * _Time.x * 0.01;
 
                 float3 localPosition = v.vertex.xyz * data.w;
                 float3 worldPosition = data.xyz + localPosition;
@@ -105,6 +125,12 @@
 
             fixed4 fragmentProgram (v2f i) : SV_Target
             {
+                // Tranforms position from world to homogenous space
+                //float3 origin = UnityWorldToClipPos(_Point.xyz);
+                // Tranforms position from view to homogenous space ----DONE, seems (0,0,0) is screen origin.
+                //float3 origin = UnityViewToClipPos(_Point.xyz);
+                // Tranforms position from object to camera space -----DONE, seems (0,0,0) is screen origin.
+                //float3 origin = UnityObjectToViewPos(_Point.xyz);
 
                 fixed shadow = SHADOW_ATTENUATION(i);
                 fixed4 albedo = tex2D(_MainTex, i.uv_MainTex);
