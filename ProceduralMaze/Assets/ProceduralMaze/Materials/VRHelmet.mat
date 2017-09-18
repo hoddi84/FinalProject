@@ -6,11 +6,11 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: CubeMaterial
-  m_Shader: {fileID: 4800000, guid: ae38905caaa73804dae348cca90ef6b2, type: 3}
+  m_Name: VRHelmet
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -55,13 +55,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BallSize: 8
     - _BumpScale: 1
-    - _CamChanger: 18.3
-    - _ColorDistr: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DirChanger: -1
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -76,12 +72,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BallColor1: {r: 0.4282139, g: 0.47712356, b: 0.04316449, a: 1}
-    - _BallColor2: {r: 0.6820612, g: 0.37077373, b: 0.21347058, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 0, g: 1, b: 0.6275863, a: 1}
-    - _Color2: {r: 0, g: 0.17241383, b: 1, a: 1}
-    - _Color3: {r: 0.5808823, g: 0.41857696, b: 0.41857696, a: 1}
-    - _CubeColor: {r: 0.24264705, g: 0.24264705, b: 0.309, a: 0.778}
+    - _Color: {r: 0.5441177, g: 0.5441177, b: 0.5441177, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Point: {r: 91.9868, g: 69.3748, b: 37.27368, a: 0}

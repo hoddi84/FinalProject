@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class UnitDoor : MonoBehaviour {
 
+	public VRHandControllerManager handManager;
 	public GameObject doorFrame;
 	public GameObject rotatingDoor;
 	private float currentDoorRotation;
@@ -30,6 +31,8 @@ public class UnitDoor : MonoBehaviour {
 		onDoorClosed += OnDoorClosed;
 		onDoorOpen += OnDoorOpen;
 		onDoneMoving += OnDoneMoving;
+
+		handManager.onTriggerClicked += InteractWithDoor;
 	}
 	private void Start()
 	{
