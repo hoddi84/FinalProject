@@ -85,8 +85,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1186428409780582}
-  m_LocalRotation: {x: -0, y: -0.0000013411044, z: -0, w: 1}
-  m_LocalPosition: {x: -0.9553623, y: -1.7003846, z: 6.8}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.31, y: 0, z: 0.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4896654697221772}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143b4ecbe9cd3a24d8d894d3a2f4a72c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handManager: {fileID: 0}
+  doorHandle: {fileID: 1407745958916652}
   doorFrame: {fileID: 1988934250385322}
   rotatingDoor: {fileID: 1091083910715256}
   rotationTimeOpening: 5
