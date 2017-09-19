@@ -6,6 +6,7 @@ using UnityEngine;
 public class UnitDoor : MonoBehaviour {
 
 	public GameObject doorHandle;
+	private VRInteractable vrInteractable;
 	public GameObject doorFrame;
 	public GameObject rotatingDoor;
 	private float currentDoorRotation;
@@ -28,6 +29,9 @@ public class UnitDoor : MonoBehaviour {
 
 	private void Awake()
 	{
+		vrInteractable = doorHandle.GetComponent<VRInteractable>();
+		vrInteractable.onInteracted += InteractWithDoor;
+
 		onDoorClosed += OnDoorClosed;
 		onDoorOpen += OnDoorOpen;
 		onDoneMoving += OnDoneMoving;

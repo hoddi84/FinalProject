@@ -35,6 +35,7 @@ public class VRHandControllerManager : MonoBehaviour {
 		{
 			onTriggerClicked();
 		}
+		print("Clicekd Trigger");
 	}
 
 	void OnTriggerClickedCollider(Collider clickedCollider)
@@ -43,6 +44,7 @@ public class VRHandControllerManager : MonoBehaviour {
 		{
 			onTriggerClickedCollider(clickedCollider);
 		}
+		print("Clicked Trigger on Collider: " + clickedCollider.name);
 	}
 
 	void OnTriggerUnclicked()
@@ -51,5 +53,6 @@ public class VRHandControllerManager : MonoBehaviour {
 		{
 			onTriggerUnclicked();
 		}
+		print("Unclicked Trigger");
 	}
 }

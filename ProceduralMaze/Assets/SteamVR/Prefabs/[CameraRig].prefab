@@ -26,9 +26,11 @@ GameObject:
   m_Component:
   - component: {fileID: 458974}
   - component: {fileID: 11411726}
+  - component: {fileID: 114505907551919382}
+  - component: {fileID: 135070505846766706}
   m_Layer: 0
   m_Name: Controller (left)
-  m_TagString: Untagged
+  m_TagString: Controller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,10 +97,11 @@ GameObject:
   m_Component:
   - component: {fileID: 402434}
   - component: {fileID: 11463128}
-  - component: {fileID: 114835278191805056}
+  - component: {fileID: 114265908532402046}
+  - component: {fileID: 135897610846519456}
   m_Layer: 0
   m_Name: Controller (right)
-  m_TagString: Untagged
+  m_TagString: Controller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -847,7 +850,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114835278191805056
+--- !u!114 &114265908532402046
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -855,9 +858,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 159396}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44f9cf9c2a37f9a4d820b728e7ae3b74, type: 3}
+  m_Script: {fileID: 11500000, guid: b86e16161d0e0234b82cc683fc2dba64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114505907551919382
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86e16161d0e0234b82cc683fc2dba64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &135070505846766706
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124034}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05
+  m_Center: {x: 0, y: -0.03, z: 0.01}
 --- !u!135 &135170238994395322
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -870,6 +896,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &135897610846519456
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159396}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05
+  m_Center: {x: 0, y: -0.03, z: 0.01}
 --- !u!135 &135903055775325234
 SphereCollider:
   m_ObjectHideFlags: 1

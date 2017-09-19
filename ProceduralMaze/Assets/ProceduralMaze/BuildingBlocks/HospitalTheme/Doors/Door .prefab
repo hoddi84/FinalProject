@@ -54,6 +54,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4442338681275326}
   - component: {fileID: 136404254293798590}
+  - component: {fileID: 114621140374230696}
+  - component: {fileID: 54145648372564256}
   m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
@@ -77,7 +79,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4147290512428622
 Transform:
@@ -86,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1186428409780582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.31, y: 0, z: 0.39}
+  m_LocalPosition: {x: -0.455, y: 0, z: 5.764}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4896654697221772}
@@ -213,6 +215,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1091083910715256}
   m_Mesh: {fileID: 4300004, guid: 02bb5bf2550e9de4fba1c135aaef0200, type: 3}
+--- !u!54 &54145648372564256
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1407745958916652}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!64 &64399685544022930
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -239,6 +256,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 94.08233, y: 243.86902, z: 24.406147}
   m_Center: {x: 47.041164, y: 121.93451, z: -2.5204873}
+--- !u!114 &114621140374230696
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1407745958916652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d396138af4a25ee49a71d09671aef7ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerManager: {fileID: 0}
 --- !u!114 &114898181546419904
 MonoBehaviour:
   m_ObjectHideFlags: 1
