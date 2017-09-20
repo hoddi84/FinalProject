@@ -34,6 +34,8 @@ public class UnitManager : MonoBehaviour {
 
     private Action<TestUnit, GameObject> onInstantiate = null;
 
+    public Action<Dictionary<TestUnit, GameObject>> onPathDictUpdate = null;
+
     private void Awake()
     {
         onInstantiate += UpdatePathDictionary;
@@ -185,7 +187,7 @@ public class UnitManager : MonoBehaviour {
         }
         else
         {
-            InstantiateExistingUnit(type, trigger);
+            InstantiateExistingUnit(type);
             ForceDisableUnit(trigger);
         }
 
@@ -200,7 +202,7 @@ public class UnitManager : MonoBehaviour {
         }
     }
 
-    private void InstantiateExistingUnit(TestUnit type, UnitTrigger trigger)
+    private void InstantiateExistingUnit(TestUnit type)
     {
         GameObject t;
         pathDict.TryGetValue(type, out t);
@@ -234,6 +236,11 @@ public class UnitManager : MonoBehaviour {
         if (!pathDict.ContainsKey(unitType))
         {
             pathDict.Add(unitType, obj);
+        }
+
+        if (onPathDictUpdate != null)
+        {
+            onPathDictUpdate(pathDict);
         }
     }
 

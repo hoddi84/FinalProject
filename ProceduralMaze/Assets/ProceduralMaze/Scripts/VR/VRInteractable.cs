@@ -11,7 +11,11 @@ public class VRInteractable : MonoBehaviour {
 
 	void Awake() 
 	{
-		controllerManager.onTriggerClickedCollider += ControllerInteracted;
+		if (controllerManager != null)
+		{
+			controllerManager.onTriggerClickedCollider += ControllerInteracted;
+		}
+
 	}
 
 	void ControllerInteracted(Collider other)
@@ -24,6 +28,4 @@ public class VRInteractable : MonoBehaviour {
 			}
 		}
 	}
-
-	
 }
