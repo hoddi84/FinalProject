@@ -52,6 +52,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4690237269056032}
+  - component: {fileID: 114515822675095294}
   m_Layer: 0
   m_Name: isTypeA_1_isTypeF4_0_Prop
   m_TagString: Untagged
@@ -460,6 +461,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114515822675095294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1308434202569944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a051cd305519848ae2c194984f365a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  propsAtUnit: 0100000017000000
 --- !u!114 &114816709175358442
 MonoBehaviour:
   m_ObjectHideFlags: 1

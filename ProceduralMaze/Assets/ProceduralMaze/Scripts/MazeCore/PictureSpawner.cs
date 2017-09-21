@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PictureManager : MonoBehaviour {
+public class PictureSpawner : MonoBehaviour {
 
 	public Sprite[] flowersHealthy;
 	public Sprite[] flowersDying;

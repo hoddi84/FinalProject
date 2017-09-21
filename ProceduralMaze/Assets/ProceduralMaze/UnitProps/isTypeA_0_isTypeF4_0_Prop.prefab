@@ -138,6 +138,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4847631622140986}
+  - component: {fileID: 114600052066470400}
   m_Layer: 0
   m_Name: isTypeA_0_isTypeF4_0_Prop
   m_TagString: Untagged
@@ -492,6 +493,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c12bb5cfee6e9af44afba8140148f6aa, type: 3}
   - {fileID: 21300000, guid: ccd6052d1ecf693408dda238cd581aa1, type: 3}
   - {fileID: 21300000, guid: 13e12c53109d2314d8af7b53d5f88fb9, type: 3}
+--- !u!114 &114600052066470400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1997876572250226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a051cd305519848ae2c194984f365a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  propsAtUnit: 0100000017000000
 --- !u!212 &212143011474229382
 SpriteRenderer:
   m_ObjectHideFlags: 1
