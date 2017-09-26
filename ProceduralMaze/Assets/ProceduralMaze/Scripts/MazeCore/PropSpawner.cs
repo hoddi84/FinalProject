@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,9 +30,12 @@ public class PropSpawner : MonoBehaviour {
 				{
 					if (entry.Value.activeInHierarchy)
 					{
-						foreach (GameObject obj in activeProps)
+						foreach (GameObject obj in allProps)
 						{
-							obj.SetActive(true);
+							if (obj != null)
+							{
+								obj.SetActive(true);
+							}
 						}
 						return;
 					}
@@ -40,15 +44,10 @@ public class PropSpawner : MonoBehaviour {
 		}
 		foreach (GameObject obj in activeProps)
 		{
-			obj.SetActive(false);
-		}
-	}
-
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.E))
-		{
-			Initialize();
+			if (obj != null)
+			{
+				obj.SetActive(false);
+			}
 		}
 	}
 
@@ -64,8 +63,8 @@ public class PropSpawner : MonoBehaviour {
 			obj.SetActive(false);
 		}
 
-		int rndIndexMin = Random.Range(0, allProps.Length);
-		int rndIndexMax = Random.Range(0, allProps.Length);
+		int rndIndexMin = UnityEngine.Random.Range(0, allProps.Length);
+		int rndIndexMax = UnityEngine.Random.Range(0, allProps.Length);
 
 		int rangeLength;
 

@@ -38,11 +38,13 @@ public class UnitManager : MonoBehaviour {
 
     private void Awake()
     {
-        onInstantiate += UpdatePathDictionary;
+        //onInstantiate += UpdatePathDictionary;
     }
 
     private void Start()
     {
+        onInstantiate += UpdatePathDictionary;
+        
         Initialize(unitA);
     }
 
