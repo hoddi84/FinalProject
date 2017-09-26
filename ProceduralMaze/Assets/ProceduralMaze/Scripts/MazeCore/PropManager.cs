@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class PropManager : MonoBehaviour {
 	private GameObject propParent;
 	private UnitManager unitManager;
 	private const string PROP_GAMEOBJECT = "PROPS";
+	public Action onPropsReady = null; 
 
 	void Awake()
 	{
@@ -15,17 +17,27 @@ public class PropManager : MonoBehaviour {
 
 		propParent = new GameObject();
 		propParent.name = PROP_GAMEOBJECT;
-
-		InitializeProps();
 	}
 
-	void InitializeProps()
+	void Start()
+	{
+		StartCoroutine(InitializeProps());
+	}
+
+	IEnumerator InitializeProps()
 	{
 		foreach (GameObject prop in props)
 		{
 			GameObject t = Instantiate(prop);
 			t.transform.parent = propParent.transform;
-			unitManager.onPathDictUpdate += t.GetComponent<PropSpawner>().CheckForActivePath;		
+			bool tr = t.GetComponent<PropSpawner>().done;
+			yield return new WaitUntil(() => tr == true);
+			unitManager.onPathDictUpdate += t.GetComponent<PropSpawner>().CheckForActivePath;
+		}
+
+		if (onPropsReady != null) 
+		{
+			onPropsReady();
 		}
 	}
 }

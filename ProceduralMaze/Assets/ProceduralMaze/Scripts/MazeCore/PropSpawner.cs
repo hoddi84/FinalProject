@@ -8,10 +8,13 @@ public class PropSpawner : MonoBehaviour {
 	public TestUnit[] unitToSpawnProp;
 	public GameObject[] allProps;
 	private GameObject[] activeProps;
+	public bool done = false;
 
 	void Awake()
 	{
 		Initialize();
+
+		done = true;
 	}
 
 	/*
@@ -30,12 +33,9 @@ public class PropSpawner : MonoBehaviour {
 				{
 					if (entry.Value.activeInHierarchy)
 					{
-						foreach (GameObject obj in allProps)
+						foreach (GameObject obj in activeProps)
 						{
-							if (obj != null)
-							{
-								obj.SetActive(true);
-							}
+							obj.SetActive(true);
 						}
 						return;
 					}
@@ -44,10 +44,7 @@ public class PropSpawner : MonoBehaviour {
 		}
 		foreach (GameObject obj in activeProps)
 		{
-			if (obj != null)
-			{
-				obj.SetActive(false);
-			}
+			obj.SetActive(false);
 		}
 	}
 

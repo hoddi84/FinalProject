@@ -36,15 +36,19 @@ public class UnitManager : MonoBehaviour {
 
     public Action<Dictionary<TestUnit, GameObject>> onPathDictUpdate = null;
 
+    private PropManager propManager;
+
     private void Awake()
     {
-        //onInstantiate += UpdatePathDictionary;
+        onInstantiate += UpdatePathDictionary;
+
+        propManager = GetComponent<PropManager>();
+        propManager.onPropsReady += GetPathDictionaryOnPropsInitial;
+
     }
 
     private void Start()
     {
-        onInstantiate += UpdatePathDictionary;
-        
         Initialize(unitA);
     }
 
@@ -230,6 +234,14 @@ public class UnitManager : MonoBehaviour {
 
             DeregisterListeners(tmp);
             tmp.SetActive(false);
+        }
+    }
+
+    private void GetPathDictionaryOnPropsInitial()
+    {
+        if (onPathDictUpdate != null)
+        {
+            onPathDictUpdate(pathDict);
         }
     }
 
