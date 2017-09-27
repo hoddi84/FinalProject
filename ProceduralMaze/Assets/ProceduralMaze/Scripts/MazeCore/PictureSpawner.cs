@@ -6,13 +6,18 @@ public class PictureSpawner : MonoBehaviour {
 
 	public Sprite[] flowersHealthy;
 	public Sprite[] flowersDying;
-
 	private SpriteRenderer renderer;
-	// Use this for initialization
-	void Start () {
-		
-		renderer = GetComponent<SpriteRenderer>();
+	private PropManager propManager;
+	
+	void Awake()
+	{
+		propManager = FindObjectOfType(typeof(PropManager)) as PropManager;
 
+		renderer = GetComponent<SpriteRenderer>();
+	}
+
+	void Start()
+	{
 		int rndIndex = Random.Range(0, flowersHealthy.Length);
 		renderer.sprite = flowersHealthy[rndIndex];
 	}

@@ -21,17 +21,15 @@ public class PropManager : MonoBehaviour {
 
 	void Start()
 	{
-		StartCoroutine(InitializeProps());
+		InitializeProps();
 	}
 
-	IEnumerator InitializeProps()
+	void InitializeProps()
 	{
 		foreach (GameObject prop in props)
 		{
 			GameObject t = Instantiate(prop);
 			t.transform.parent = propParent.transform;
-			bool tr = t.GetComponent<PropSpawner>().done;
-			yield return new WaitUntil(() => tr == true);
 			unitManager.onPathDictUpdate += t.GetComponent<PropSpawner>().CheckForActivePath;
 		}
 

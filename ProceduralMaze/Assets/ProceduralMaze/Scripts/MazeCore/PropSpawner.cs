@@ -7,14 +7,12 @@ public class PropSpawner : MonoBehaviour {
 
 	public TestUnit[] unitToSpawnProp;
 	public GameObject[] allProps;
-	private GameObject[] activeProps;
-	public bool done = false;
+	private List<GameObject> activeProps = null;
+	private float spawnChance = .5f;
 
 	void Awake()
 	{
 		Initialize();
-
-		done = true;
 	}
 
 	/*
@@ -33,61 +31,55 @@ public class PropSpawner : MonoBehaviour {
 				{
 					if (entry.Value.activeInHierarchy)
 					{
-						foreach (GameObject obj in activeProps)
-						{
-							obj.SetActive(true);
-						}
+						//Activate these props.
+						EnableProps();
 						return;
 					}
 				}
 			}
 		}
-		foreach (GameObject obj in activeProps)
-		{
-			obj.SetActive(false);
-		}
+		// Disable these props.
+		DisableProps();
 	}
 
-	/*
-	 * Choose a random range from the allProps array of prop gameobjects.
-	 * This random range of gameobjects are the props which get to be shown
-	 * in the scene.
-	 */
-	void Initialize()
+	void DisableProps()
 	{
 		foreach (GameObject obj in allProps)
 		{
 			obj.SetActive(false);
 		}
+	}
 
-		int rndIndexMin = UnityEngine.Random.Range(0, allProps.Length);
-		int rndIndexMax = UnityEngine.Random.Range(0, allProps.Length);
-
-		int rangeLength;
-
-		if (rndIndexMax == rndIndexMin)
+	void EnableProps()
+	{
+		if (activeProps != null)
 		{
-			activeProps = new GameObject[1];
-			activeProps[0] = allProps[rndIndexMax];
+			foreach (GameObject obj in activeProps)
+			{
+				obj.SetActive(true);
+			}
 			return;
 		}
-		else
+
+		activeProps = new List<GameObject>();
+
+		foreach (GameObject obj in allProps)
 		{
-			rangeLength = Mathf.Abs(rndIndexMax - rndIndexMin);
-			activeProps = new GameObject[rangeLength + 1];
+			float rnd = UnityEngine.Random.Range(0.0f, 1.0f);
 
-			if (rndIndexMin > rndIndexMax) 
+			if (rnd <= spawnChance)
 			{
-				rndIndexMin = rndIndexMax;
+				obj.SetActive(true);
+				activeProps.Add(obj);
 			}
+		}
+	}
 
-			int counter = 0;
-
-			for (int i = rndIndexMin; i < activeProps.Length; i++)
-			{
-				activeProps[counter] = allProps[i];
-				counter++;
-			}
+	void Initialize()
+	{
+		foreach (GameObject obj in allProps)
+		{
+			obj.SetActive(false);
 		}
 	}
 }
