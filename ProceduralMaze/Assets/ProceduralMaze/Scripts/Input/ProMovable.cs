@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProMovable : MonoBehaviour {
 
-    public ProMouseInput mouseInput;
+    private ProMouseInput mouseInput;
 
     private bool canMove = false;
     private float height;
@@ -13,6 +13,8 @@ public class ProMovable : MonoBehaviour {
 
     private void Awake()
     {
+        mouseInput = FindObjectOfType(typeof(ProMouseInput)) as ProMouseInput;
+
         mouseInput.onMouseButtonDownLeftRaycast += MoveObject;
         mouseInput.onMouseButtonLeftUp += ReleaseObject;
 
