@@ -29,6 +29,8 @@ public class UnitManager : MonoBehaviour {
     public GameObject[] unitF4;
     public GameObject[] unitG;
     public GameObject[] unitG1;
+    public GameObject[] unitH;
+    public GameObject[] unitH1;
 
     Dictionary<TestUnit, GameObject> pathDict = new Dictionary<TestUnit, GameObject>();
 
@@ -177,6 +179,14 @@ public class UnitManager : MonoBehaviour {
             case TestUnit.TypeF4:
 
                 CheckInstantiatedUnit(trigger, TestUnit.TypeF4, unitF4);
+                break;
+
+            case TestUnit.TypeH:
+                CheckInstantiatedUnit(trigger, TestUnit.TypeH, unitH);
+                break;
+            
+            case TestUnit.TypeH1:
+                CheckInstantiatedUnit(trigger, TestUnit.TypeH1, unitH1);
                 break;
         }
     }
