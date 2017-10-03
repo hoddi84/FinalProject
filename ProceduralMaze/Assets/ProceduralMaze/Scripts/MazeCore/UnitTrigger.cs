@@ -35,6 +35,8 @@ public enum TestUnit
     TypeH3,
     TypeH4,
     TypeH5,
+    TypeH6,
+    TypeH7,
     TypeK
 }
 
