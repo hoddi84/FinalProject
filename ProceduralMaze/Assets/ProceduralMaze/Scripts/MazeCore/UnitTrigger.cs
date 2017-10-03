@@ -37,7 +37,8 @@ public enum TestUnit
     TypeH5,
     TypeH6,
     TypeH7,
-    TypeK
+    TypeK,
+    TypeK1,
 }
 
 public class UnitTrigger : MonoBehaviour {
