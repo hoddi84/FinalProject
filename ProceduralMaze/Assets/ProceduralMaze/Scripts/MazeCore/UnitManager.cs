@@ -15,6 +15,9 @@ public class UnitManager : MonoBehaviour {
     public GameObject[] unitD5;
     public GameObject[] unitD6;
     public GameObject[] unitD7;
+    public GameObject[] unitD8;
+    public GameObject[] unitD9;
+    public GameObject[] unitD10;
     public GameObject[] unitE;
     public GameObject[] unitE1;
     public GameObject[] unitE2;
@@ -117,6 +120,18 @@ public class UnitManager : MonoBehaviour {
 
             case TestUnit.TypeD7:
                 CheckInstantiatedUnit(trigger, TestUnit.TypeD7, unitD7);
+                break;
+            
+            case TestUnit.TypeD8:
+                CheckInstantiatedUnit(trigger, TestUnit.TypeD8, unitD8);
+                break;
+            
+            case TestUnit.TypeD9:
+                CheckInstantiatedUnit(trigger, TestUnit.TypeD9, unitD9);
+                break;
+
+            case TestUnit.TypeD10:
+                CheckInstantiatedUnit(trigger, TestUnit.TypeD10, unitD10);
                 break;
 
             case TestUnit.TypeE:
