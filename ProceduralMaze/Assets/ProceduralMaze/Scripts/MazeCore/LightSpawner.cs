@@ -7,14 +7,19 @@ public class LightSpawner : MonoBehaviour {
 	public GameObject[] lights;
 	public GameObject lightPrefab;
 
+	public bool spawnLights = false;
+
 	private UnitManager unitManager;
 
 	private Dictionary<TestUnit, GameObject> lightDict = new Dictionary<TestUnit, GameObject>();
 
 	void Awake()
 	{
-		unitManager = FindObjectOfType(typeof(UnitManager)) as UnitManager;
-		unitManager.onPathDictUpdate += CheckForSpawnableLights;
+		if (spawnLights)
+		{
+			unitManager = FindObjectOfType(typeof(UnitManager)) as UnitManager;
+			unitManager.onPathDictUpdate += CheckForSpawnableLights;
+		}
 	}
 
 	void CheckForSpawnableLights(Dictionary<TestUnit, GameObject> pathDict)
