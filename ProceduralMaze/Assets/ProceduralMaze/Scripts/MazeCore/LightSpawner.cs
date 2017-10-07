@@ -18,8 +18,49 @@ public class LightSpawner : MonoBehaviour {
 		if (spawnLights)
 		{
 			unitManager = FindObjectOfType(typeof(UnitManager)) as UnitManager;
-			unitManager.onPathDictUpdate += CheckForSpawnableLights;
+			unitManager.onPathDictUpdate += Check;
 		}
+	}
+
+	void Check(Dictionary<TestUnit, GameObject> pathDict)
+	{
+		List<TestUnit> activeUnits = new List<TestUnit>();
+
+		// Find active Units.
+		foreach (KeyValuePair<TestUnit, GameObject> entry in pathDict)
+		{
+			if (entry.Value.activeInHierarchy)
+			{
+				activeUnits.Add(entry.Key);
+			}
+		}
+
+		foreach (GameObject light in lights)
+		{
+			if (CheckIfActiveLight(light, activeUnits))
+			{
+				light.SetActive(true);
+			}
+			else
+			{
+				light.SetActive(false);
+			}
+		}
+	}
+
+	bool CheckIfActiveLight(GameObject light, List<TestUnit> activeUnits)
+	{
+		foreach (TestUnit unit in light.GetComponent<LightSpawnType>().lightSpawnTypes)
+		{
+			foreach (TestUnit activeUnit in activeUnits)
+			{
+				if (unit == activeUnit)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	void CheckForSpawnableLights(Dictionary<TestUnit, GameObject> pathDict)
