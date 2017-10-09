@@ -18,11 +18,11 @@ public class LightSpawner : MonoBehaviour {
 		if (spawnLights)
 		{
 			unitManager = FindObjectOfType(typeof(UnitManager)) as UnitManager;
-			unitManager.onPathDictUpdate += Check;
+			unitManager.onPathDictUpdate += CheckForSpawnableLights;
 		}
 	}
 
-	void Check(Dictionary<TestUnit, GameObject> pathDict)
+	void CheckForSpawnableLights(Dictionary<TestUnit, GameObject> pathDict)
 	{
 		List<TestUnit> activeUnits = new List<TestUnit>();
 
@@ -43,7 +43,10 @@ public class LightSpawner : MonoBehaviour {
 			}
 			else
 			{
-				light.SetActive(false);
+				if (light.activeInHierarchy)
+				{
+					light.GetComponentInChildren<LightSettings>().DisableLight();
+				}
 			}
 		}
 	}
@@ -61,42 +64,5 @@ public class LightSpawner : MonoBehaviour {
 			}
 		}
 		return false;
-	}
-
-	void CheckForSpawnableLights(Dictionary<TestUnit, GameObject> pathDict)
-	{
-		foreach (KeyValuePair<TestUnit, GameObject> entry in pathDict)
-		{
-			foreach (GameObject light in lights)
-			{
-				foreach (TestUnit unit in light.GetComponent<LightSpawnType>().lightSpawnTypes)
-				{
-					if (unit == entry.Key)
-					{
-						if (entry.Value.activeInHierarchy)
-						{
-							if (!lightDict.ContainsKey(unit))
-							{
-								GameObject t = Instantiate(lightPrefab, light.transform.position, light.transform.rotation);
-								lightDict.Add(unit, t);
-							}
-							else
-							{
-								GameObject t;
-								lightDict.TryGetValue(unit, out t);
-								t.SetActive(true);
-							}
-							
-						}
-						else
-						{
-							GameObject t;
-							lightDict.TryGetValue(unit, out t);
-							t.SetActive(false);
-						}
-					}
-				}
-			}
-		}
 	}
 }

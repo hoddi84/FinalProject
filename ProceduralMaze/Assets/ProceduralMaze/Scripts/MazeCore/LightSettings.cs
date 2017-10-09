@@ -7,6 +7,9 @@ public class LightSettings : MonoBehaviour {
 	private LightManager lightManager;
 	private Light light;
 
+	private float lightInDuration = 2.0f;
+	private float lightOutDuration = 1.0f;
+
 	void Awake()
 	{
 		lightManager = FindObjectOfType(typeof(LightManager)) as LightManager;	
@@ -28,10 +31,20 @@ public class LightSettings : MonoBehaviour {
 
 	IEnumerator LightingIntro(bool intro)
 	{
-		float duration = 3;
+		float duration = 0;
 		float elapsedTime = 0;
 
 		light.color = lightManager.lightColor;
+
+		if (intro)
+		{
+			duration = lightInDuration;
+		}
+		else
+		{
+			duration = lightOutDuration;
+		}
+
 
 		while (elapsedTime < duration)
 		{
@@ -46,10 +59,20 @@ public class LightSettings : MonoBehaviour {
 			elapsedTime += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
+
+		if (!intro)
+		{
+			gameObject.SetActive(false);
+		}
 	}
 
 	void OnEnable()
 	{
 		StartCoroutine(LightingIntro(true));
+	}
+
+	public void DisableLight()
+	{
+		StartCoroutine(LightingIntro(false));
 	}
 }
