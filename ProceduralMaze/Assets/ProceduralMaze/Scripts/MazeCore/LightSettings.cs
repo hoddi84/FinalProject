@@ -7,8 +7,8 @@ public class LightSettings : MonoBehaviour {
 	private LightManager lightManager;
 	private Light light;
 
-	private float lightInDuration = 2.0f;
-	private float lightOutDuration = 1.0f;
+	private float lightInDuration = 1.0f;
+	private float lightOutDuration = .5f;
 
 	void Awake()
 	{
