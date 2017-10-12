@@ -2,43 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerTest : MonoBehaviour {
+public class CollisionTest : MonoBehaviour {
 
 	private EntryAxis entryAxis;
-	private Vector3 entryVector;
-	private Vector3 outVector;
-
-	void Start()
-	{
+	// Use this for initialization
+	void Start () {
+		
 		FindAxisOfEntry();
 	}
 
-	void OnTriggerEnter(Collider other)
+	void OnCollisionEnter(Collision collision)
 	{
-		if (other.tag == "Player")
+		if (collision.collider.tag == "Player")
 		{
-			print("enter: " + other.transform.position.x);
-			//print(other.gameObject.GetComponent<Collider>().ClosestPoint(transform.position));
-
-			//entryVector = other.gameObject.GetComponent<Collider>().ClosestPoint(transform.position);		
-			entryVector = other.transform.position;
+			print("LOL");
 		}
+
+		print("Touched");
 	}
 
-	void OnTriggerExit(Collider other)
+	void OnCollisionExit(Collision collision)
 	{
-		if (other.tag == "Player")
+		if (collision.collider.tag == "Player")
 		{
-			print("exit: " + other.transform.position.x);
-			//print(other.gameObject.GetComponent<Collider>().ClosestPoint(transform.position));
-
-			//outVector = other.gameObject.GetComponent<Collider>().ClosestPoint(transform.position);
-			outVector = other.transform.position;
-
-			CheckWay(entryVector, outVector, entryAxis);
+			print("LOL2");
 		}
 	}
-
+	
 	void CheckWayMessage(float entry, float exit)
 	{
 		float maxDiff = .16f;

@@ -67,18 +67,6 @@ public class UnitTrigger : MonoBehaviour {
 	private Vector3 entryVector;
 	private Vector3 outVector;
 
-/* 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == PLAYER)
-        {
-            if (onTriggerEntered != null)
-            {
-                onTriggerEntered(this);
-            }
-        }
-    }
-*/
     void Start()
     {
         FindAxisOfEntry();
@@ -88,11 +76,7 @@ public class UnitTrigger : MonoBehaviour {
 	{
 		if (other.tag == "Player")
 		{
-			print("enter");
-			//print(other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position));
-
-			entryVector = other.gameObject.GetComponent<Collider>().ClosestPoint(transform.position);
-			
+			entryVector = other.transform.position;	
 		}
 	}
 
@@ -100,30 +84,21 @@ public class UnitTrigger : MonoBehaviour {
 	{
 		if (other.tag == "Player")
 		{
-			print("exit");
-			//print(other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position));
-
-			outVector = other.gameObject.GetComponent<Collider>().ClosestPoint(transform.position);
-
+			outVector = other.transform.position;
 			CheckWay(entryVector, outVector, entryAxis);
 		}
 	}
 
 	void CheckWayMessage(float entry, float exit)
 	{
-		float maxDiff = .1f;
-        print("entry: " + entry);
-        print("exit: " + exit);
-        print("diff: " + Math.Abs(entry - exit));
+		float maxDiff = .15f;
 		if (Mathf.Abs(entry - exit) <= maxDiff)
 		{
-			print("Came out same way");
-            print(entryAxis);
+			//print("Came out same way");
 		}
 		else
 		{
-			print("Came out other way");
-            print(entryAxis);
+			//print("Came out other way");
             if (onTriggerEntered != null)
             {
                 onTriggerEntered(this);
