@@ -8,7 +8,7 @@ public class PropSpawner : MonoBehaviour {
 	public TestUnit[] unitToSpawnProp;
 	public GameObject[] allProps;
 	private List<GameObject> activeProps = null;
-	private float spawnChance = .5f;
+	private float spawnChance = 1f;
 
 	void Awake()
 	{
