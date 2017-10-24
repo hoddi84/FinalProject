@@ -6,11 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class VRInteractable : MonoBehaviour {
 
-	public VRHandControllerManager controllerManager;
+	private VRHandControllerManager controllerManager;
 	public Action onInteracted = null;
 
 	void Awake() 
 	{
+
+		controllerManager = FindObjectOfType(typeof(VRHandControllerManager)) as VRHandControllerManager;
+		
 		if (controllerManager != null)
 		{
 			controllerManager.onTriggerClickedCollider += ControllerInteracted;
