@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class LightManager : MonoBehaviour {
 
-	public float lightIntensity = 1;
+	public float lightIntensity;
+	public float MAX_LIGHT_INTENSITY = 1;
 	private float _currentLightIntensity;
 	public Color lightColor;
 	private Color _currentLightColor;
@@ -17,6 +18,7 @@ public class LightManager : MonoBehaviour {
 
 	void Start()
 	{
+		lightIntensity = MAX_LIGHT_INTENSITY;
 		_currentLightIntensity = lightIntensity;
 		_currentLightColor = lightColor;
 	}
@@ -29,7 +31,7 @@ public class LightManager : MonoBehaviour {
 		RenderSettings.ambientLight = ambienceColor;
 	}
 
-	void CheckIfIntensityChanged()
+	void CheckIfColorChanged()
 	{
 		if (_currentLightColor != lightColor)
 		{
@@ -42,7 +44,7 @@ public class LightManager : MonoBehaviour {
 		}
 	}
 
-	void CheckIfColorChanged()
+	void CheckIfIntensityChanged()
 	{
 		if (_currentLightIntensity != lightIntensity)
 		{

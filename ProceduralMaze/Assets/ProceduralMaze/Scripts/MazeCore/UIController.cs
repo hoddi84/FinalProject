@@ -19,15 +19,64 @@ public class UIController : MonoBehaviour {
 	{
 		isSimpleCheckOn = simpleCheck.isOn;
 		isFocusedCheckOn = focusedCheck.isOn;
+
+		simplePanel.SetActive(simpleCheck.isOn);
+		focusedPanel.SetActive(focusedCheck.isOn);
 	}
 
-	void SimpleMode()
+	void Update()
 	{
-
+		simplePanel.SetActive(simpleCheck.isOn);
+		focusedPanel.SetActive(focusedCheck.isOn);
 	}
 
-	void FocusedMode()
+	public void SimpleMode()
 	{
+		// Allready checked.
+		if (isSimpleCheckOn && !simpleCheck.isOn)
+		{
+			simpleCheck.isOn = true;
+			return;
+		}
+
+		// Not checked.
+		if (!isSimpleCheckOn && isFocusedCheckOn)
+		{
+			// Now Checked.
+
+			// Uncheck other.
+			isFocusedCheckOn = false;
+			focusedCheck.isOn = false;
+		}
+
+		if (!isSimpleCheckOn && !isFocusedCheckOn)
+		{
+			isFocusedCheckOn = true;
+		}
+	}
+
+	public void FocusedMode()
+	{
+		// Allready checked.
+		if (isFocusedCheckOn && !focusedCheck.isOn)
+		{
+			focusedCheck.isOn = true;
+			return;
+		}
 		
+		// Not checked.
+		if (!isFocusedCheckOn && isSimpleCheckOn)
+		{
+			// Now checked.
+
+			// Uncheck other.
+			isSimpleCheckOn = false;
+			simpleCheck.isOn = false;
+		}
+
+		if (!isFocusedCheckOn && !isSimpleCheckOn)
+		{
+			isSimpleCheckOn = true;
+		}
 	}
 }
