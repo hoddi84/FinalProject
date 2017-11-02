@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
 public class LightSpawner : MonoBehaviour {
 
 	public GameObject[] lights;
@@ -66,3 +67,4 @@ public class LightSpawner : MonoBehaviour {
 		return false;
 	}
 }
+*/

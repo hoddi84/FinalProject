@@ -38,8 +38,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4774549464040998}
-  - component: {fileID: 114867316110817108}
   - component: {fileID: 65835586577541956}
+  - component: {fileID: 114867316110817108}
   m_Layer: 0
   m_Name: connect_TypeH1
   m_TagString: Untagged
@@ -127,8 +127,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4870370606609270}
-  - component: {fileID: 114438158926940614}
   - component: {fileID: 65331042409621676}
+  - component: {fileID: 114438158926940614}
   m_Layer: 0
   m_Name: connect_TypeH3
   m_TagString: Untagged
@@ -1175,9 +1175,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 30
-  isType: 31
-  toType: 32
+  fromType: TypeH1
+  isType: TypeH2
+  toType: TypeH3
 --- !u!114 &114867316110817108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1189,6 +1189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 30
-  isType: 31
-  toType: 30
+  fromType: TypeH1
+  isType: TypeH2
+  toType: TypeH1

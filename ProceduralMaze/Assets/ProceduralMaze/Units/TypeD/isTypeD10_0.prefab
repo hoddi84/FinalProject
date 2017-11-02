@@ -76,8 +76,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4772685478414334}
-  - component: {fileID: 114570397411700966}
   - component: {fileID: 65060372067515740}
+  - component: {fileID: 114570397411700966}
   m_Layer: 0
   m_Name: connect_TypeA_LOOP
   m_TagString: Untagged
@@ -1377,9 +1377,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 14
-  isType: 14
-  toType: 1
+  fromType: TypeD10
+  isType: TypeD10
+  toType: TypeA
 --- !u!114 &114647254632078130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1391,6 +1391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 13
-  isType: 14
-  toType: 13
+  fromType: TypeD9
+  isType: TypeD10
+  toType: TypeD9

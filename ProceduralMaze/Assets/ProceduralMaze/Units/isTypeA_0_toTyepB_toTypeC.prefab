@@ -973,9 +973,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 0
-  isType: 1
-  toType: 2
+  fromType: NULL
+  isType: TypeA
+  toType: TypeB
 --- !u!114 &114806383920915148
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -987,6 +987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 0
-  isType: 1
-  toType: 3
+  fromType: NULL
+  isType: TypeA
+  toType: TypeC

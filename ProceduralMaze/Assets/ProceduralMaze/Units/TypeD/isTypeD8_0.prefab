@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4587503380726590}
-  - component: {fileID: 114720635604891518}
   - component: {fileID: 65027888910192304}
+  - component: {fileID: 114720635604891518}
   m_Layer: 0
   m_Name: connect_TypeD9
   m_TagString: Untagged
@@ -74,8 +74,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4696137081235834}
-  - component: {fileID: 114990514529759702}
   - component: {fileID: 65289713161344374}
+  - component: {fileID: 114990514529759702}
   m_Layer: 0
   m_Name: connect_TypeD7
   m_TagString: Untagged
@@ -1138,7 +1138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d396138af4a25ee49a71d09671aef7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerManager: {fileID: 0}
 --- !u!114 &114720635604891518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1150,9 +1149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 11
-  isType: 12
-  toType: 13
+  fromType: TypeD7
+  isType: TypeD8
+  toType: TypeD9
 --- !u!114 &114990514529759702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1164,9 +1163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 11
-  isType: 12
-  toType: 11
+  fromType: TypeD7
+  isType: TypeD8
+  toType: TypeD7
 --- !u!136 &136466001945005706
 CapsuleCollider:
   m_ObjectHideFlags: 1

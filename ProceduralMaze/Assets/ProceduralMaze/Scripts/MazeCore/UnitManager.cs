@@ -43,20 +43,20 @@ public class UnitManager : MonoBehaviour {
     public GameObject[] unitK;
     public GameObject[] unitK1;
 
-    Dictionary<TestUnit, GameObject> pathDict = new Dictionary<TestUnit, GameObject>();
+    Dictionary<string, GameObject> pathDict = new Dictionary<string, GameObject>();
 
-    private Action<TestUnit, GameObject> onInstantiate = null;
+    private Action<string, GameObject> onInstantiate = null;
 
-    public Action<Dictionary<TestUnit, GameObject>> onPathDictUpdate = null;
+    public Action<Dictionary<string, GameObject>> onPathDictUpdate = null;
 
-    private PropManager propManager;
+    //private PropManager propManager;
 
     private void Awake()
     {
         onInstantiate += UpdatePathDictionary;
 
-        propManager = GetComponent<PropManager>();
-        propManager.onPropsReady += GetPathDictionaryOnPropsInitial;
+        //propManager = GetComponent<PropManager>();
+        //propManager.onPropsReady += GetPathDictionaryOnPropsInitial;
 
     }
 
@@ -70,183 +70,183 @@ public class UnitManager : MonoBehaviour {
 
         switch (trigger.toType)
         {
-            case TestUnit.TypeA:
+            case "TypeA":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeA, unitA);
+                CheckInstantiatedUnit(trigger, "TypeA", unitA);
                 break;
 
-            case TestUnit.TypeB:
+            case "TypeB":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeB, unitB);
+                CheckInstantiatedUnit(trigger, "TypeB", unitB);
                 break;
 
-            case TestUnit.TypeC:
+            case "TypeC":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeC, unitC);
+                CheckInstantiatedUnit(trigger, "TypeC", unitC);
                 break;
 
-            case TestUnit.TypeD:
+            case "TypeD":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD, unitD);
+                CheckInstantiatedUnit(trigger, "TypeD", unitD);
                 break;
 
-            case TestUnit.TypeD1:
+            case "TypeD1":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD1, unitD1);
+                CheckInstantiatedUnit(trigger, "TypeD1", unitD1);
                 break;
 
-            case TestUnit.TypeD2:
+            case "TypeD2":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD2, unitD2);
-                break;
-            
-            case TestUnit.TypeD3:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD3, unitD3);
-                break;
-
-            case TestUnit.TypeD4:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD4, unitD4);
-                break;
-
-            case TestUnit.TypeD5:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD5, unitD5);
-                break;
-
-            case TestUnit.TypeD6:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD6, unitD6);
-                break;
-
-            case TestUnit.TypeD7:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD7, unitD7);
+                CheckInstantiatedUnit(trigger, "TypeD2", unitD2);
                 break;
             
-            case TestUnit.TypeD8:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD8, unitD8);
+            case "TypeD3":
+
+                CheckInstantiatedUnit(trigger, "TypeD3", unitD3);
+                break;
+
+            case "TypeD4":
+
+                CheckInstantiatedUnit(trigger, "TypeD4", unitD4);
+                break;
+
+            case "TypeD5":
+                CheckInstantiatedUnit(trigger, "TypeD5", unitD5);
+                break;
+
+            case "TypeD6":
+                CheckInstantiatedUnit(trigger, "TypeD6", unitD6);
+                break;
+
+            case "TypeD7":
+                CheckInstantiatedUnit(trigger, "TypeD7", unitD7);
                 break;
             
-            case TestUnit.TypeD9:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD9, unitD9);
-                break;
-
-            case TestUnit.TypeD10:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeD10, unitD10);
-                break;
-
-            case TestUnit.TypeE:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeE, unitE);
-                break;
-
-            case TestUnit.TypeE1:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeE1, unitE1);
-                break;
-
-            case TestUnit.TypeE2:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeE2, unitE2);
-                break;
-
-            case TestUnit.TypeE3:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeE3, unitE3);
-                break;
-
-            case TestUnit.TypeE4:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeE4, unitE4);
+            case "TypeD8":
+                CheckInstantiatedUnit(trigger, "TypeD8", unitD8);
                 break;
             
-            case TestUnit.TypeE5:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeE5, unitE5);
+            case "TypeD9":
+                CheckInstantiatedUnit(trigger, "TypeD9", unitD9);
                 break;
 
-            case TestUnit.TypeE6:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeE6, unitE6);
-                break;
-            
-            case TestUnit.TypeG:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeG, unitG);
+            case "TypeD10":
+                CheckInstantiatedUnit(trigger, "TypeD10", unitD10);
                 break;
 
-            case TestUnit.TypeG1:
+            case "TypeE":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeG1, unitG1);
+                CheckInstantiatedUnit(trigger, "TypeE", unitE);
                 break;
 
-            case TestUnit.TypeF:
+            case "TypeE1":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeF, unitF);
+                CheckInstantiatedUnit(trigger, "TypeE1", unitE1);
                 break;
 
-            case TestUnit.TypeF1:
+            case "TypeE2":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeF1, unitF1);
+                CheckInstantiatedUnit(trigger, "TypeE2", unitE2);
                 break;
 
-            case TestUnit.TypeF2:
+            case "TypeE3":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeF2, unitF2);
+                CheckInstantiatedUnit(trigger, "TypeE3", unitE3);
                 break;
 
-            case TestUnit.TypeF3:
+            case "TypeE4":
 
-                CheckInstantiatedUnit(trigger, TestUnit.TypeF3, unitF3);
-                break;
-
-            case TestUnit.TypeF4:
-
-                CheckInstantiatedUnit(trigger, TestUnit.TypeF4, unitF4);
-                break;
-
-            case TestUnit.TypeH:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeH, unitH);
+                CheckInstantiatedUnit(trigger, "TypeE4", unitE4);
                 break;
             
-            case TestUnit.TypeH1:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeH1, unitH1);
+            case "TypeE5":
+
+                CheckInstantiatedUnit(trigger, "TypeE5", unitE5);
+                break;
+
+            case "TypeE6":
+
+                CheckInstantiatedUnit(trigger, "TypeE6", unitE6);
                 break;
             
-            case TestUnit.TypeH2:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeH2, unitH2);
+            case "TypeG":
+
+                CheckInstantiatedUnit(trigger, "TypeG", unitG);
+                break;
+
+            case "TypeG1":
+
+                CheckInstantiatedUnit(trigger, "TypeG1", unitG1);
+                break;
+
+            case "TypeF":
+
+                CheckInstantiatedUnit(trigger, "TypeF", unitF);
+                break;
+
+            case "TypeF1":
+
+                CheckInstantiatedUnit(trigger, "TypeF1", unitF1);
+                break;
+
+            case "TypeF2":
+
+                CheckInstantiatedUnit(trigger, "TypeF2", unitF2);
+                break;
+
+            case "TypeF3":
+
+                CheckInstantiatedUnit(trigger, "TypeF3", unitF3);
+                break;
+
+            case "TypeF4":
+
+                CheckInstantiatedUnit(trigger, "TypeF4", unitF4);
+                break;
+
+            case "TypeH":
+                CheckInstantiatedUnit(trigger, "TypeH", unitH);
                 break;
             
-            case TestUnit.TypeH3:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeH3, unitH3);
-                break;
-
-            case TestUnit.TypeH4:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeH4, unitH4);
-                break;
-
-            case TestUnit.TypeH5:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeH5, unitH5);
+            case "TypeH1":
+                CheckInstantiatedUnit(trigger, "TypeH1", unitH1);
                 break;
             
-            case TestUnit.TypeH6:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeH6, unitH6);
+            case "TypeH2":
+                CheckInstantiatedUnit(trigger, "TypeH2", unitH2);
+                break;
+            
+            case "TypeH3":
+                CheckInstantiatedUnit(trigger, "TypeH3", unitH3);
                 break;
 
-            case TestUnit.TypeH7:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeH7, unitH7);
+            case "TypeH4":
+                CheckInstantiatedUnit(trigger, "TypeH4", unitH4);
                 break;
 
-            case TestUnit.TypeK:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeK, unitK);
+            case "TypeH5":
+                CheckInstantiatedUnit(trigger, "TypeH5", unitH5);
+                break;
+            
+            case "TypeH6":
+                CheckInstantiatedUnit(trigger, "TypeH6", unitH6);
                 break;
 
-            case TestUnit.TypeK1:
-                CheckInstantiatedUnit(trigger, TestUnit.TypeK1, unitK1);
+            case "TypeH7":
+                CheckInstantiatedUnit(trigger, "TypeH7", unitH7);
+                break;
+
+            case "TypeK":
+                CheckInstantiatedUnit(trigger, "TypeK", unitK);
+                break;
+
+            case "TypeK1":
+                CheckInstantiatedUnit(trigger, "TypeK1", unitK1);
                 break;
         }
     }
 
-    private void CheckInstantiatedUnit(UnitTrigger trigger, TestUnit type, GameObject[] unit)
+    private void CheckInstantiatedUnit(UnitTrigger trigger, string type, GameObject[] unit)
     {
         GameObject tmp = null;
 
@@ -273,7 +273,7 @@ public class UnitManager : MonoBehaviour {
         }
     }
 
-    private void InstantiateExistingUnit(TestUnit type)
+    private void InstantiateExistingUnit(string type)
     {
         GameObject t;
         pathDict.TryGetValue(type, out t);
@@ -310,7 +310,7 @@ public class UnitManager : MonoBehaviour {
         }
     }
 
-    private void UpdatePathDictionary(TestUnit unitType, GameObject obj)
+    private void UpdatePathDictionary(string unitType, GameObject obj)
     {
         if (!pathDict.ContainsKey(unitType))
         {

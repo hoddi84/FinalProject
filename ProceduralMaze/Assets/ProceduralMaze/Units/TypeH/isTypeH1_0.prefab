@@ -37,8 +37,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4057107049157006}
-  - component: {fileID: 114260495398647200}
   - component: {fileID: 65223548519545718}
+  - component: {fileID: 114260495398647200}
   m_Layer: 0
   m_Name: connect_TypeH
   m_TagString: Untagged
@@ -197,8 +197,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4640379028506128}
-  - component: {fileID: 114707019466178678}
   - component: {fileID: 65664767386341070}
+  - component: {fileID: 114707019466178678}
   m_Layer: 0
   m_Name: connect_TypeH2
   m_TagString: Untagged
@@ -1248,9 +1248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 29
-  isType: 30
-  toType: 29
+  fromType: TypeH
+  isType: TypeH1
+  toType: TypeH
 --- !u!114 &114346302278806190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1282,9 +1282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 29
-  isType: 30
-  toType: 31
+  fromType: TypeH
+  isType: TypeH1
+  toType: TypeH2
 --- !u!114 &114784071399023964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1296,7 +1296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d396138af4a25ee49a71d09671aef7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerManager: {fileID: 0}
 --- !u!136 &136712206105168472
 CapsuleCollider:
   m_ObjectHideFlags: 1

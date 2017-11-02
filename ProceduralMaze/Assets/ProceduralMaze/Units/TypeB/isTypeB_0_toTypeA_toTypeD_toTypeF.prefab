@@ -1059,9 +1059,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 1
-  isType: 2
-  toType: 1
+  fromType: TypeA
+  isType: TypeB
+  toType: TypeA
 --- !u!114 &114227816287614806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1073,9 +1073,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 1
-  isType: 2
-  toType: 1
+  fromType: TypeA
+  isType: TypeB
+  toType: TypeA
 --- !u!114 &114412106139635050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1087,9 +1087,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 1
-  isType: 2
-  toType: 4
+  fromType: TypeA
+  isType: TypeB
+  toType: TypeD
 --- !u!114 &114417166979029480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1101,6 +1101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 1
-  isType: 2
-  toType: 22
+  fromType: TypeA
+  isType: TypeB
+  toType: TypeF

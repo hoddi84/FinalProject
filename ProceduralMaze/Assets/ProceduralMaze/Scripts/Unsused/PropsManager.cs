@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
 public class PropsManager : MonoBehaviour {
 
 	public GameObject[] unitA_props;
@@ -86,3 +87,4 @@ public class PropsManager : MonoBehaviour {
 	}
 
 }
+*/

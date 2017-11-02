@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4313957241476166}
-  - component: {fileID: 114791256229686114}
   - component: {fileID: 65032331354011668}
+  - component: {fileID: 114791256229686114}
   m_Layer: 0
   m_Name: 'connect_TypeH3 '
   m_TagString: Untagged
@@ -146,8 +146,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4290200401841814}
-  - component: {fileID: 114456092226151016}
   - component: {fileID: 65937485416516258}
+  - component: {fileID: 114456092226151016}
   m_Layer: 0
   m_Name: connect_TypeH3
   m_TagString: Untagged
@@ -220,8 +220,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4681092261189288}
-  - component: {fileID: 114403685350373472}
   - component: {fileID: 65265757245920586}
+  - component: {fileID: 114403685350373472}
   m_Layer: 0
   m_Name: connect_TypeK
   m_TagString: Untagged
@@ -252,8 +252,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4883418946601736}
-  - component: {fileID: 114002743742310814}
   - component: {fileID: 65227264857508040}
+  - component: {fileID: 114002743742310814}
   m_Layer: 0
   m_Name: connect_TypeH5
   m_TagString: Untagged
@@ -1362,9 +1362,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 32
-  isType: 33
-  toType: 34
+  fromType: TypeH3
+  isType: TypeH4
+  toType: TypeH5
 --- !u!114 &114403685350373472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1376,9 +1376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 32
-  isType: 33
-  toType: 37
+  fromType: TypeH3
+  isType: TypeH4
+  toType: TypeK
 --- !u!114 &114456092226151016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1390,9 +1390,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 32
-  isType: 33
-  toType: 32
+  fromType: TypeH3
+  isType: TypeH4
+  toType: TypeH3
 --- !u!114 &114791256229686114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1404,6 +1404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a194f4acfa4dba0437a9ff64f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromType: 32
-  isType: 33
-  toType: 32
+  fromType: TypeH3
+  isType: TypeH4
+  toType: TypeH3

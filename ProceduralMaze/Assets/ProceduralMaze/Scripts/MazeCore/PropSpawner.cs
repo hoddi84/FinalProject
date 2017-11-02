@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
 public class PropSpawner : MonoBehaviour {
 
 	public TestUnit[] unitToSpawnProp;
@@ -15,12 +16,12 @@ public class PropSpawner : MonoBehaviour {
 		Initialize();
 	}
 
-	/*
+	/
 	 * PropManager delegates this event and subscribes it to the UnitManager, in such
 	 * a way so that when the UnitTriggers are activated this event gets called.
 	 * This event looks in the Path Dictionary from the UnitManager and checks which Unit Types
 	 * are active and this activates the props for that Unit Type. 
-	 */
+	 *
 	public void CheckForActivePath(Dictionary<TestUnit, GameObject> pathDict)
 	{
 		foreach (TestUnit type in unitToSpawnProp)
@@ -83,3 +84,4 @@ public class PropSpawner : MonoBehaviour {
 		}
 	}
 }
+*/

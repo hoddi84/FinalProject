@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
 public class PropManager : MonoBehaviour {
 
 	public GameObject[] props;
@@ -39,3 +40,4 @@ public class PropManager : MonoBehaviour {
 		}
 	}
 }
+*/

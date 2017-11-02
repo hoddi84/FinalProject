@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
 public class PictureSpawner : MonoBehaviour {
 
 	public Sprite[] flowersHealthy;
@@ -22,3 +23,4 @@ public class PictureSpawner : MonoBehaviour {
 		renderer.sprite = flowersHealthy[rndIndex];
 	}
 }
+*/
