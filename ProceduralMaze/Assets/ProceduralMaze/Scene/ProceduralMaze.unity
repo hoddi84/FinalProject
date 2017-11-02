@@ -42,7 +42,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 11
   m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 8
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
     m_TextureWidth: 1024
@@ -77,17 +77,19 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFiltering: 0
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousColorSigma: 1
-    m_PVRFilteringAtrousNormalSigma: 1
-    m_PVRFilteringAtrousPositionSigma: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
   m_LightingDataAsset: {fileID: 0}
-  m_ShadowMaskMode: 2
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -381,7 +383,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 3
+  m_TargetEye: 0
   m_HDR: 1
   m_AllowMSAA: 1
   m_ForceIntoRT: 0
@@ -2326,6 +2328,16 @@ MonoBehaviour:
   - {fileID: 1145546032263986, guid: 4b522355c3af7c74ea1f26c4dfcddafa, type: 2}
   unitE6:
   - {fileID: 1379006972755864, guid: bec514394ad55a84eb1415e5e1cffa32, type: 2}
+  unitE7:
+  - {fileID: 1947669615301548, guid: b428da04d7faeba4e936019cb70e0f43, type: 2}
+  unitE8:
+  - {fileID: 1408867443868630, guid: c70159cf4cd902947802ac97545cc1ec, type: 2}
+  unitE9:
+  - {fileID: 1212308852603730, guid: 5a9190e0a8a377c4196b55b99c426ce3, type: 2}
+  unitE10:
+  - {fileID: 1848983392155354, guid: f3a740446d109bf4a8a41a182656307f, type: 2}
+  unitE11:
+  - {fileID: 1576578847547424, guid: f9ed0acd700da4d41a5ce5194b0967b7, type: 2}
   unitF:
   - {fileID: 1790031306225232, guid: 3e82996a084ed7041b78889c5d1bca4e, type: 2}
   unitF1:
