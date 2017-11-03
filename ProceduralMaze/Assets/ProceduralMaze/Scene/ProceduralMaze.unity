@@ -1699,7 +1699,7 @@ GameObject:
   - component: {fileID: 666204925}
   - component: {fileID: 666204924}
   - component: {fileID: 666204927}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TriggerPoint
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1715,7 +1715,7 @@ Transform:
   m_GameObject: {fileID: 666204922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.0331}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.29, y: 0.29, z: 0.29}
   m_Children: []
   m_Father: {fileID: 2118718041}
   m_RootOrder: 0
@@ -2184,7 +2184,7 @@ GameObject:
   - component: {fileID: 791129653}
   - component: {fileID: 791129652}
   - component: {fileID: 791129651}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: VRHelm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2197,14 +2197,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 791129649}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.70710677, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0331}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 980310998}
   m_Father: {fileID: 2118718041}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
 --- !u!23 &791129651
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2582,7 +2582,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 3
+  m_TargetEye: 0
   m_HDR: 1
   m_AllowMSAA: 1
   m_ForceIntoRT: 0
@@ -2601,7 +2601,7 @@ GameObject:
   - component: {fileID: 980311001}
   - component: {fileID: 980311000}
   - component: {fileID: 980310999}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3901,7 +3901,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1847680811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4251,7 +4251,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1904555509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5063,7 +5063,7 @@ Camera:
   m_Depth: -2
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294966783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
