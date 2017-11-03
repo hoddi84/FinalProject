@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 4376321845884740}
   - component: {fileID: 114042022175267130}
   m_Layer: 0
-  m_Name: Light
+  m_Name: Light1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,6 +209,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1667245290350268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4325643154211492}
+  - component: {fileID: 114859574125002918}
+  m_Layer: 0
+  m_Name: Light2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1688388989019750
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +235,22 @@ GameObject:
   - component: {fileID: 4897433235115548}
   m_Layer: 0
   m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1716440287663602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4674271532648880}
+  - component: {fileID: 114114234609630066}
+  m_Layer: 0
+  m_Name: Light3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352,6 +384,19 @@ Transform:
   m_Father: {fileID: 4897433235115548}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 45.000004, z: 0}
+--- !u!4 &4325643154211492
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1667245290350268}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.05, z: 0.31}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4714409542192914}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4376321845884740
 Transform:
   m_ObjectHideFlags: 1
@@ -404,6 +449,19 @@ Transform:
   m_Father: {fileID: 4897433235115548}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+--- !u!4 &4674271532648880
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1716440287663602}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000029504295}
+  m_LocalPosition: {x: -0.0000008780197, y: 2.05, z: -0.477}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4714409542192914}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
 --- !u!4 &4682933162744824
 Transform:
   m_ObjectHideFlags: 1
@@ -431,6 +489,8 @@ Transform:
   - {fileID: 4293024899787280}
   - {fileID: 4947159580240042}
   - {fileID: 4376321845884740}
+  - {fileID: 4325643154211492}
+  - {fileID: 4674271532648880}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1307,6 +1367,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitLight: {fileID: 1067278679676586, guid: f6fc82d9c9b156642b71ba1b71cb302c, type: 2}
+--- !u!114 &114114234609630066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1716440287663602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e128ff8578097b4492616641116414c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitLight: {fileID: 1067278679676586, guid: f6fc82d9c9b156642b71ba1b71cb302c, type: 2}
 --- !u!114 &114588541720731010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1335,3 +1407,15 @@ MonoBehaviour:
   fromType: TypeE11
   isType: TypeE11
   toType: TypeA
+--- !u!114 &114859574125002918
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1667245290350268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e128ff8578097b4492616641116414c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitLight: {fileID: 1067278679676586, guid: f6fc82d9c9b156642b71ba1b71cb302c, type: 2}
