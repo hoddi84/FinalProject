@@ -66,6 +66,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1272418780878788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4756339836025938}
+  - component: {fileID: 114500988059125180}
+  m_Layer: 0
+  m_Name: Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1374857819327872
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,6 +409,19 @@ Transform:
   m_Father: {fileID: 4997603081914522}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4756339836025938
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272418780878788}
+  m_LocalRotation: {x: -0, y: -0.7071075, z: -0, w: 0.7071062}
+  m_LocalPosition: {x: 0.694, y: 2.05, z: 0.001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4997603081914522}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
 --- !u!4 &4761502044289382
 Transform:
   m_ObjectHideFlags: 1
@@ -484,6 +513,7 @@ Transform:
   - {fileID: 4455980280953584}
   - {fileID: 4696137081235834}
   - {fileID: 4587503380726590}
+  - {fileID: 4756339836025938}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1138,6 +1168,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d396138af4a25ee49a71d09671aef7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114500988059125180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272418780878788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e128ff8578097b4492616641116414c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitLight: {fileID: 1067278679676586, guid: f6fc82d9c9b156642b71ba1b71cb302c, type: 2}
 --- !u!114 &114720635604891518
 MonoBehaviour:
   m_ObjectHideFlags: 1

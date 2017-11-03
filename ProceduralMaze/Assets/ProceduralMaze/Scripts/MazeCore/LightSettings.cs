@@ -62,7 +62,7 @@ public class LightSettings : MonoBehaviour {
 
 		if (!intro)
 		{
-			gameObject.SetActive(false);
+			Destroy(gameObject);
 		}
 	}
 

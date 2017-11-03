@@ -83,6 +83,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1474895990621264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4376321845884740}
+  - component: {fileID: 114042022175267130}
+  m_Layer: 0
+  m_Name: Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1479175712953914
 GameObject:
   m_ObjectHideFlags: 1
@@ -336,6 +352,19 @@ Transform:
   m_Father: {fileID: 4897433235115548}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 45.000004, z: 0}
+--- !u!4 &4376321845884740
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1474895990621264}
+  m_LocalRotation: {x: -0, y: 0.7071058, z: -0, w: -0.70710784}
+  m_LocalPosition: {x: 0.741, y: 2.05, z: 0.858}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4714409542192914}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: -450, z: 0}
 --- !u!4 &4458825571563838
 Transform:
   m_ObjectHideFlags: 1
@@ -401,6 +430,7 @@ Transform:
   - {fileID: 4897433235115548}
   - {fileID: 4293024899787280}
   - {fileID: 4947159580240042}
+  - {fileID: 4376321845884740}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1252,7 +1282,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.79, y: 2.37, z: 0.02}
-  m_Center: {x: 1.22, y: 1.22, z: -0.55}
+  m_Center: {x: 1.22, y: 1.22, z: -0.49}
 --- !u!65 &65853202568661172
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1265,6 +1295,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.02, y: 2.35, z: 0.68}
   m_Center: {x: 0.46, y: 1.22, z: -0.07}
+--- !u!114 &114042022175267130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1474895990621264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e128ff8578097b4492616641116414c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitLight: {fileID: 1067278679676586, guid: f6fc82d9c9b156642b71ba1b71cb302c, type: 2}
 --- !u!114 &114588541720731010
 MonoBehaviour:
   m_ObjectHideFlags: 1

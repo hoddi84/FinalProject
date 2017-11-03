@@ -123,6 +123,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1569075507704292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4853227501728050}
+  - component: {fileID: 114877444391358532}
+  m_Layer: 0
+  m_Name: Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1570535112136718
 GameObject:
   m_ObjectHideFlags: 1
@@ -327,6 +343,7 @@ Transform:
   - {fileID: 4070965816926510}
   - {fileID: 4515367823339642}
   - {fileID: 4082203330615834}
+  - {fileID: 4853227501728050}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -432,6 +449,19 @@ Transform:
   m_LocalScale: {x: 0.14999999, y: 0.87277997, z: 0.67936}
   m_Children: []
   m_Father: {fileID: 4070965816926510}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4853227501728050
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569075507704292}
+  m_LocalRotation: {x: -0, y: 0.00000092387205, z: -0, w: 1}
+  m_LocalPosition: {x: -0.551, y: 2.05, z: 1.428}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4301941742454694}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4885292562055026
@@ -1192,3 +1222,15 @@ MonoBehaviour:
   fromType: TypeE6
   isType: TypeE7
   toType: TypeE8
+--- !u!114 &114877444391358532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569075507704292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e128ff8578097b4492616641116414c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitLight: {fileID: 1067278679676586, guid: f6fc82d9c9b156642b71ba1b71cb302c, type: 2}
