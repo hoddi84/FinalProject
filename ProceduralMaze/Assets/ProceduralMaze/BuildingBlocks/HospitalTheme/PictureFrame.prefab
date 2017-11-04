@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4838736990566218}
   - component: {fileID: 33478862077410246}
-  - component: {fileID: 65200792365756016}
   - component: {fileID: 23613288647548792}
   m_Layer: 0
   m_Name: Cube (2)
@@ -37,6 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4360549944128074}
+  - component: {fileID: 65602461914577126}
   m_Layer: 0
   m_Name: Contents
   m_TagString: Untagged
@@ -53,7 +53,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4299869568045134}
   - component: {fileID: 33686958161677988}
-  - component: {fileID: 65547976920123018}
   - component: {fileID: 23661524964248708}
   m_Layer: 0
   m_Name: Cube (3)
@@ -71,7 +70,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4949500008146228}
   - component: {fileID: 33486066852309794}
-  - component: {fileID: 65476669762731252}
   - component: {fileID: 23977188448541798}
   m_Layer: 0
   m_Name: Cube (1)
@@ -104,7 +102,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4922684183585700}
   - component: {fileID: 212379649437399716}
-  - component: {fileID: 114242866896524792}
   m_Layer: 0
   m_Name: PhotoInFrame
   m_TagString: Untagged
@@ -121,7 +118,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4329121990921562}
   - component: {fileID: 33721964500750010}
-  - component: {fileID: 65333856238782688}
   - component: {fileID: 23192203233814940}
   m_Layer: 0
   m_Name: Cube
@@ -383,86 +379,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1951076590876334}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65200792365756016
+--- !u!65 &65602461914577126
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1341588293804516}
+  m_GameObject: {fileID: 1373655313145550}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65333856238782688
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1951076590876334}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65476669762731252
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1473189085684948}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65547976920123018
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1447939982917218}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114242866896524792
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1949722062758410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e3afcf8fca68d843a30dd6d67966cd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flowersHealthy:
-  - {fileID: 21300000, guid: 952f96b01b1a1f54fb1696579c823241, type: 3}
-  - {fileID: 21300000, guid: 5cfbbb7cd04f11c409351c9e68036a51, type: 3}
-  - {fileID: 21300000, guid: 6116a5af4d6f82347b31e0215a9f13c7, type: 3}
-  - {fileID: 21300000, guid: 99a468847ece608428d9f204d8dd1fdf, type: 3}
-  - {fileID: 21300000, guid: b7f1b4cf4eebcd140bd4bcc09e034993, type: 3}
-  - {fileID: 21300000, guid: 58f5a656c3609d842821f09539820a3e, type: 3}
-  - {fileID: 21300000, guid: defa00eb5a23b4a4683f00cdc3377bfa, type: 3}
-  - {fileID: 21300000, guid: ea20e3e0efd688c459980e50e15c3c91, type: 3}
-  - {fileID: 21300000, guid: afff3e74f66f1a4429ee400e6a7e54e5, type: 3}
-  - {fileID: 21300000, guid: 78c6dc2319a673046a2060c25a5d425c, type: 3}
-  - {fileID: 21300000, guid: 41896ff41ff18774cacfcc9d57585237, type: 3}
-  - {fileID: 21300000, guid: e4a42b40406866040a6636772c3bd7c6, type: 3}
-  - {fileID: 21300000, guid: 466d65dbd36d365478c33daf8dbe4ea2, type: 3}
-  flowersDying:
-  - {fileID: 21300000, guid: 6596b93c94ddf2941838cb40f808cd38, type: 3}
-  - {fileID: 21300000, guid: 3effdc2aa86a9704eb72a75268e93dfc, type: 3}
-  - {fileID: 21300000, guid: 73c3e5fa954958b49a0c5ed67a55c0b3, type: 3}
-  - {fileID: 21300000, guid: c12bb5cfee6e9af44afba8140148f6aa, type: 3}
-  - {fileID: 21300000, guid: ccd6052d1ecf693408dda238cd581aa1, type: 3}
-  - {fileID: 21300000, guid: 13e12c53109d2314d8af7b53d5f88fb9, type: 3}
+  m_Size: {x: 0.03, y: 0.93, z: 0.5}
+  m_Center: {x: 1.663, y: 1.634, z: -0.07}
 --- !u!212 &212379649437399716
 SpriteRenderer:
   m_ObjectHideFlags: 1

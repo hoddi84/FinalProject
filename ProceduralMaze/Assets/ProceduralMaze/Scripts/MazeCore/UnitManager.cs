@@ -59,15 +59,9 @@ public class UnitManager : MonoBehaviour {
 
     public Action<Dictionary<string, GameObject>> onPathDictUpdate = null;
 
-    //private PropManager propManager;
-
     private void Awake()
     {
         onInstantiate += UpdatePathDictionary;
-
-        //propManager = GetComponent<PropManager>();
-        //propManager.onPropsReady += GetPathDictionaryOnPropsInitial;
-
     }
 
     private void Start()

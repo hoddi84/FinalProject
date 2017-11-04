@@ -5,9 +5,8 @@ using UnityEngine;
 public class UnitLightSpawner : MonoBehaviour {
 
 	public GameObject unitLight;
-
 	private GameObject tmp;
-	// Use this for initialization
+
 	void OnEnable()
 	{
 		tmp = Instantiate(unitLight, transform.position, transform.rotation);
@@ -15,6 +14,9 @@ public class UnitLightSpawner : MonoBehaviour {
 
 	void OnDisable()
 	{
-		tmp.GetComponent<LightSettings>().DisableLight();
+		if (tmp != null)
+		{
+			tmp.GetComponent<LightSettings>().DisableLight();
+		}
 	}
 }
