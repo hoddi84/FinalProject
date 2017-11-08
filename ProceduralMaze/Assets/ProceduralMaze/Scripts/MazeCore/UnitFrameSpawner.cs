@@ -8,32 +8,67 @@ public class UnitFrameSpawner : MonoBehaviour {
 	private Transform[] frameSpawnPoints;
 	private UnitFrameManager frameManager;
 	private float spawnChance;
+	private List<GameObject> listOfSpawned;
+	private List<Transform> listOfSpawnPoints;
 
 	void OnEnable()
 	{
-		
-	}
+		if (frameManager == null)
+		{
+			frameManager = FindObjectOfType(typeof(UnitFrameManager)) as UnitFrameManager;
+			spawnChance = frameManager.frameSpawnChance;
+		}
 
-	void OnDisable()
-	{
-
+		if (frameSpawnPoints == null)
+		{
+			frameSpawnPoints = gameObject.GetComponentsInChildren<Transform>();
+		}
 	}
 
 	void Start()
 	{
-		frameManager = FindObjectOfType(typeof(UnitFrameManager)) as UnitFrameManager;
-		spawnChance = frameManager.frameSpawnChance;
+		listOfSpawnPoints = new List<Transform>();
 
-		frameSpawnPoints = gameObject.GetComponentsInChildren<Transform>();
+		foreach (Transform transform in frameSpawnPoints)
+		{
+			listOfSpawnPoints.Add(transform);
+		}
+
+		listOfSpawnPoints = RandomizeSpawnList(listOfSpawnPoints);
 
 		Initialize();
 	}
 
+	void OnDisable()
+	{
+		if (listOfSpawned.Count != 0)
+		{
+			foreach (GameObject obj in listOfSpawned)
+			{
+				Destroy(obj);
+			}
+		}
+	}
+
+	private List<T> RandomizeSpawnList<T>(List<T> someList)
+	{
+		List<T> randomized = new List<T>();
+		List<T> original = new List<T>(someList);
+
+		while (original.Count > 0)
+		{
+			int index = Random.Range(0, original.Count);
+			randomized.Add(original[index]);
+			original.RemoveAt(index);
+		}
+		return randomized;
+	}
+
 	void Initialize()
 	{
-		List<GameObject> listOfSpawned = new List<GameObject>();
+		listOfSpawned = new List<GameObject>();
 
-		foreach (Transform spawn in frameSpawnPoints)
+		foreach (Transform spawn in listOfSpawnPoints)
 		{
 			if (spawn.gameObject.GetInstanceID() != gameObject.GetInstanceID())
 			{

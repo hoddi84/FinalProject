@@ -2434,7 +2434,7 @@ MonoBehaviour:
   lightIntensity: 1
   MAX_LIGHT_INTENSITY: 1
   lightColor: {r: 1, g: 1, b: 1, a: 0}
-  ambienceColor: {r: 0, g: 0, b: 0, a: 0}
+  ambienceColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &793615194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2446,7 +2446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8471d9ecfcbad4f4d903c092c7dee0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frameSpawnChance: 0.378
+  frameSpawnChance: 1
 --- !u!1 &849572780
 GameObject:
   m_ObjectHideFlags: 0
