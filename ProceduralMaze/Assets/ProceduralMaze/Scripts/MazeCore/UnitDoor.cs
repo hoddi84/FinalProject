@@ -5,14 +5,12 @@ using UnityEngine;
 
 public class UnitDoor : MonoBehaviour {
 
+	private UnitDoorManager doorManager;
 	public GameObject doorHandle;
 	private VRInteractable vrInteractable;
 	public GameObject doorFrame;
 	public GameObject rotatingDoor;
 	private float currentDoorRotation;
-	public float rotationTimeOpening = 5f;
-	public float rotationTimeClosing = .2f;
-	public float rotationAngle = 65f;
 	private Axis rotationAxis = Axis.Y;
 
 	private bool isDoorOpen = false;
@@ -22,13 +20,10 @@ public class UnitDoor : MonoBehaviour {
 	private Action onDoneMoving = null;
 	private const float MAX_ROTATION_DIFF = 0.1f;
 
-	// Sounds
-	public AudioClip openSqueek;
-	public AudioClip openHandle;
-	public AudioClip closeSlam;
-
 	private void Awake()
 	{
+		doorManager = FindObjectOfType(typeof(UnitDoorManager)) as UnitDoorManager;
+
 		vrInteractable = doorHandle.GetComponent<VRInteractable>();
 		vrInteractable.onInteracted += InteractWithDoor;
 
@@ -57,12 +52,12 @@ public class UnitDoor : MonoBehaviour {
 			isDoorBusy = true;
 			if (!isDoorOpen) 
 			{
-				AudioSource.PlayClipAtPoint(openHandle, doorFrame.transform.position);
-				StartCoroutine(UnitUtilities.RotateRoundAxis(rotationTimeOpening, rotationAngle, rotationAxis, rotatingDoor, onDoneMoving, openHandle.length));
+				AudioSource.PlayClipAtPoint(doorManager.openHandleClip, doorFrame.transform.position);
+				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorOpenTime, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving, doorManager.openHandleClip.length));
 			}
 			else 
 			{
-				StartCoroutine(UnitUtilities.RotateRoundAxis(rotationTimeClosing, -rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorCloseTime, -doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
 			}
 		}
 	}
@@ -109,13 +104,13 @@ public class UnitDoor : MonoBehaviour {
 	private void OnDoorOpen() 
 	{
 		print("The door is now open");
-		AudioSource.PlayClipAtPoint(openSqueek, doorFrame.transform.position);
+		AudioSource.PlayClipAtPoint(doorManager.openDoorClip, doorFrame.transform.position);
 	}
 
 	private void OnDoorClosed()
 	{
 		print("The door is now closed");
-		AudioSource.PlayClipAtPoint(closeSlam, doorFrame.transform.position);
+		AudioSource.PlayClipAtPoint(doorManager.closeDoorClip, doorFrame.transform.position);
 	}
 
 	private void OnDoneMoving() 
