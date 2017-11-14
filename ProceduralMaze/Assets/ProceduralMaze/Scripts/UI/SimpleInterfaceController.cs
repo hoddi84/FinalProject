@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SimpleInterfaceController : MonoBehaviour {
@@ -23,10 +21,12 @@ public class SimpleInterfaceController : MonoBehaviour {
 	void UpdateLightIntensity(float value)
 	{
 		lightManager.lightIntensity = value;
+		lightManager.ambienceIntensity = value;
 	}
 
 	void InitializeSlider()
 	{
+		slider.minValue = 0;
 		slider.value = lightManager.lightIntensity;
 		slider.maxValue = lightManager.MAX_LIGHT_INTENSITY;
 	}

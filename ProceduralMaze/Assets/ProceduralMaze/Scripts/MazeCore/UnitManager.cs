@@ -57,11 +57,18 @@ public class UnitManager : MonoBehaviour {
 
     private Action<string, GameObject> onInstantiate = null;
 
-    public Action<Dictionary<string, GameObject>> onPathDictUpdate = null;
+    private GameObject parentOfUnits;
 
     private void Awake()
     {
         onInstantiate += UpdatePathDictionary;
+
+        parentOfUnits = GameObject.Find("UNITS");
+
+        if (parentOfUnits == null) 
+        {
+            parentOfUnits = new GameObject("UNITS");
+        }
     }
 
     private void Start()
@@ -300,6 +307,9 @@ public class UnitManager : MonoBehaviour {
         }
     }
 
+    // Here we want to check if we have spawned this type, but also we want to check if we
+    // should spawn a new random type, i.e. if the user has gone a circle.
+    // HINT: If the new current type matches the previous type we know the user has gone backwards.
     private void CheckInstantiatedUnit(UnitTrigger trigger, string type, GameObject[] unit)
     {
         GameObject tmp = null;
@@ -308,25 +318,26 @@ public class UnitManager : MonoBehaviour {
         {
             int rndIndex = UnityEngine.Random.Range(0, unit.Length);
             tmp = Instantiate(unit[rndIndex]);
+
+            tmp.transform.parent = parentOfUnits.transform;
+
             ForceDisableUnit(trigger);
+            RegisterListeners(tmp);
+
+            if (onInstantiate != null)
+            {
+                onInstantiate(trigger.toType, tmp);
+            }
         }
         else
         {
             InstantiateExistingUnit(type);
             ForceDisableUnit(trigger);
         }
-
-        if (tmp != null)
-        {
-            RegisterListeners(tmp);
-        }
-
-        if (onInstantiate != null)
-        {
-            onInstantiate(trigger.toType, tmp);
-        }
     }
 
+    // Here we want to check if the existing unit is the previous unit after
+    // current unit, else we want to randomize a new unit.
     private void InstantiateExistingUnit(string type)
     {
         GameObject t;
@@ -341,7 +352,7 @@ public class UnitManager : MonoBehaviour {
         {
             DeregisterListeners(t);
             t.SetActive(false);
-        }     
+        }  
     }
     
     private void ForceDisableUnit(UnitTrigger trigger)
@@ -356,24 +367,11 @@ public class UnitManager : MonoBehaviour {
         }
     }
 
-    private void GetPathDictionaryOnPropsInitial()
-    {
-        if (onPathDictUpdate != null)
-        {
-            onPathDictUpdate(pathDict);
-        }
-    }
-
     private void UpdatePathDictionary(string unitType, GameObject obj)
     {
         if (!pathDict.ContainsKey(unitType))
         {
             pathDict.Add(unitType, obj);
-        }
-
-        if (onPathDictUpdate != null)
-        {
-            onPathDictUpdate(pathDict);
         }
     }
 
@@ -387,6 +385,8 @@ public class UnitManager : MonoBehaviour {
         int rndIndex = UnityEngine.Random.Range(0, unit.Length);
         GameObject tmp = Instantiate(unit[rndIndex]);
         UnitTrigger trigger = tmp.GetComponentInChildren<UnitTrigger>();
+
+        tmp.transform.parent = parentOfUnits.transform;
 
         RegisterListeners(tmp);
 

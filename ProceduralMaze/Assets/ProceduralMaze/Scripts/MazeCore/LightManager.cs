@@ -5,12 +5,20 @@ using UnityEngine;
 
 public class LightManager : MonoBehaviour {
 
-	public float lightIntensity;
+	// General Light Intensity
+	[HideInInspector]
 	public float MAX_LIGHT_INTENSITY = 1;
+	[Range(0.0f, 1.0f)]
+	public float lightIntensity;
 	private float _currentLightIntensity;
+
+	// General Light Color.
 	public Color lightColor;
 	private Color _currentLightColor;
 
+	// Ambience Intensity.
+	[Range(0.0f, 1.0f)]
+	public float ambienceIntensity;
 	public Color ambienceColor;
 
 	public Action<float> onLightIntensityChanged = null;
@@ -18,7 +26,6 @@ public class LightManager : MonoBehaviour {
 
 	void Start()
 	{
-		lightIntensity = MAX_LIGHT_INTENSITY;
 		_currentLightIntensity = lightIntensity;
 		_currentLightColor = lightColor;
 	}
@@ -28,7 +35,14 @@ public class LightManager : MonoBehaviour {
 		CheckIfColorChanged();
 		CheckIfIntensityChanged();
 
+		SetAmbienceChanges();
+	}
+
+	void SetAmbienceChanges()
+	{
 		RenderSettings.ambientLight = ambienceColor;
+
+		RenderSettings.ambientLight = Color.Lerp(RenderSettings.ambientLight, Color.black, ambienceIntensity);
 	}
 
 	void CheckIfColorChanged()

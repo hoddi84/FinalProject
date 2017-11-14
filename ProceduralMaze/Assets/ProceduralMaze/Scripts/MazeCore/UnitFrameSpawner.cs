@@ -10,6 +10,17 @@ public class UnitFrameSpawner : MonoBehaviour {
 	private float spawnChance;
 	private List<GameObject> listOfSpawned;
 	private List<Transform> listOfSpawnPoints;
+	private GameObject parentOfFrames;
+
+	void Awake()
+	{
+		parentOfFrames = GameObject.Find("FRAMES");
+
+		if (parentOfFrames == null)
+		{
+			parentOfFrames = new GameObject("FRAMES");
+		}
+	}
 
 	void OnEnable()
 	{
@@ -22,6 +33,14 @@ public class UnitFrameSpawner : MonoBehaviour {
 		if (frameSpawnPoints == null)
 		{
 			frameSpawnPoints = gameObject.GetComponentsInChildren<Transform>();
+		}
+
+		if (listOfSpawned != null)
+		{
+			foreach (GameObject obj in listOfSpawned)
+			{
+				obj.SetActive(true);
+			}
 		}
 	}
 
@@ -41,11 +60,14 @@ public class UnitFrameSpawner : MonoBehaviour {
 
 	void OnDisable()
 	{
-		if (listOfSpawned.Count != 0)
+		if (listOfSpawned != null)
 		{
 			foreach (GameObject obj in listOfSpawned)
 			{
-				Destroy(obj);
+				if (obj != null)
+				{
+					obj.SetActive(false);
+				}
 			}
 		}
 	}
@@ -80,11 +102,13 @@ public class UnitFrameSpawner : MonoBehaviour {
 					if (listOfSpawned.Count == 0)
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
+						t.transform.parent = parentOfFrames.transform;
 						listOfSpawned.Add(t);
 					}
 					else
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
+						t.transform.parent = parentOfFrames.transform;
 						if (CheckIfCollision(listOfSpawned, t))
 						{
 							Destroy(t);
