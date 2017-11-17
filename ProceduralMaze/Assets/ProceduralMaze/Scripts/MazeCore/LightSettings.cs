@@ -21,12 +21,18 @@ public class LightSettings : MonoBehaviour {
 
 	void SetLightIntensity(float newIntensity)
 	{
-		light.intensity = newIntensity;
+		if (light != null)
+		{
+			light.intensity = newIntensity;
+		}
 	}
 
 	void SetLightColor(Color newColor)
 	{
-		light.color = newColor;
+		if (light != null)
+		{
+			light.color = newColor;
+		}
 	}
 
 	IEnumerator LightingIntro(bool intro)

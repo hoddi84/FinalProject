@@ -102,12 +102,14 @@ public class UnitFrameSpawner : MonoBehaviour {
 					if (listOfSpawned.Count == 0)
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
+						AssignPhotoToFrame(t);
 						t.transform.parent = parentOfFrames.transform;
 						listOfSpawned.Add(t);
 					}
 					else
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
+						AssignPhotoToFrame(t);
 						t.transform.parent = parentOfFrames.transform;
 						if (CheckIfCollision(listOfSpawned, t))
 						{
@@ -121,6 +123,14 @@ public class UnitFrameSpawner : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	// Assign random picture from manager.
+	void AssignPhotoToFrame(GameObject t)
+	{
+		int rnd = Random.Range(0, frameManager.availablePhotos.Count);
+
+		t.GetComponentInChildren<SpriteRenderer>().sprite = frameManager.availablePhotos[rnd];
 	}
 
 	bool CheckIfCollision(List<GameObject> listOfSpawned, GameObject newSpawn)

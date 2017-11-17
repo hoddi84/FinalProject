@@ -2585,6 +2585,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameSpawnChance: 1
+  photoAssets: {fileID: 11400000, guid: 93d12f8f7bd0f7a4da43f79204cd0de7, type: 2}
+  availablePhotos: []
 --- !u!114 &793615195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5366,7 +5368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1904555509
 MonoBehaviour:
   m_ObjectHideFlags: 0
