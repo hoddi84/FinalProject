@@ -45,30 +45,59 @@ public class UnitFrameManager : MonoBehaviour {
 		}
 	}
 
+	/*
+	 * We have three photo groups.
+	 * Need to add more variety to the changes in slider values.
+	 * At 0: Only healthy flower paintings.
+	 * At 0 < x < 50: Gradually increasing mix of dying flower paintings.
+	 * At 50: Only dying flower paintings.
+	 * At 50 < x < 100: Gradually increasing mix of creepy paintings. 
+	 * At 100: Only creepy paintings.
+	 */
 	public void UpdateAvailablePhotos(float sliderValue)
 	{
-		if (sliderValue < .3f)
+		if (sliderValue < .5f)
 		{
-			availablePhotos = new List<Sprite>();
-			foreach (Sprite x in photoAssets.healthyFlowers)
+			IncreaseVariance(photoAssets.healthyFlowers, photoAssets.dyingFlowers, 0, sliderValue, .5f, ref availablePhotos);
+		}
+		else if (sliderValue >= .5f && sliderValue <= 1f)
+		{
+			IncreaseVariance(photoAssets.dyingFlowers, photoAssets.scary, .5f, sliderValue, .5f, ref availablePhotos);
+		}
+	}
+
+	private void IncreaseVariance(Sprite[] from, Sprite[] to, float startRange, float value, float range, ref List<Sprite> listToFill)
+	{
+		listToFill = new List<Sprite>();
+		float ratio = (value - startRange) / range;
+
+		// Fill first list.
+		foreach (Sprite x in from)
+		{
+			float rnd = Random.Range(0.0f, 1.0f);
+
+			if (ratio == 0)
 			{
-				availablePhotos.Add(x);
+				listToFill.Add(x);
+			}
+			if (rnd > ratio)
+			{
+				listToFill.Add(x);
 			}
 		}
-		else if (sliderValue >= .3f && sliderValue < .7f)
+
+		// Fill second list.
+		foreach (Sprite x in to)
 		{
-			availablePhotos = new List<Sprite>();
-			foreach (Sprite x in photoAssets.dyingFlowers)
+			float rnd = Random.Range(0.0f, 1.0f);
+
+			if (ratio == 1)
 			{
-				availablePhotos.Add(x);
+				listToFill.Add(x);
 			}
-		}
-		else 
-		{
-			availablePhotos = new List<Sprite>();
-			foreach (Sprite x in photoAssets.scary)
+			if (rnd < ratio)
 			{
-				availablePhotos.Add(x);
+				listToFill.Add(x);
 			}
 		}
 	}
