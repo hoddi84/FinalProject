@@ -5,12 +5,14 @@ public class SimpleInterfaceController : MonoBehaviour {
 
 	public Slider slider;
 	private LightManager lightManager;
+	private UnitFrameManager frameManager;
 
 	void Awake()
 	{
 		lightManager = FindObjectOfType(typeof(LightManager)) as LightManager;
+		frameManager = FindObjectOfType(typeof(UnitFrameManager)) as UnitFrameManager;
 
-		slider.onValueChanged.AddListener(UpdateLightIntensity);
+		slider.onValueChanged.AddListener(UpdateScarySlider);
 	}
 
 	void Start()
@@ -18,10 +20,12 @@ public class SimpleInterfaceController : MonoBehaviour {
 		InitializeSlider();
 	}
 
-	void UpdateLightIntensity(float value)
+	void UpdateScarySlider(float value)
 	{
 		lightManager.lightIntensity = value;
 		lightManager.ambienceIntensity = value;
+
+		frameManager.frameSliderValue = value;
 	}
 
 	void InitializeSlider()

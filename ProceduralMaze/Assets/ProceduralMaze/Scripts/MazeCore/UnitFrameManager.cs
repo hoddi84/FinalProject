@@ -11,7 +11,12 @@ public class UnitFrameManager : MonoBehaviour {
 	public List<Sprite> availablePhotos;
 	private SimpleInterfaceController simpleInterfaceController;
 
-	private float simpleSliderValue;
+
+	//TODO Connect scary slider to frame.
+	[Range(0.0f, 1.0f)]
+	public float frameSliderValue;
+	private float _frameSliderValue;
+
 
 	void Awake()
 	{
@@ -22,26 +27,27 @@ public class UnitFrameManager : MonoBehaviour {
 	{
 		if (simpleInterfaceController != null)
 		{
-			simpleSliderValue = simpleInterfaceController.slider.value;
+			frameSliderValue = simpleInterfaceController.slider.value;
+			_frameSliderValue = frameSliderValue;
 		}
-		UpdateAvailablePhotos();
+		UpdateAvailablePhotos(_frameSliderValue);
 	}
 
 	void Update()
 	{
 		if (simpleInterfaceController != null)
 		{
-			if (simpleSliderValue != simpleInterfaceController.slider.value)
+			if (_frameSliderValue != frameSliderValue)
 			{
-				UpdateAvailablePhotos();
-				simpleSliderValue = simpleInterfaceController.slider.value;
+				_frameSliderValue = frameSliderValue;
+				UpdateAvailablePhotos(_frameSliderValue);
 			}
 		}
 	}
 
-	void UpdateAvailablePhotos()
+	public void UpdateAvailablePhotos(float sliderValue)
 	{
-		if (simpleSliderValue < .3f)
+		if (sliderValue < .3f)
 		{
 			availablePhotos = new List<Sprite>();
 			foreach (Sprite x in photoAssets.healthyFlowers)
@@ -49,7 +55,7 @@ public class UnitFrameManager : MonoBehaviour {
 				availablePhotos.Add(x);
 			}
 		}
-		else if (simpleSliderValue >= .3f && simpleSliderValue < .7f)
+		else if (sliderValue >= .3f && sliderValue < .7f)
 		{
 			availablePhotos = new List<Sprite>();
 			foreach (Sprite x in photoAssets.dyingFlowers)
