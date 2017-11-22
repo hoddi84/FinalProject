@@ -132,6 +132,7 @@ public class UnitDoor : MonoBehaviour {
 
 	private void OnDirectorDoorOpen()
 	{
+		print("here");
 		InteractWithDoor();
 	}
 
