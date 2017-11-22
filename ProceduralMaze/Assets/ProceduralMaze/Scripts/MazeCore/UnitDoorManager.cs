@@ -11,4 +11,8 @@ public class UnitDoorManager : MonoBehaviour {
 	public AudioClip openDoorClip;
 	public AudioClip openHandleClip;
 	public AudioClip closeDoorClip;
+	public Sprite doorSpriteClosed;
+	public Sprite doorSpriteOpen;
+	public Sprite doorSpriteLockOpen;
+	public Sprite doorSpriteLockClosed;
 }

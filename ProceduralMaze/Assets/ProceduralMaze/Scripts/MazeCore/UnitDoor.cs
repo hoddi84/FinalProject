@@ -20,6 +20,15 @@ public class UnitDoor : MonoBehaviour {
 	private Action onDoneMoving = null;
 	private const float MAX_ROTATION_DIFF = 0.1f;
 
+	// Testing for sprites. Needs refactoring.
+	public bool isDoorLocked = true;
+	public GameObject doorLockMechanic;
+	public GameObject doorOpenMechanic;
+	private SpriteRenderer lockRenderer;
+	private SpriteRenderer openRenderer;
+	private DirectorClickable directorClickableLock;
+	private DirectorClickable directorClickableOpen;
+
 	private void Awake()
 	{
 		doorManager = FindObjectOfType(typeof(UnitDoorManager)) as UnitDoorManager;
@@ -30,6 +39,15 @@ public class UnitDoor : MonoBehaviour {
 		onDoorClosed += OnDoorClosed;
 		onDoorOpen += OnDoorOpen;
 		onDoneMoving += OnDoneMoving;
+
+		lockRenderer = doorLockMechanic.GetComponentInChildren<SpriteRenderer>();
+		openRenderer = doorOpenMechanic.GetComponentInChildren<SpriteRenderer>();
+
+		directorClickableLock = doorLockMechanic.GetComponentInChildren<DirectorClickable>();
+		directorClickableOpen = doorOpenMechanic.GetComponentInChildren<DirectorClickable>();
+
+		directorClickableLock.onHit += OnDirectorDoorLock;
+		directorClickableOpen.onHit += OnDirectorDoorOpen;
 	}
 	private void Start()
 	{
@@ -47,16 +65,18 @@ public class UnitDoor : MonoBehaviour {
 
 	private void InteractWithDoor() 
 	{
-		if (!isDoorBusy)
+		if (!isDoorBusy && !isDoorLocked)
 		{
 			isDoorBusy = true;
 			if (!isDoorOpen) 
 			{
+				openRenderer.sprite = doorManager.doorSpriteOpen;
 				AudioSource.PlayClipAtPoint(doorManager.openHandleClip, doorFrame.transform.position);
 				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorOpenTime, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving, doorManager.openHandleClip.length));
 			}
 			else 
 			{
+				openRenderer.sprite = doorManager.doorSpriteClosed;
 				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorCloseTime, -doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
 			}
 		}
@@ -99,6 +119,25 @@ public class UnitDoor : MonoBehaviour {
 			}
 			currentDoorRotation = rotatingDoor.transform.eulerAngles.y;
 		}	
+
+		if (!isDoorLocked)
+		{
+			lockRenderer.sprite = doorManager.doorSpriteLockOpen;
+		}
+		else
+		{
+			lockRenderer.sprite = doorManager.doorSpriteLockClosed;
+		}
+	}
+
+	private void OnDirectorDoorOpen()
+	{
+		InteractWithDoor();
+	}
+
+	private void OnDirectorDoorLock()
+	{
+		isDoorLocked = !isDoorLocked;
 	}
 
 	private void OnDoorOpen() 
