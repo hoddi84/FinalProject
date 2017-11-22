@@ -30,18 +30,20 @@ public class UnitFrameManager : MonoBehaviour {
 			frameSliderValue = simpleInterfaceController.slider.value;
 			_frameSliderValue = frameSliderValue;
 		}
+		else
+		{
+			frameSliderValue = 0;
+			_frameSliderValue = frameSliderValue;
+		}
 		UpdateAvailablePhotos(_frameSliderValue);
 	}
 
 	void Update()
 	{
-		if (simpleInterfaceController != null)
+		if (_frameSliderValue != frameSliderValue)
 		{
-			if (_frameSliderValue != frameSliderValue)
-			{
-				_frameSliderValue = frameSliderValue;
-				UpdateAvailablePhotos(_frameSliderValue);
-			}
+			_frameSliderValue = frameSliderValue;
+			UpdateAvailablePhotos(_frameSliderValue);
 		}
 	}
 
