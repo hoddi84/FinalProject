@@ -11,7 +11,16 @@ public class DirectorClickable : MonoBehaviour {
 	void Awake()
 	{
 		mouseInput = FindObjectOfType(typeof(ProMouseInput)) as ProMouseInput;
-        mouseInput.onMouseButtonDownLeftRaycast += ClickedObject;
+	}
+
+	void OnEnable()
+	{
+		mouseInput.onMouseButtonDownLeftRaycast += ClickedObject;
+	}
+
+	void OnDisable()
+	{
+		mouseInput.onMouseButtonDownLeftRaycast -= ClickedObject;
 	}
 
 	void ClickedObject(RaycastHit hit)

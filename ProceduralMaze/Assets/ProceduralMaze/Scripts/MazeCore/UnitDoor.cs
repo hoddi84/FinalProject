@@ -34,11 +34,7 @@ public class UnitDoor : MonoBehaviour {
 		doorManager = FindObjectOfType(typeof(UnitDoorManager)) as UnitDoorManager;
 
 		vrInteractable = doorHandle.GetComponent<VRInteractable>();
-		vrInteractable.onInteracted += InteractWithDoor;
-
-		onDoorClosed += OnDoorClosed;
-		onDoorOpen += OnDoorOpen;
-		onDoneMoving += OnDoneMoving;
+		
 
 		lockRenderer = doorLockMechanic.GetComponentInChildren<SpriteRenderer>();
 		openRenderer = doorOpenMechanic.GetComponentInChildren<SpriteRenderer>();
@@ -46,9 +42,33 @@ public class UnitDoor : MonoBehaviour {
 		directorClickableLock = doorLockMechanic.GetComponentInChildren<DirectorClickable>();
 		directorClickableOpen = doorOpenMechanic.GetComponentInChildren<DirectorClickable>();
 
+		
+	}
+
+	void OnEnable()
+	{
+		vrInteractable.onInteracted += InteractWithDoor;
+
+		onDoorClosed += OnDoorClosed;
+		onDoorOpen += OnDoorOpen;
+		onDoneMoving += OnDoneMoving;
+
 		directorClickableLock.onHit += OnDirectorDoorLock;
 		directorClickableOpen.onHit += OnDirectorDoorOpen;
 	}
+
+	void OnDisable()
+	{
+		vrInteractable.onInteracted -= InteractWithDoor;
+
+		onDoorClosed -= OnDoorClosed;
+		onDoorOpen -= OnDoorOpen;
+		onDoneMoving -= OnDoneMoving;
+
+		directorClickableLock.onHit -= OnDirectorDoorLock;
+		directorClickableOpen.onHit -= OnDirectorDoorOpen;
+	}
+
 	private void Start()
 	{
 		currentDoorRotation = rotatingDoor.transform.eulerAngles.y;
@@ -132,7 +152,6 @@ public class UnitDoor : MonoBehaviour {
 
 	private void OnDirectorDoorOpen()
 	{
-		print("here");
 		InteractWithDoor();
 	}
 
@@ -143,19 +162,16 @@ public class UnitDoor : MonoBehaviour {
 
 	private void OnDoorOpen() 
 	{
-		print("The door is now open");
 		AudioSource.PlayClipAtPoint(doorManager.openDoorClip, doorFrame.transform.position);
 	}
 
 	private void OnDoorClosed()
 	{
-		print("The door is now closed");
 		AudioSource.PlayClipAtPoint(doorManager.closeDoorClip, doorFrame.transform.position);
 	}
 
 	private void OnDoneMoving() 
 	{
-		print("I am done moving");
 		isDoorBusy = false;
 	}
 }
