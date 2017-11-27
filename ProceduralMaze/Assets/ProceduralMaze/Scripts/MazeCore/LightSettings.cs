@@ -19,6 +19,11 @@ public class LightSettings : MonoBehaviour {
 		lightManager.onLightIntensityChanged += SetLightIntensity;
 	}
 
+	void Start()
+	{
+		light.intensity = lightManager.lightIntensity;
+	}
+
 	void SetLightIntensity(float newIntensity)
 	{
 		if (light != null)

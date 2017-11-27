@@ -15,4 +15,19 @@ public class UnitDoorManager : MonoBehaviour {
 	public Sprite doorSpriteOpen;
 	public Sprite doorSpriteLockOpen;
 	public Sprite doorSpriteLockClosed;
+
+	public float presenceSliderValue;
+
+	private SimpleInterfaceController simepleController;
+
+	void Awake()
+	{
+		simepleController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
+		simepleController.onPresenceSliderChanged += UpdatePresenceValue;
+	}
+
+	void UpdatePresenceValue(float value)
+	{
+		presenceSliderValue = value;
+	}
 }

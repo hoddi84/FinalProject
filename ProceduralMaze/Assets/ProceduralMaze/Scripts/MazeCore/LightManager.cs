@@ -5,70 +5,90 @@ using UnityEngine;
 
 public class LightManager : MonoBehaviour {
 
-	// General Light Intensity
-	[HideInInspector]
-	public float MAX_LIGHT_INTENSITY = 1;
-	[Range(0.0f, 1.0f)]
-	public float lightIntensity;
-	private float _currentLightIntensity;
-
 	// General Light Color.
 	public Color lightColor;
-	private Color _currentLightColor;
+	private Color _lightColor;
+	public Color ambienceColor;
+	private Color _ambienceColor;
 
-	// Ambience Intensity.
+	[Range(0.0f, 1.0f)]
+	public float lightIntensity;
+	private float _lightIntensity;
+
 	[Range(0.0f, 1.0f)]
 	public float ambienceIntensity;
-	public Color ambienceColor;
+	private float _ambienceIntensity;
 
 	public Action<float> onLightIntensityChanged = null;
 	public Action<Color> onLightColorChanged = null;
 
+	private SimpleInterfaceController simpleController;
+
+	void Awake()
+	{
+		simpleController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
+		simpleController.onScarySliderChanged += UpdateAmbienceIntensity;
+		simpleController.onScarySliderChanged += UpdateLightIntensity;
+	}
+
 	void Start()
 	{
-		_currentLightIntensity = lightIntensity;
-		_currentLightColor = lightColor;
+		_lightColor = lightColor;
+		_ambienceColor = ambienceColor;
 	}
 
 	void Update()
 	{
-		CheckIfColorChanged();
-		CheckIfIntensityChanged();
+		if (_lightIntensity != lightIntensity)
+		{
+			UpdateLightIntensity(lightIntensity);
+		}
 
-		SetAmbienceChanges();
+		if (_ambienceIntensity != ambienceIntensity)
+		{
+			UpdateAmbienceIntensity(ambienceIntensity);
+		}
+
+		CheckIfLightColorChanged();
+
+		if (_ambienceColor != ambienceColor)
+		{
+			RenderSettings.ambientLight = ambienceColor;
+			_ambienceColor = ambienceColor;
+		}
 	}
 
-	void SetAmbienceChanges()
+	void UpdateAmbienceIntensity(float newAmbienceIntensity)
 	{
 		RenderSettings.ambientLight = ambienceColor;
 
-		RenderSettings.ambientLight = Color.Lerp(RenderSettings.ambientLight, Color.black, ambienceIntensity);
+		RenderSettings.ambientLight = Color.Lerp(RenderSettings.ambientLight, Color.black, newAmbienceIntensity);
+
+		ambienceIntensity = newAmbienceIntensity;
+		_ambienceIntensity = ambienceIntensity;
 	}
 
-	void CheckIfColorChanged()
+	void UpdateLightIntensity(float newIntensity)
 	{
-		if (_currentLightColor != lightColor)
+		if (onLightIntensityChanged != null)
 		{
-			_currentLightColor = lightColor;
-		
+			onLightIntensityChanged(newIntensity);
+		}
+
+		lightIntensity = newIntensity;
+		_lightIntensity = lightIntensity;
+	}	
+
+	void CheckIfLightColorChanged()
+	{
+		if (_lightColor != lightColor)
+		{	
 			if (onLightColorChanged != null)
 			{
-				onLightColorChanged(_currentLightColor);
+				onLightColorChanged(lightColor);
 			}
+
+			_lightColor = lightColor;
 		}
 	}
-
-	void CheckIfIntensityChanged()
-	{
-		if (_currentLightIntensity != lightIntensity)
-		{
-			_currentLightIntensity = lightIntensity;
-
-			if (onLightIntensityChanged != null)
-			{
-				onLightIntensityChanged(_currentLightIntensity);
-			}
-		}
-	}
-	
 }

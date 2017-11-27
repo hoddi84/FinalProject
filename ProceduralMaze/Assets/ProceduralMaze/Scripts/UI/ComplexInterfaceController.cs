@@ -20,13 +20,11 @@ public class ComplexInterfaceController : MonoBehaviour {
 
 	void UpdateLightIntensity(float value)
 	{
-		lightManager.lightIntensity = value;
+
 	}
 
 	void UpdateAmbience(float value)
 	{
-		lightManager.ambienceIntensity = value;
+
 	}
-
-
 }
