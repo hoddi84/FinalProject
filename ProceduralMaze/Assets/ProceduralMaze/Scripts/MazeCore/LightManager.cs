@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class LightManager : MonoBehaviour {
 
-	// General Light Color.
 	public Color lightColor;
 	private Color _lightColor;
 	public Color ambienceColor;
@@ -23,12 +22,26 @@ public class LightManager : MonoBehaviour {
 	public Action<Color> onLightColorChanged = null;
 
 	private SimpleInterfaceController simpleController;
+	private ComplexInterfaceController complexController;
 
 	void Awake()
 	{
 		simpleController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
-		simpleController.onScarySliderChanged += UpdateAmbienceIntensity;
-		simpleController.onScarySliderChanged += UpdateLightIntensity;
+		
+		if (simpleController != null)
+		{
+			simpleController.onScarySliderChanged += UpdateAmbienceIntensity;
+			simpleController.onScarySliderChanged += UpdateLightIntensity;
+		}
+
+		complexController = FindObjectOfType(typeof(ComplexInterfaceController)) as ComplexInterfaceController;
+
+		if (complexController != null)
+		{
+			complexController.onLightIntensityChanged += UpdateLightIntensity;
+			complexController.onAmbienceIntensityChanged += UpdateAmbienceIntensity;
+		}
+
 	}
 
 	void Start()
@@ -50,19 +63,12 @@ public class LightManager : MonoBehaviour {
 		}
 
 		CheckIfLightColorChanged();
-
-		if (_ambienceColor != ambienceColor)
-		{
-			RenderSettings.ambientLight = ambienceColor;
-			_ambienceColor = ambienceColor;
-		}
+		CheckIfAmbienceColorChanged();
 	}
 
 	void UpdateAmbienceIntensity(float newAmbienceIntensity)
 	{
-		RenderSettings.ambientLight = ambienceColor;
-
-		RenderSettings.ambientLight = Color.Lerp(RenderSettings.ambientLight, Color.black, newAmbienceIntensity);
+		RenderSettings.ambientLight = Color.Lerp(ambienceColor, Color.black, newAmbienceIntensity);
 
 		ambienceIntensity = newAmbienceIntensity;
 		_ambienceIntensity = ambienceIntensity;
@@ -89,6 +95,15 @@ public class LightManager : MonoBehaviour {
 			}
 
 			_lightColor = lightColor;
+		}
+	}
+
+	void CheckIfAmbienceColorChanged()
+	{
+		if (_ambienceColor != ambienceColor)
+		{
+			RenderSettings.ambientLight = Color.Lerp(ambienceColor, Color.black, ambienceIntensity);
+			_ambienceColor = ambienceColor;
 		}
 	}
 }

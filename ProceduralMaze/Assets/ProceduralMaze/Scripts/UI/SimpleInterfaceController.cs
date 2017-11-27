@@ -17,10 +17,7 @@ public class SimpleInterfaceController : MonoBehaviour {
 	{
 		scarySlider.onValueChanged.AddListener(UpdateScarySlider);
 		presenceSlider.onValueChanged.AddListener(UpdatePresenceSlider);
-	}
 
-	void Start()
-	{
 		InitializeSlider();
 	}
 

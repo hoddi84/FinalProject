@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,18 +17,48 @@ public class UnitDoorManager : MonoBehaviour {
 	public Sprite doorSpriteLockOpen;
 	public Sprite doorSpriteLockClosed;
 
+	[Range(0.0f, 1.0f)]
 	public float presenceSliderValue;
+	private float _presenceSliderValue;
+
+	[Range(0.0f, 1.0f)]
+	public float scarySliderValue;
+	private float _scarySliderValue;
 
 	private SimpleInterfaceController simepleController;
 
 	void Awake()
 	{
 		simepleController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
-		simepleController.onPresenceSliderChanged += UpdatePresenceValue;
+		
+		if (simepleController != null)
+		{
+			simepleController.onPresenceSliderChanged += UpdatePresenceValue;
+		}
 	}
 
-	void UpdatePresenceValue(float value)
+	void Update()
 	{
-		presenceSliderValue = value;
+		if (_scarySliderValue != scarySliderValue)
+		{
+			UpdateScaryValue(scarySliderValue);
+		}
+
+		if (_presenceSliderValue != presenceSliderValue)
+		{
+			UpdatePresenceValue(presenceSliderValue);
+		}
+	}
+
+	void UpdateScaryValue(float newScaryValue)
+	{
+		scarySliderValue = newScaryValue;
+		_scarySliderValue = scarySliderValue;
+	}
+
+	void UpdatePresenceValue(float newPresenceValue)
+	{
+		presenceSliderValue = newPresenceValue;
+		_presenceSliderValue = presenceSliderValue;
 	}
 }

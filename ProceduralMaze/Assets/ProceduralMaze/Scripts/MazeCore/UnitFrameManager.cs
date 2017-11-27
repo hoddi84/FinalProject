@@ -20,7 +20,15 @@ public class UnitFrameManager : MonoBehaviour {
 	void Awake()
 	{
 		simpleInterfaceController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
-		simpleInterfaceController.onScarySliderChanged += UpdateAvailablePhotos;
+		
+		if (simpleInterfaceController != null)
+		{
+			simpleInterfaceController.onScarySliderChanged += UpdateAvailablePhotos;
+		}
+		else
+		{
+			UpdateAvailablePhotos(frameVariance);
+		}
 	}
 
 	void Start()

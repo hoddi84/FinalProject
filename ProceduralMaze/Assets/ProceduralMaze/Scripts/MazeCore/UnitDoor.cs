@@ -40,9 +40,8 @@ public class UnitDoor : MonoBehaviour {
 		openRenderer = doorOpenMechanic.GetComponentInChildren<SpriteRenderer>();
 
 		directorClickableLock = doorLockMechanic.GetComponentInChildren<DirectorClickable>();
-		directorClickableOpen = doorOpenMechanic.GetComponentInChildren<DirectorClickable>();
+		directorClickableOpen = doorOpenMechanic.GetComponentInChildren<DirectorClickable>();	
 
-		
 	}
 
 	void OnEnable()
@@ -55,6 +54,9 @@ public class UnitDoor : MonoBehaviour {
 
 		directorClickableLock.onHit += OnDirectorDoorLock;
 		directorClickableOpen.onHit += OnDirectorDoorOpen;
+
+		PerformScaryMeterActions(doorManager.scarySliderValue);
+		PerformPresenceMeterActions(doorManager.presenceSliderValue);
 	}
 
 	void OnDisable()
@@ -83,6 +85,38 @@ public class UnitDoor : MonoBehaviour {
 		CheckDoorState();
 	}
 
+	private void PerformScaryMeterActions(float value)
+	{
+
+	}
+
+	/*
+	 * High presence will increase the chance that you hear
+	 * a door slam or door being open.
+	 */
+	private void PerformPresenceMeterActions(float value)
+	{
+		float rnd = UnityEngine.Random.Range(0.0f, 1.0f);
+
+		float choice = UnityEngine.Random.Range(0.0f, 1.0f);
+
+		if (choice < .5)
+		{
+			if (rnd <= value)
+			{
+				AudioSource.PlayClipAtPoint(doorManager.closeDoorClip, doorFrame.transform.position);
+			}
+		}
+		else 
+		{
+			if (rnd <= value && !isDoorOpen)
+			{
+				isDoorBusy = true;
+				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorOpenTime, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+			}
+		}
+	}
+
 	private void InteractWithDoor() 
 	{
 		if (!isDoorBusy && !isDoorLocked)
@@ -90,13 +124,11 @@ public class UnitDoor : MonoBehaviour {
 			isDoorBusy = true;
 			if (!isDoorOpen) 
 			{
-				openRenderer.sprite = doorManager.doorSpriteOpen;
 				AudioSource.PlayClipAtPoint(doorManager.openHandleClip, doorFrame.transform.position);
 				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorOpenTime, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving, doorManager.openHandleClip.length));
 			}
 			else 
 			{
-				openRenderer.sprite = doorManager.doorSpriteClosed;
 				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorCloseTime, -doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
 			}
 		}
@@ -147,6 +179,15 @@ public class UnitDoor : MonoBehaviour {
 		else
 		{
 			lockRenderer.sprite = doorManager.doorSpriteLockClosed;
+		}
+
+		if (!isDoorOpen)
+		{
+			openRenderer.sprite = doorManager.doorSpriteClosed;
+		}
+		else
+		{
+			openRenderer.sprite = doorManager.doorSpriteOpen;
 		}
 	}
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,21 +11,30 @@ public class ComplexInterfaceController : MonoBehaviour {
 
 	private LightManager lightManager;
 
+	public Action<float> onLightIntensityChanged = null;
+	public Action<float> onAmbienceIntensityChanged = null;
+
 	void Awake()
 	{
 		lightManager = FindObjectOfType(typeof(LightManager)) as LightManager;
 
 		lightIntensitySlider.onValueChanged.AddListener(UpdateLightIntensity);
-		lightAmbienceSlider.onValueChanged.AddListener(UpdateAmbience);
+		lightAmbienceSlider.onValueChanged.AddListener(UpdateAmbienceIntensity);
 	}
 
-	void UpdateLightIntensity(float value)
+	void UpdateLightIntensity(float newLightIntensity)
 	{
-
+		if (onLightIntensityChanged != null)
+		{
+			onLightIntensityChanged(newLightIntensity);
+		}
 	}
 
-	void UpdateAmbience(float value)
+	void UpdateAmbienceIntensity(float newAmbienceIntensity)
 	{
-
+		if (onAmbienceIntensityChanged != null)
+		{
+			onAmbienceIntensityChanged(newAmbienceIntensity);
+		}
 	}
 }
