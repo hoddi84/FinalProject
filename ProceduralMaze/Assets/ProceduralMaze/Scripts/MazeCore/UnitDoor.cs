@@ -40,9 +40,6 @@ public class UnitDoor : MonoBehaviour {
 
 		directorClickableLock = doorLockMechanic.GetComponentInChildren<DirectorClickable>();
 		directorClickableOpen = doorOpenMechanic.GetComponentInChildren<DirectorClickable>();	
-
-		//doorTriggerManager = parent.GetComponentInChildren<UnitDoorTriggerManager>();
-
 	}
 
 	void OnEnable()
@@ -56,7 +53,6 @@ public class UnitDoor : MonoBehaviour {
 		directorClickableLock.onHit += OnDirectorDoorLock;
 		directorClickableOpen.onHit += OnDirectorDoorOpen;
 
-		//PerformScaryMeterActions(doorManager.scarySliderValue);
 		PerformPresenceMeterActions(doorManager.presenceSliderValue);
 	}
 
@@ -90,14 +86,22 @@ public class UnitDoor : MonoBehaviour {
 	 * High scary meter will increase the chance a door 
 	 * will close after entering through it.
 	 */
-	public void PerformScaryMeterActions()
+	public void PerformScaryMeterActions(Action action)
 	{
-		float rnd = UnityEngine.Random.Range(0.0f, 1.0f);
-
-		if (rnd <= doorManager.scarySliderValue && isDoorOpen)
+		if (!isDoorBusy)
 		{
-			// Slam door shut.
-			StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorCloseTime, -doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+			float rnd = UnityEngine.Random.Range(0.0f, 1.0f);
+
+			if (rnd <= doorManager.scarySliderValue && isDoorOpen)
+			{
+				// Slam door shut.
+				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorCloseTime, -doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+			}
+
+			if (action != null)
+			{
+				action();
+			}
 		}
 	}
 

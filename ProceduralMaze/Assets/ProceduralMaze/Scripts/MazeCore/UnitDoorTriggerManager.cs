@@ -24,7 +24,7 @@ public class UnitDoorTriggerManager : MonoBehaviour {
 		DeregisterCollider();
 	}
 
-	void RegisterCollider()
+	void Initialize()
 	{
 		BoxCollider[] colliders = GetComponentsInChildren<BoxCollider>(true);
 
@@ -36,22 +36,33 @@ public class UnitDoorTriggerManager : MonoBehaviour {
 			if (i != rnd)
 			{
 				colliders[i].gameObject.SetActive(false);
-				print("Disabling: " + colliders[i].name);
 			}
 			else
 			{
 				colliders[i].gameObject.SetActive(true);
-				print("Activating: " + colliders[i].name);
 			}
 		}
 
 		activeCollider = colliders[rnd];
-		activeCollider.gameObject.GetComponent<UnitDoorTrigger>().onTriggerEntered += unitDoor.PerformScaryMeterActions;
+	}
+
+	void RegisterCollider()
+	{
+		Initialize();
+		activeCollider.gameObject.GetComponent<UnitDoorTrigger>().onTriggerEntered += OnDoorTriggerEnter;
 	}
 
 	void DeregisterCollider()
 	{
-		activeCollider.gameObject.GetComponent<UnitDoorTrigger>().onTriggerEntered -= unitDoor.PerformScaryMeterActions;
+		activeCollider.gameObject.GetComponent<UnitDoorTrigger>().onTriggerEntered -= OnDoorTriggerEnter;
 		activeCollider = null;
+	}
+
+	void OnDoorTriggerEnter()
+	{
+		unitDoor.PerformScaryMeterActions(delegate() {
+			DeregisterCollider();
+			RegisterCollider();
+		});
 	}
 }
