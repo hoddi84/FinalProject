@@ -20,7 +20,6 @@ public class UnitDoor : MonoBehaviour {
 	private Action onDoneMoving = null;
 	private const float MAX_ROTATION_DIFF = 0.1f;
 
-	// Testing for sprites. Needs refactoring.
 	public bool isDoorLocked = true;
 	public GameObject doorLockMechanic;
 	public GameObject doorOpenMechanic;
@@ -82,10 +81,10 @@ public class UnitDoor : MonoBehaviour {
 		CheckDoorState();
 	}
 
-	/*
-	 * High scary meter will increase the chance a door 
-	 * will close after entering through it.
-	 */
+	/// <summary>
+	/// Event executed when we enter a door trigger.
+	/// </summary>
+	/// <param name="action">Additional executed commands.</param>
 	public void PerformScaryMeterActions(Action action)
 	{
 		if (!isDoorBusy)
@@ -104,34 +103,41 @@ public class UnitDoor : MonoBehaviour {
 			}
 		}
 	}
-
-	/*
-	 * High presence will increase the chance that you hear
-	 * a door slam or door being open.
-	 */
+	
+	/// <summary>
+	/// Event executed when new Unit is being activated/instantiated.
+	/// </summary>
+	/// <param name="value">Scary meter value.</param>
 	private void PerformPresenceMeterActions(float value)
 	{
 		float rnd = UnityEngine.Random.Range(0.0f, 1.0f);
 
 		float choice = UnityEngine.Random.Range(0.0f, 1.0f);
 
-		if (choice < .3)
+		if (rnd <= value)
 		{
-			if (rnd <= value)
+			if (choice < .3)
 			{
 				AudioSource.PlayClipAtPoint(doorManager.closeDoorClip, doorFrame.transform.position);
 			}
-		}
-		else 
-		{
-			if (rnd <= value && !isDoorOpen)
+			else if (choice >= .3 && choice < .7)
 			{
-				isDoorBusy = true;
-				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorOpenTime, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+				if (!isDoorOpen)
+				{
+					isDoorBusy = true;
+					StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorOpenTime, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+				}
+			}
+			else
+			{
+				// TODO add more, i.e. door being open, no sound.
 			}
 		}
 	}
 
+	/// <summary>
+	/// Call to open a closed door, or close an opened door.
+	/// </summary>
 	private void InteractWithDoor() 
 	{
 		if (!isDoorBusy && !isDoorLocked)

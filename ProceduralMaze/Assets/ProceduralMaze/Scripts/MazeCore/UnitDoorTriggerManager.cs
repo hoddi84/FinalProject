@@ -28,12 +28,11 @@ public class UnitDoorTriggerManager : MonoBehaviour {
 	{
 		BoxCollider[] colliders = GetComponentsInChildren<BoxCollider>(true);
 
-		int rnd = UnityEngine.Random.Range(0, colliders.Length);
-		print(rnd);
+		int index = UnityEngine.Random.Range(0, colliders.Length);
 
 		for (int i = 0; i < colliders.Length; i++)
 		{
-			if (i != rnd)
+			if (i != index)
 			{
 				colliders[i].gameObject.SetActive(false);
 			}
@@ -43,7 +42,7 @@ public class UnitDoorTriggerManager : MonoBehaviour {
 			}
 		}
 
-		activeCollider = colliders[rnd];
+		activeCollider = colliders[index];
 	}
 
 	void RegisterCollider()
