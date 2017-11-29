@@ -115,7 +115,7 @@ public class UnitDoor : MonoBehaviour {
 
 		float choice = UnityEngine.Random.Range(0.0f, 1.0f);
 
-		if (choice < .5)
+		if (choice < .3)
 		{
 			if (rnd <= value)
 			{
