@@ -6,6 +6,7 @@ Shader "Easy Decal/Unlit/ED Alpha"
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+		_Color ("Color", Color) = (1,1,1,1)
 	}
 	SubShader
 	{
@@ -42,6 +43,7 @@ Shader "Easy Decal/Unlit/ED Alpha"
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			float4 _Color;
 			
 			v2f vert (appdata v)
 			{
@@ -57,7 +59,7 @@ Shader "Easy Decal/Unlit/ED Alpha"
 			fixed4 frag (v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 color = tex2D(_MainTex, i.uv);				
+				fixed4 color = tex2D(_MainTex, i.uv) * _Color;				
 
 				// apply fog
 				//UNITY_APPLY_FOG(i.fogCoord, color);
