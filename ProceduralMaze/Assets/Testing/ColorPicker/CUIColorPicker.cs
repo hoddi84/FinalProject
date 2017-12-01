@@ -35,11 +35,10 @@ public class CUIColorPicker : MonoBehaviour
     {
         var rt = ( RectTransform )go.transform;
         var mp = rt.InverseTransformPoint( Input.mousePosition );
+
         result.x = Mathf.Clamp( mp.x, rt.rect.min.x, rt.rect.max.x );
         result.y = Mathf.Clamp( mp.y, rt.rect.min.y, rt.rect.max.y );
-        print(result.x);
-        print(result.y);
-        print(rt.rect.Contains(mp));
+
         return rt.rect.Contains( mp );
     }
 
