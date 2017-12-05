@@ -21,6 +21,32 @@ public class testing : MonoBehaviour {
 
 	void Start()
 	{
+		/* 
+		minX = rect.transform.GetComponent<RectTransform>().rect.min.x;
+		maxX = rect.transform.GetComponent<RectTransform>().rect.max.x;
+		minY = rect.transform.GetComponent<RectTransform>().rect.min.y;
+		maxY = rect.transform.GetComponent<RectTransform>().rect.max.y;
+
+		rectWidth = Mathf.Abs(minX) + Mathf.Abs(maxX);
+		rectHeight = Mathf.Abs(minY) + Mathf.Abs(maxY);	
+		*/
+
+		/*
+		 * Annoying magic number. Needs fixing.
+		 * Could be something related to the render texture
+		  * and the camera, such that the render texture is not
+		  * rendering the complete width of the camera.
+		 */
+	}
+
+	// Want this to return pixel coords.
+	// Need to convert rect coords into pixel coords.
+	// Rect coords (0,0) is the rects center.
+	public bool GetLocalMouse( GameObject go, out Vector2 screen ) 
+    {	
+        RectTransform rect = go.GetComponent<RectTransform>();
+
+		//added
 		minX = rect.transform.GetComponent<RectTransform>().rect.min.x;
 		maxX = rect.transform.GetComponent<RectTransform>().rect.max.x;
 		minY = rect.transform.GetComponent<RectTransform>().rect.min.y;
@@ -29,21 +55,6 @@ public class testing : MonoBehaviour {
 		rectWidth = Mathf.Abs(minX) + Mathf.Abs(maxX);
 		rectHeight = Mathf.Abs(minY) + Mathf.Abs(maxY);	
 
-		/*
-		 * Annoying magic number. Needs fixing.
-		 * Could be something related to the render texture
-		  * and the camera, such that the render texture is not
-		  * rendering the complete width of the camera.
-		 */
-		rectWidth += 100;
-	}
-
-	// Want this to return pixel coords.
-	// Need to convert rect coords into pixel coords.
-	// Rect coords (0,0) is the rects center.
-	public bool GetLocalMouse( GameObject go, out Vector2 screen ) 
-    {
-        RectTransform rect = go.GetComponent<RectTransform>();
         Vector3 rectCoord = rect.InverseTransformPoint( Input.mousePosition );
 
 		Vector3 result;

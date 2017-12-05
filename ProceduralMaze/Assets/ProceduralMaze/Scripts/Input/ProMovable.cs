@@ -4,69 +4,65 @@ using UnityEngine;
 
 public class ProMovable : MonoBehaviour {
 
-    private ProMouseInput mouseInput;
-
-    private bool canMove = false;
-    private float height;
-    private Vector3 mousePosition;
-    public float moveSpeed = .1f;
-
-    private Camera overHeadCam;
+    private ProMouseInput _mouseInput;
+    private bool _canMove = false;
+    private float _height;
+    private Vector3 _mousePosition;
+    public float _moveSpeed = .1f;
+    private Camera _overHeadCamera;
 
     private void Awake()
     {
-        mouseInput = FindObjectOfType(typeof(ProMouseInput)) as ProMouseInput;
+        _mouseInput = FindObjectOfType(typeof(ProMouseInput)) as ProMouseInput;
+        _mouseInput.onMouseButtonDownLeftRaycast += EnableObject;
+        _mouseInput.onMouseButtonLeftUp += ReleaseObject;
+        _mouseInput.onRenderTextureClickDown = EnableObjectOverTexture;
 
-        mouseInput.onMouseButtonDownLeftRaycast += MoveObject;
-        mouseInput.onMouseButtonLeftUp += ReleaseObject;
-
-        mouseInput.onRenderTextureClick = MoveObjectOverTexture;
-
-        height = transform.position.y;
+        _height = transform.position.y;
     }
 
     private void Update()
     {
-        if (canMove)
+        if (_canMove)
         {
-            if (overHeadCam == null)
+            if (_overHeadCamera == null)
             {
-                mousePosition = Input.mousePosition;
-                mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-                mousePosition.y = height;
-                transform.position = Vector3.Lerp(transform.position, mousePosition, moveSpeed);
+                MoveObject(Input.mousePosition, Camera.main);
             }
             else
             {
-                mousePosition = mouseInput.renderTexMousePos;
-                mousePosition = overHeadCam.ScreenToWorldPoint(mousePosition);
-                mousePosition.y = height;
-                transform.position = Vector3.Lerp(transform.position, mousePosition, moveSpeed);
-                transform.position = mousePosition;
-                print("Object: " + overHeadCam.WorldToScreenPoint(transform.position));
+                MoveObject(_mouseInput.renderTextureCoord, _overHeadCamera);
             }         
         }
     }
 
-    void MoveObject(RaycastHit hit)
+    void MoveObject(Vector3 position, Camera renderCamera)
+    {
+        _mousePosition = renderCamera.ScreenToWorldPoint(position);
+        _mousePosition.y = _height;
+        transform.position = Vector3.Lerp(transform.position, _mousePosition, _moveSpeed);
+    }
+
+    void EnableObject(RaycastHit hit)
     {
         if (gameObject.GetInstanceID() == hit.transform.gameObject.GetInstanceID())
         {
-            canMove = true;
+            _canMove = true;
         }
     }
 
-    void MoveObjectOverTexture(Vector3 pos, RaycastHit hit, Camera overHeadCamera)
+    void EnableObjectOverTexture(Vector3 pos, RaycastHit hit, Camera overHeadCamera)
     {
         if (gameObject.GetInstanceID() == hit.transform.gameObject.GetInstanceID())
         {
-            overHeadCam = overHeadCamera;
-            canMove = true;
+            _overHeadCamera = overHeadCamera;
+            _canMove = true;
         }
     }
 
     void ReleaseObject()
     {
-        canMove = false;
+        _canMove = false;
+        _overHeadCamera = null;
     }
 }
