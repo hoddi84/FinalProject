@@ -24,6 +24,9 @@ public class LightManager : MonoBehaviour {
 	private SimpleInterfaceController simpleController;
 	private ComplexInterfaceController complexController;
 
+	private CUIColorPicker colorPicker;
+	private Action<Color> onColorChanged = null;
+
 	void Awake()
 	{
 		simpleController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
@@ -41,6 +44,11 @@ public class LightManager : MonoBehaviour {
 			complexController.onLightIntensityChanged += UpdateLightIntensity;
 			complexController.onAmbienceIntensityChanged += UpdateAmbienceIntensity;
 		}
+
+		colorPicker = FindObjectOfType(typeof(CUIColorPicker)) as CUIColorPicker;
+
+		onColorChanged = OnColorPickerChanged;
+		colorPicker.SetOnValueChangeCallback(onColorChanged);
 
 	}
 
@@ -64,6 +72,12 @@ public class LightManager : MonoBehaviour {
 
 		CheckIfLightColorChanged();
 		CheckIfAmbienceColorChanged();
+	}
+
+	void OnColorPickerChanged(Color newColor)
+	{
+		ambienceColor = newColor;
+		lightColor = newColor;
 	}
 
 	void UpdateAmbienceIntensity(float newAmbienceIntensity)

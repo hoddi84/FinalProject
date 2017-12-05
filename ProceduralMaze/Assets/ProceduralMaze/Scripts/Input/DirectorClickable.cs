@@ -16,14 +16,27 @@ public class DirectorClickable : MonoBehaviour {
 	void OnEnable()
 	{
 		mouseInput.onMouseButtonDownLeftRaycast += ClickedObject;
+		mouseInput.onRenderTextureClick += ClickedObjectOnRenderTexture;
 	}
 
 	void OnDisable()
 	{
 		mouseInput.onMouseButtonDownLeftRaycast -= ClickedObject;
+		mouseInput.onRenderTextureClick += ClickedObjectOnRenderTexture;
 	}
 
 	void ClickedObject(RaycastHit hit)
+	{
+		if (hit.transform.gameObject.GetInstanceID() == gameObject.GetInstanceID())
+		{
+			if (onHit != null)
+			{
+				onHit();
+			}
+		}
+	}
+
+	void ClickedObjectOnRenderTexture(Vector3 pos, RaycastHit hit, Camera camera)
 	{
 		if (hit.transform.gameObject.GetInstanceID() == gameObject.GetInstanceID())
 		{
