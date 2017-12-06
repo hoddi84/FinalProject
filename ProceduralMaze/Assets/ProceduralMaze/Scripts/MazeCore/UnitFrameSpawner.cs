@@ -102,6 +102,9 @@ public class UnitFrameSpawner : MonoBehaviour {
 					if (listOfSpawned.Count == 0)
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
+
+						AddVariationToFrame(t, frameManager.GetScaryMeterValue());
+
 						AssignPhotoToFrame(t);
 						t.transform.parent = parentOfFrames.transform;
 						listOfSpawned.Add(t);
@@ -109,6 +112,9 @@ public class UnitFrameSpawner : MonoBehaviour {
 					else
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
+
+						AddVariationToFrame(t, frameManager.GetScaryMeterValue());
+
 						AssignPhotoToFrame(t);
 						t.transform.parent = parentOfFrames.transform;
 						if (CheckIfCollision(listOfSpawned, t))
@@ -127,9 +133,15 @@ public class UnitFrameSpawner : MonoBehaviour {
 
 	// Add a variation to the frames depending on scary meter.
 	// DOING
-	void AddVariationToFrame(float scaryMeterValue)
+	void AddVariationToFrame(GameObject frame, float scaryMeterValue)
 	{
+		UnitFrameSpawnerRotation frameRotation = frame.GetComponentInChildren<UnitFrameSpawnerRotation>();
+		BoxCollider collider = frame.GetComponentInChildren<BoxCollider>();
 
+		Vector3 colliderCenter = collider.bounds.center;
+		Transform rotatingFrame = frameRotation.gameObject.transform;
+
+		rotatingFrame.RotateAround(colliderCenter, new Vector3(0,0,1), 5);
 	}
 
 
