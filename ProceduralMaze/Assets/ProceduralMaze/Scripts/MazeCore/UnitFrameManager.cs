@@ -13,6 +13,11 @@ public class UnitFrameManager : MonoBehaviour {
 	public List<Sprite> availablePhotos;
 	private SimpleInterfaceController simpleInterfaceController;
 
+	public float GetScaryMeterValue() 
+	{
+		return simpleInterfaceController.scarySlider.value;
+	}
+
 	[Range(0.0f, 1.0f)]
 	public float frameVariance;
 	private float _frameVariance;

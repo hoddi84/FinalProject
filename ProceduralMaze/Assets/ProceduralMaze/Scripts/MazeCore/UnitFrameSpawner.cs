@@ -125,6 +125,14 @@ public class UnitFrameSpawner : MonoBehaviour {
 		}
 	}
 
+	// Add a variation to the frames depending on scary meter.
+	// DOING
+	void AddVariationToFrame(float scaryMeterValue)
+	{
+
+	}
+
+
 	// Assign random picture from manager.
 	void AssignPhotoToFrame(GameObject t)
 	{
