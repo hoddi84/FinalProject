@@ -103,7 +103,7 @@ public class UnitFrameSpawner : MonoBehaviour {
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
 
-						AddVariationToFrame(t, frameManager.GetScaryMeterValue());
+						//AddVariationToFrame(t, frameManager.GetScaryMeterValue());
 
 						AssignPhotoToFrame(t);
 						t.transform.parent = parentOfFrames.transform;
@@ -113,7 +113,7 @@ public class UnitFrameSpawner : MonoBehaviour {
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
 
-						AddVariationToFrame(t, frameManager.GetScaryMeterValue());
+						//AddVariationToFrame(t, frameManager.GetScaryMeterValue());
 
 						AssignPhotoToFrame(t);
 						t.transform.parent = parentOfFrames.transform;
@@ -133,6 +133,7 @@ public class UnitFrameSpawner : MonoBehaviour {
 
 	// Add a variation to the frames depending on scary meter.
 	// DOING
+	// Need to check which axes to rotate about, X or Z axis.
 	void AddVariationToFrame(GameObject frame, float scaryMeterValue)
 	{
 		UnitFrameSpawnerRotation frameRotation = frame.GetComponentInChildren<UnitFrameSpawnerRotation>();
