@@ -87,7 +87,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4797450777285394}
-  - component: {fileID: 114200642221719150}
   m_Layer: 0
   m_Name: PictureFrame
   m_TagString: Untagged
@@ -401,17 +400,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.03, y: 0.93, z: 0.5}
   m_Center: {x: 1.663, y: 1.634, z: -0.07}
---- !u!114 &114200642221719150
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1540698969992204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129a551a7678b6844953e7dedfc64c04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114908647420539272
 MonoBehaviour:
   m_ObjectHideFlags: 1
