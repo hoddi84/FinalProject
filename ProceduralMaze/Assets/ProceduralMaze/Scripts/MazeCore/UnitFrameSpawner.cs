@@ -103,8 +103,7 @@ public class UnitFrameSpawner : MonoBehaviour {
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
 
-						AddVariationToFrame(t, frameManager.GetScaryMeterValue());
-
+						AddRotation(t, frameManager.GetScaryMeterValue());
 						AssignPhotoToFrame(t);
 						t.transform.parent = parentOfFrames.transform;
 						listOfSpawned.Add(t);
@@ -113,8 +112,7 @@ public class UnitFrameSpawner : MonoBehaviour {
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
 
-						AddVariationToFrame(t, frameManager.GetScaryMeterValue());
-
+						AddRotation(t, frameManager.GetScaryMeterValue());
 						AssignPhotoToFrame(t);
 						t.transform.parent = parentOfFrames.transform;
 						if (CheckIfCollision(listOfSpawned, t))
@@ -131,45 +129,35 @@ public class UnitFrameSpawner : MonoBehaviour {
 		}
 	}
 
-	// Add a variation to the frames depending on scary meter.
-	// DOING
-	// Need to check which axes to rotate about, X or Z axis.
-	void AddVariationToFrame(GameObject frame, float scaryMeterValue)
+	// Add rotation to the painting frames.
+	// Higher scary value, chance for more rotation.
+	void AddRotation(GameObject frame, float scaryMeterValue)
 	{
-		UnitFrameSpawnerRotation frameRotation = frame.GetComponentInChildren<UnitFrameSpawnerRotation>();
+		UnitFrameSpawnerRotation frameToRotate = frame.GetComponentInChildren<UnitFrameSpawnerRotation>();
 		BoxCollider collider = frame.GetComponentInChildren<BoxCollider>();
 
-		Vector3 colliderCenter = collider.bounds.center;
-		Transform rotatingFrame = frameRotation.gameObject.transform;
+		Vector3 center = collider.bounds.center;
+		Transform rotatingFrame = frameToRotate.gameObject.transform;
+		Transform parentRotation = rotatingFrame.parent.transform;
 
-		Vector3 widthAlign;
-		Vector3 heightAlign;
-
-		float xExtents = collider.bounds.extents.x;
 		float yExtents = collider.bounds.extents.y;
 		float zExtents = collider.bounds.extents.z;
 
-		if (xExtents > zExtents)
-		{
-			widthAlign = new Vector3(colliderCenter.x + xExtents, colliderCenter.y, colliderCenter.z);
-		}
-		else
-		{
-			widthAlign = new Vector3(colliderCenter.x, colliderCenter.y, colliderCenter.z + zExtents);
-		}
+		Vector3 pointEndZ = new Vector3(center.x, center.y, center.z + zExtents);
+		Vector3 pointEndY = new Vector3(center.x, center.y + yExtents, center.z);
 
-		heightAlign = new Vector3(colliderCenter.x, colliderCenter.y + yExtents, colliderCenter.z);
+		Vector3 dir = pointEndZ - center;
+		dir = Quaternion.Euler(0,parentRotation.rotation.eulerAngles.y, 0) * dir;
+		pointEndZ = dir + center;
 
-		Vector3 widthLine = widthAlign - colliderCenter;
-		Vector3 heightLine = heightAlign - colliderCenter;
-		Vector3 rotationPoint = Vector3.Cross(widthLine, heightLine);
-		rotationPoint = new Vector3(rotationPoint.x, 0, rotationPoint.z);
+		Vector3 heightLine = pointEndY - center;
+		Vector3 widthLine = pointEndZ - center;
+
+		Vector3 rotationAxis = Vector3.Cross(heightLine, widthLine);
 
 		float randomRotation = Random.Range(-frameManager.maxFrameRotation, frameManager.maxFrameRotation);
-
-		rotatingFrame.RotateAround(colliderCenter, rotationPoint, randomRotation*scaryMeterValue);
+		rotatingFrame.RotateAround(center, rotationAxis, randomRotation*scaryMeterValue);
 	}
-
 
 	// Assign random picture from manager.
 	void AssignPhotoToFrame(GameObject t)

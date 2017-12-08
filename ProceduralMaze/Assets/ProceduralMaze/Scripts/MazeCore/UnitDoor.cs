@@ -116,10 +116,19 @@ public class UnitDoor : MonoBehaviour {
 
 		if (rnd <= value)
 		{
+			// Play door close sound.
+			// No delay on closing door.
 			if (choice < .3)
 			{
-				AudioSource.PlayClipAtPoint(doorManager.closeDoorClip, doorFrame.transform.position);
+				if (isDoorOpen)
+				{
+					isDoorBusy = true;
+					AudioSource.PlayClipAtPoint(doorManager.closeDoorClip, doorFrame.transform.position);
+					StartCoroutine(UnitUtilities.RotateRoundAxis(0, -doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+				}
 			}
+			// Play door open sound.
+			// Door has normal open delay.
 			else if (choice >= .3 && choice < .7)
 			{
 				if (!isDoorOpen)
@@ -128,9 +137,15 @@ public class UnitDoor : MonoBehaviour {
 					StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorOpenTime, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
 				}
 			}
+			// No sound.
+			// Door is open.
 			else
 			{
-				// TODO add more, i.e. door being open, no sound.
+				if (!isDoorOpen)
+				{
+					isDoorBusy = true;
+					StartCoroutine(UnitUtilities.RotateRoundAxis(0, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+				}
 			}
 		}
 	}

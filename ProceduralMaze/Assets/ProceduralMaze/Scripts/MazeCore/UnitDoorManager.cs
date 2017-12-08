@@ -25,15 +25,16 @@ public class UnitDoorManager : MonoBehaviour {
 	public float scarySliderValue;
 	private float _scarySliderValue;
 
-	private SimpleInterfaceController simepleController;
+	private SimpleInterfaceController simpleController;
 
 	void Awake()
 	{
-		simepleController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
+		simpleController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
 		
-		if (simepleController != null)
+		if (simpleController != null)
 		{
-			simepleController.onPresenceSliderChanged += UpdatePresenceValue;
+			simpleController.onPresenceSliderChanged += UpdatePresenceValue;
+			simpleController.onScarySliderChanged += UpdateScaryValue;
 		}
 	}
 
