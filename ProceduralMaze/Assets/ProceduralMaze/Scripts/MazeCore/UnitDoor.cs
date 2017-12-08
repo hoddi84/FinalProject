@@ -139,6 +139,7 @@ public class UnitDoor : MonoBehaviour {
 			}
 			// No sound.
 			// Door is open.
+			// TODO: Fix because it still makes sound cause of close / open events.
 			else
 			{
 				if (!isDoorOpen)
