@@ -142,28 +142,32 @@ public class UnitFrameSpawner : MonoBehaviour {
 		Vector3 colliderCenter = collider.bounds.center;
 		Transform rotatingFrame = frameRotation.gameObject.transform;
 
-		Vector3 pointEndX;
-		Vector3 pointEndY;
+		Vector3 widthAlign;
+		Vector3 heightAlign;
 
 		float xExtents = collider.bounds.extents.x;
 		float yExtents = collider.bounds.extents.y;
+		float zExtents = collider.bounds.extents.z;
 
-		pointEndX = new Vector3(colliderCenter.x + xExtents, colliderCenter.y, colliderCenter.z);
-		pointEndY = new Vector3(colliderCenter.x, colliderCenter.y + yExtents, colliderCenter.z);
+		if (xExtents > zExtents)
+		{
+			widthAlign = new Vector3(colliderCenter.x + xExtents, colliderCenter.y, colliderCenter.z);
+		}
+		else
+		{
+			widthAlign = new Vector3(colliderCenter.x, colliderCenter.y, colliderCenter.z + zExtents);
+		}
 
-		Vector3 dir = pointEndX - colliderCenter;
-		dir = Quaternion.Euler(0,transform.parent.transform.rotation.eulerAngles.y+90, 0) * dir;
-		pointEndX = dir + colliderCenter;
+		heightAlign = new Vector3(colliderCenter.x, colliderCenter.y + yExtents, colliderCenter.z);
 
-		Vector3 side1 = pointEndX - colliderCenter;
-		Vector3 side2 = pointEndY - colliderCenter;
-
-		Vector3 rotationPoint = Vector3.Cross(side1, side2);
-		//rotationPoint = new Vector3(rotationPoint.x, 0, rotationPoint.z);
+		Vector3 widthLine = widthAlign - colliderCenter;
+		Vector3 heightLine = heightAlign - colliderCenter;
+		Vector3 rotationPoint = Vector3.Cross(widthLine, heightLine);
+		rotationPoint = new Vector3(rotationPoint.x, 0, rotationPoint.z);
 
 		float randomRotation = Random.Range(-frameManager.maxFrameRotation, frameManager.maxFrameRotation);
 
-		rotatingFrame.RotateAround(colliderCenter, rotationPoint, 4);
+		rotatingFrame.RotateAround(colliderCenter, rotationPoint, randomRotation*scaryMeterValue);
 	}
 
 
