@@ -103,7 +103,7 @@ public class UnitFrameSpawner : MonoBehaviour {
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
 
-						//AddVariationToFrame(t, frameManager.GetScaryMeterValue());
+						AddVariationToFrame(t, frameManager.GetScaryMeterValue());
 
 						AssignPhotoToFrame(t);
 						t.transform.parent = parentOfFrames.transform;
@@ -113,7 +113,7 @@ public class UnitFrameSpawner : MonoBehaviour {
 					{
 						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
 
-						//AddVariationToFrame(t, frameManager.GetScaryMeterValue());
+						AddVariationToFrame(t, frameManager.GetScaryMeterValue());
 
 						AssignPhotoToFrame(t);
 						t.transform.parent = parentOfFrames.transform;
@@ -142,7 +142,28 @@ public class UnitFrameSpawner : MonoBehaviour {
 		Vector3 colliderCenter = collider.bounds.center;
 		Transform rotatingFrame = frameRotation.gameObject.transform;
 
-		rotatingFrame.RotateAround(colliderCenter, new Vector3(0,0,1), 5);
+		Vector3 pointEndX;
+		Vector3 pointEndY;
+
+		float xExtents = collider.bounds.extents.x;
+		float yExtents = collider.bounds.extents.y;
+
+		pointEndX = new Vector3(colliderCenter.x + xExtents, colliderCenter.y, colliderCenter.z);
+		pointEndY = new Vector3(colliderCenter.x, colliderCenter.y + yExtents, colliderCenter.z);
+
+		Vector3 dir = pointEndX - colliderCenter;
+		dir = Quaternion.Euler(0,transform.parent.transform.rotation.eulerAngles.y+90, 0) * dir;
+		pointEndX = dir + colliderCenter;
+
+		Vector3 side1 = pointEndX - colliderCenter;
+		Vector3 side2 = pointEndY - colliderCenter;
+
+		Vector3 rotationPoint = Vector3.Cross(side1, side2);
+		//rotationPoint = new Vector3(rotationPoint.x, 0, rotationPoint.z);
+
+		float randomRotation = Random.Range(-frameManager.maxFrameRotation, frameManager.maxFrameRotation);
+
+		rotatingFrame.RotateAround(colliderCenter, rotationPoint, 4);
 	}
 
 

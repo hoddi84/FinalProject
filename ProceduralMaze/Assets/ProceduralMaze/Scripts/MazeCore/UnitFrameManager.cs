@@ -22,6 +22,9 @@ public class UnitFrameManager : MonoBehaviour {
 	public float frameVariance;
 	private float _frameVariance;
 
+	[Range(0.0f, 4.0f)]
+	public float maxFrameRotation;
+
 	void Awake()
 	{
 		simpleInterfaceController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
