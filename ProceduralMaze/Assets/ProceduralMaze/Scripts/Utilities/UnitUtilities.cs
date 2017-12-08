@@ -21,7 +21,7 @@ public class UnitUtilities : MonoBehaviour {
 	/// <param name="onDone">Event for when the rotation has finished.</param>
 	/// <param name="delay">Delay before rotation starts.</param>
 	/// <returns></returns>
-	public static IEnumerator RotateRoundAxis(float rotationTime, float rotationAngle, Axis rotationAxis, GameObject objToRotate, Action onDone = null, float delay = 0) {
+	public static IEnumerator RotateRoundAxis(float rotationTime, float rotationAngle, Axis rotationAxis, GameObject objToRotate, Action onBegin = null, Action onDone = null, float delay = 0) {
 
 		Vector3 startPos = objToRotate.transform.eulerAngles;
 		Vector3 endPos = objToRotate.transform.eulerAngles;
@@ -42,6 +42,11 @@ public class UnitUtilities : MonoBehaviour {
 		float elapsedTime = 0f;
 
 		yield return new WaitForSeconds(delay);
+
+		if (onBegin != null)
+		{
+			onBegin();
+		}
 
 		while (elapsedTime < rotationTime)
 		{

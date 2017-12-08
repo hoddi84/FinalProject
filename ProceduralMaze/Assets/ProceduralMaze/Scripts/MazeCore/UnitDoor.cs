@@ -15,8 +15,6 @@ public class UnitDoor : MonoBehaviour {
 
 	public bool isDoorOpen = false;
 	private bool isDoorBusy = false;
-	private Action onDoorClosed = null;
-	private Action onDoorOpen = null;
 	private Action onDoneMoving = null;
 	private const float MAX_ROTATION_DIFF = 0.1f;
 
@@ -45,8 +43,6 @@ public class UnitDoor : MonoBehaviour {
 	{
 		vrInteractable.onInteracted += InteractWithDoor;
 
-		onDoorClosed += OnDoorClosed;
-		onDoorOpen += OnDoorOpen;
 		onDoneMoving += OnDoneMoving;
 
 		directorClickableLock.onHit += OnDirectorDoorLock;
@@ -59,8 +55,6 @@ public class UnitDoor : MonoBehaviour {
 	{
 		vrInteractable.onInteracted -= InteractWithDoor;
 
-		onDoorClosed -= OnDoorClosed;
-		onDoorOpen -= OnDoorOpen;
 		onDoneMoving -= OnDoneMoving;
 
 		directorClickableLock.onHit -= OnDirectorDoorLock;
@@ -93,8 +87,7 @@ public class UnitDoor : MonoBehaviour {
 
 			if (rnd <= doorManager.scarySliderValue && isDoorOpen)
 			{
-				// Slam door shut.
-				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorCloseTime, -doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+				CloseDoor();
 			}
 
 			if (action != null)
@@ -110,42 +103,36 @@ public class UnitDoor : MonoBehaviour {
 	/// <param name="value">Scary meter value.</param>
 	private void PerformPresenceMeterActions(float value)
 	{
-		float rnd = UnityEngine.Random.Range(0.0f, 1.0f);
+		float chanceOfAction = UnityEngine.Random.Range(0.0f, 1.0f);
+		float randomAction = UnityEngine.Random.Range(0.0f, 1.0f);
 
-		float choice = UnityEngine.Random.Range(0.0f, 1.0f);
-
-		if (rnd <= value)
+		if (chanceOfAction <= value)
 		{
 			// Play door close sound.
 			// No delay on closing door.
-			if (choice < .3)
+			if (randomAction < .3)
 			{
 				if (isDoorOpen)
 				{
-					isDoorBusy = true;
-					AudioSource.PlayClipAtPoint(doorManager.closeDoorClip, doorFrame.transform.position);
-					StartCoroutine(UnitUtilities.RotateRoundAxis(0, -doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+					CloseDoor(false);
 				}
 			}
 			// Play door open sound.
 			// Door has normal open delay.
-			else if (choice >= .3 && choice < .7)
+			else if (randomAction >= .3 && randomAction < .7)
 			{
 				if (!isDoorOpen)
 				{
-					isDoorBusy = true;
-					StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorOpenTime, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+					OpenDoor();
 				}
 			}
 			// No sound.
 			// Door is open.
-			// TODO: Fix because it still makes sound cause of close / open events.
 			else
 			{
 				if (!isDoorOpen)
 				{
-					isDoorBusy = true;
-					StartCoroutine(UnitUtilities.RotateRoundAxis(0, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+					OpenDoor(false, false);
 				}
 			}
 		}
@@ -158,17 +145,50 @@ public class UnitDoor : MonoBehaviour {
 	{
 		if (!isDoorBusy && !isDoorLocked)
 		{
-			isDoorBusy = true;
 			if (!isDoorOpen) 
 			{
-				AudioSource.PlayClipAtPoint(doorManager.openHandleClip, doorFrame.transform.position);
-				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorOpenTime, doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving, doorManager.openHandleClip.length));
+				OpenDoor();
 			}
 			else 
 			{
-				StartCoroutine(UnitUtilities.RotateRoundAxis(doorManager.doorCloseTime, -doorManager.rotationAngle, rotationAxis, rotatingDoor, onDoneMoving));
+				CloseDoor();
 			}
 		}
+	}
+
+	void OpenDoor(bool useDelay = true, bool useSound = true)
+	{
+		isDoorBusy = true;
+		float delayTime;
+		delayTime = useDelay ? doorManager.doorOpenTime : 0;
+
+		if (useSound)
+		{
+			AudioSource.PlayClipAtPoint(doorManager.openHandleClip, doorFrame.transform.position);
+		}
+		StartCoroutine(UnitUtilities.RotateRoundAxis(delayTime, doorManager.rotationAngle, rotationAxis, rotatingDoor,
+			delegate() {
+				if (useSound)
+				{
+					OnDoorOpen();
+				}
+		},
+		delegate() {
+			OnDoneMoving();
+		}, doorManager.openHandleClip.length));
+	}
+
+	void CloseDoor(bool useDelay = true)
+	{
+		isDoorBusy = true;
+		float delayTime;
+		delayTime = useDelay ? doorManager.doorCloseTime : 0;
+
+		StartCoroutine(UnitUtilities.RotateRoundAxis(delayTime, -doorManager.rotationAngle, rotationAxis, rotatingDoor, 
+		delegate(){
+			OnDoneMoving();
+			OnDoorClosed();
+		}));
 	}
 
 	/// <summary>
@@ -188,10 +208,6 @@ public class UnitDoor : MonoBehaviour {
 			{
 				if (isDoorOpen) 
 				{
-					if (onDoorClosed != null) 
-					{
-						onDoorClosed();
-					}
 					isDoorOpen = false;
 				}
 			}
@@ -199,10 +215,6 @@ public class UnitDoor : MonoBehaviour {
 			{
 				if (!isDoorOpen)
 				{
-					if (onDoorOpen != null) 
-					{
-						onDoorOpen();
-					}
 					isDoorOpen = true;
 				}
 			}
