@@ -4,45 +4,83 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public struct AmbienceSound {
+public struct InteractiveSound {
 	public Text text;
 	public Toggle activeToggle;
 	public Slider volumeSlider;
+
+	[HideInInspector]
+	public AudioSource audioSource;
 }
 
 public class SoundManager : MonoBehaviour {
 
 	public GameObject soundPanel;
 
-	public AmbienceSoundsScriptableObject ambienceSoundsAsset;
-
 	private bool showSoundPanel = false;
 
-	public AmbienceSound ambienceSound;
+	public SoundScriptableObject ambienceSoundAsset;
+	public SoundScriptableObject specialSoundsAsset;
 
-	private AudioSource ambienceSource1;
+	public InteractiveSound[] ambienceSound;
+	public InteractiveSound[] specialSound;
 
 	void Start()
 	{
-		ActivateAmbience();
-		ambienceSound.volumeSlider.onValueChanged.AddListener(OnSliderChanged);
-		ambienceSound.activeToggle.onValueChanged.AddListener(OnToggleChanged);
+		GameObject t = GameObject.Find("AMBIENCESOUNDS");
+		if (t == null)
+		{
+			t = new GameObject("AMBIENCESOUNDS");
+		}
+
+		InitializeSounds(t);
 	}
 
-	private void OnSliderChanged(float volume)
+	void InitializeSounds(GameObject audioSourceAttached)
 	{
-		ambienceSource1.volume = volume;
+		for (int i = 0; i < ambienceSound.Length; i++)
+		{
+			AudioSource source = audioSourceAttached.AddComponent<AudioSource>();
+			SetupAudioSource(source, i, ambienceSoundAsset);
+
+			ambienceSound[i].activeToggle.onValueChanged.AddListener(delegate(bool active) {
+				OnToggleChanged(active, source);
+			});
+			ambienceSound[i].volumeSlider.onValueChanged.AddListener(delegate(float value) {
+				OnSliderChanged(value, source);
+			});
+			ambienceSound[i].audioSource = source;
+		}
+
+		for (int i = 0; i < specialSound.Length; i++)
+		{
+			AudioSource source = audioSourceAttached.AddComponent<AudioSource>();
+			SetupAudioSource(source, i, specialSoundsAsset);
+
+			specialSound[i].activeToggle.onValueChanged.AddListener(delegate(bool active) {
+				OnToggleChanged(active, source);
+			});
+			specialSound[i].volumeSlider.onValueChanged.AddListener(delegate(float value) {
+				OnSliderChanged(value, source);
+			});
+			specialSound[i].audioSource = source;
+		}
 	}
 
-	private void OnToggleChanged(bool active)
+	private void OnSliderChanged(float volume, AudioSource source)
+	{
+		source.volume = volume;
+	}
+
+	private void OnToggleChanged(bool active, AudioSource source)
 	{
 		if (active)
 		{
-			ambienceSource1.Play();
+			source.Play();
 		}
 		else
 		{
-			ambienceSource1.Stop();
+			source.Stop();
 		}
 	}
 
@@ -60,20 +98,14 @@ public class SoundManager : MonoBehaviour {
 		}
 	}
 
-	void ActivateAmbience()
+	void SetupAudioSource(AudioSource source, int index, SoundScriptableObject asset)
 	{
-		GameObject t = GameObject.Find("AmbienceSOunds");
-		if (t == null)
-		{
-			t = new GameObject("AmbienceSounds");
-		}
-
-		ambienceSource1 = t.AddComponent<AudioSource>();
-		ambienceSource1.spatialBlend = 1.0f;
-		ambienceSource1.clip = ambienceSoundsAsset.ambienceSounds[0];
-		ambienceSource1.loop = true;
-		ambienceSource1.playOnAwake = false;
-		ambienceSource1.volume = 0;
-		ambienceSource1.Play();
+		source.spatialBlend = 1.0f;
+		source.clip = asset.soundsAsset[index];
+		source.loop = true;
+		source.playOnAwake = false;
+		source.volume = 0;
+		source.minDistance = 495;
+		source.Play();
 	}
 }
