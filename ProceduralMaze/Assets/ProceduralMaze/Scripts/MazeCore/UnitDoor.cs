@@ -112,7 +112,7 @@ public class UnitDoor : MonoBehaviour {
 			// No delay on closing door.
 			if (randomAction < .3)
 			{
-				if (isDoorOpen)
+				if (isDoorOpen && !isDoorBusy)
 				{
 					CloseDoor(false);
 				}
@@ -121,7 +121,7 @@ public class UnitDoor : MonoBehaviour {
 			// Door has normal open delay.
 			else if (randomAction >= .3 && randomAction < .7)
 			{
-				if (!isDoorOpen)
+				if (!isDoorOpen && !isDoorBusy)
 				{
 					OpenDoor();
 				}
@@ -130,7 +130,7 @@ public class UnitDoor : MonoBehaviour {
 			// Door is open.
 			else
 			{
-				if (!isDoorOpen)
+				if (!isDoorOpen && !isDoorBusy)
 				{
 					OpenDoor(false, false);
 				}

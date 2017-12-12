@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+
+#if UNITY_EDITOR
+
 using UnityEditor;
 
 [CustomEditor(typeof(PlayerTest))]
@@ -54,3 +57,5 @@ public class PlayerTestEditor : Editor {
 
 	}
 }
+
+#endif

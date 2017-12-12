@@ -58,6 +58,7 @@ public class VRHandController : MonoBehaviour {
 			if (onTriggerClickedCollider != null)
 			{
 				onTriggerClickedCollider(other);
+				triggerPressed = false; // added, so only happens once.
 			}
 		}
 	}

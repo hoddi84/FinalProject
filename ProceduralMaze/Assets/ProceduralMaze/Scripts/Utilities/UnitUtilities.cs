@@ -23,8 +23,8 @@ public class UnitUtilities : MonoBehaviour {
 	/// <returns></returns>
 	public static IEnumerator RotateRoundAxis(float rotationTime, float rotationAngle, Axis rotationAxis, GameObject objToRotate, Action onBegin = null, Action onDone = null, float delay = 0) {
 
-		Vector3 startPos = objToRotate.transform.eulerAngles;
-		Vector3 endPos = objToRotate.transform.eulerAngles;
+		Vector3 startPos = objToRotate.transform.localEulerAngles;
+		Vector3 endPos = objToRotate.transform.localEulerAngles;
 
 		switch(rotationAxis)
 		{
@@ -50,11 +50,11 @@ public class UnitUtilities : MonoBehaviour {
 
 		while (elapsedTime < rotationTime)
 		{
-			objToRotate.transform.eulerAngles = Vector3.Lerp(startPos, endPos, (elapsedTime/rotationTime));
+			objToRotate.transform.localEulerAngles = Vector3.Lerp(startPos, endPos, (elapsedTime/rotationTime));
 			elapsedTime += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
-		objToRotate.transform.eulerAngles = endPos;
+		objToRotate.transform.localEulerAngles = endPos;
 
 		if (onDone != null) 
 		{

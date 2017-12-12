@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+
+#if UNITY_EDITOR
+
 using UnityEditor;
 
 public class CalculateUIAnchors : MonoBehaviour
@@ -99,5 +102,7 @@ public class CalculateUIAnchors : MonoBehaviour
 		rectTransform.pivot = new Vector2(0.5f, 0.5f);
 	}
 }
+
+#endif
 
 

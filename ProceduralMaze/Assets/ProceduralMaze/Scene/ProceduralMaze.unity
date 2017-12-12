@@ -5415,7 +5415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!20 &741765091
 Camera:
   m_ObjectHideFlags: 0
@@ -6131,7 +6131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8471d9ecfcbad4f4d903c092c7dee0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frameSpawnChance: 1
+  frameSpawnChance: 0.6
   photoAssets: {fileID: 11400000, guid: 93d12f8f7bd0f7a4da43f79204cd0de7, type: 2}
   availablePhotos: []
   frameVariance: 0
@@ -6172,10 +6172,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundPanel: {fileID: 1869405468}
-  ambienceSoundAsset: {fileID: 0}
-  specialSoundsAsset: {fileID: 0}
-  ambienceSound: []
-  specialSound: []
+  ambienceSoundAsset: {fileID: 11400000, guid: 6802fc26c91690f49bef17e4e0d74f90, type: 2}
+  specialSoundsAsset: {fileID: 11400000, guid: 06ef5938e26a68146a8fd348a6a48eea, type: 2}
+  ambienceSound:
+  - text: {fileID: 191197389}
+    activeToggle: {fileID: 1471967942}
+    volumeSlider: {fileID: 2098658393}
+    audioSource: {fileID: 0}
+  - text: {fileID: 307404999}
+    activeToggle: {fileID: 1853009723}
+    volumeSlider: {fileID: 1121247436}
+    audioSource: {fileID: 0}
+  - text: {fileID: 1599255104}
+    activeToggle: {fileID: 1693254380}
+    volumeSlider: {fileID: 1729143316}
+    audioSource: {fileID: 0}
+  - text: {fileID: 1038701669}
+    activeToggle: {fileID: 96397835}
+    volumeSlider: {fileID: 806986267}
+    audioSource: {fileID: 0}
+  - text: {fileID: 1249081103}
+    activeToggle: {fileID: 2070809214}
+    volumeSlider: {fileID: 58411388}
+    audioSource: {fileID: 0}
+  - text: {fileID: 1476146938}
+    activeToggle: {fileID: 1677484375}
+    volumeSlider: {fileID: 529719973}
+    audioSource: {fileID: 0}
+  specialSound:
+  - text: {fileID: 1983014182}
+    activeToggle: {fileID: 1350696696}
+    volumeSlider: {fileID: 502956393}
+    audioSource: {fileID: 0}
+  - text: {fileID: 928872538}
+    activeToggle: {fileID: 542795921}
+    volumeSlider: {fileID: 64238729}
+    audioSource: {fileID: 0}
 --- !u!1 &806986265
 GameObject:
   m_ObjectHideFlags: 0
@@ -14762,7 +14794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1904555509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16008,6 +16040,7 @@ GameObject:
   - component: {fileID: 2090294768}
   - component: {fileID: 2090294770}
   - component: {fileID: 2090294769}
+  - component: {fileID: 2090294771}
   m_Layer: 0
   m_Name: OverHeadCam
   m_TagString: Untagged
@@ -16070,6 +16103,13 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!81 &2090294771
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2090294767}
+  m_Enabled: 0
 --- !u!1 &2097518502
 GameObject:
   m_ObjectHideFlags: 0
