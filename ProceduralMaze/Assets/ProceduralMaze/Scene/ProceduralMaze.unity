@@ -14100,6 +14100,7 @@ GameObject:
   - component: {fileID: 1847680813}
   - component: {fileID: 1847680812}
   - component: {fileID: 1847680811}
+  - component: {fileID: 1847680817}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -14200,6 +14201,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &1847680817
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1847680810}
+  m_Enabled: 1
 --- !u!1 &1852184181
 GameObject:
   m_ObjectHideFlags: 0
@@ -16040,7 +16048,6 @@ GameObject:
   - component: {fileID: 2090294768}
   - component: {fileID: 2090294770}
   - component: {fileID: 2090294769}
-  - component: {fileID: 2090294771}
   m_Layer: 0
   m_Name: OverHeadCam
   m_TagString: Untagged
@@ -16103,13 +16110,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &2090294771
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2090294767}
-  m_Enabled: 0
 --- !u!1 &2097518502
 GameObject:
   m_ObjectHideFlags: 0
