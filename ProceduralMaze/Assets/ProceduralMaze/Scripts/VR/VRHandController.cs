@@ -53,12 +53,20 @@ public class VRHandController : MonoBehaviour {
 
 	void OnTriggerStay(Collider other)
 	{
-		if (triggerPressed)
+		if (other.tag == "Wall")
 		{
-			if (onTriggerClickedCollider != null)
+			print("LOL");
+			StartCoroutine(UnitUtilities.TriggerVibration(controller, 1, .1f));
+		}
+		else
+		{
+			if (triggerPressed)
 			{
-				onTriggerClickedCollider(other);
-				triggerPressed = false; // added, so only happens once.
+				if (onTriggerClickedCollider != null)
+				{
+					onTriggerClickedCollider(other);
+					triggerPressed = false; // added, so only happens once.
+				}
 			}
 		}
 	}
