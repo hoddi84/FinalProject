@@ -70,6 +70,14 @@ public class VRHandController : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "DoorHandle")
+		{
+			StartCoroutine(UnitUtilities.TriggerVibration(controller, 1, .1f));
+		}
+	}
+
 	void OnTriggerExit(Collider other)
 	{
 

@@ -25,6 +25,8 @@ public class VRInteractable : MonoBehaviour {
 	{
 		if (other.gameObject.GetInstanceID() == gameObject.GetInstanceID())
 		{
+			//StartCoroutine(UnitUtilities.TriggerVibration(controller, 1, .1f));
+
 			if (onInteracted != null) 
 			{
 				onInteracted();
