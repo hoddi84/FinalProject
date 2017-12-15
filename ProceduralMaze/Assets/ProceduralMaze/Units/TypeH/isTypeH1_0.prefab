@@ -537,6 +537,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4881074771551034}
+  - component: {fileID: 114919861920909070}
   m_Layer: 0
   m_Name: isTypeH1_0
   m_TagString: Untagged
@@ -1906,6 +1907,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitDoorPrefab: {fileID: 1186428409780582, guid: ec96c981968cdf849adef9480abd3bc1,
     type: 2}
+--- !u!114 &114919861920909070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977040129921038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d21f670a89cd8c4ca8c211dc0d88fe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114980031449540020
 MonoBehaviour:
   m_ObjectHideFlags: 1

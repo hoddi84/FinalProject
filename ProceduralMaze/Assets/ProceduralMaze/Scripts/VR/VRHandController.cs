@@ -55,7 +55,6 @@ public class VRHandController : MonoBehaviour {
 	{
 		if (other.tag == "Wall")
 		{
-			print("LOL");
 			StartCoroutine(UnitUtilities.TriggerVibration(controller, 1, .1f));
 		}
 		else
