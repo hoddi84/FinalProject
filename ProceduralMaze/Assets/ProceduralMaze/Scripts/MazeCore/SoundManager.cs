@@ -13,6 +13,12 @@ public struct InteractiveSound {
 	public AudioSource audioSource;
 }
 
+[System.Serializable]
+public struct OneShotSound {
+	public Text text;
+	public Button button;
+}
+
 public class SoundManager : MonoBehaviour {
 
 	public GameObject soundPanel;
@@ -21,9 +27,14 @@ public class SoundManager : MonoBehaviour {
 
 	public SoundScriptableObject ambienceSoundAsset;
 	public SoundScriptableObject specialSoundsAsset;
+	public SoundScriptableObject effectSoundsAsset;
 
 	public InteractiveSound[] ambienceSound;
 	public InteractiveSound[] specialSound;
+	public OneShotSound[] effectSound;
+
+	[Range(1.0f, 5.0f)]
+	public float effectSpawnRange;
 
 	void Start()
 	{
@@ -65,6 +76,14 @@ public class SoundManager : MonoBehaviour {
 			});
 			specialSound[i].audioSource = source;
 		}
+
+		for (int i = 0; i < effectSound.Length; i++)
+		{
+			int index = i;
+			effectSound[i].button.onClick.AddListener(delegate() {
+				StartCoroutine(PlayOneShotSound(audioSourceAttached, effectSoundsAsset, index));
+			});
+		}
 	}
 
 	private void OnSliderChanged(float volume, AudioSource source)
@@ -96,6 +115,28 @@ public class SoundManager : MonoBehaviour {
 		{
 			soundPanel.SetActive(false);
 		}
+	}
+
+	IEnumerator PlayOneShotSound(GameObject audioSourceAttached, SoundScriptableObject asset, int index)
+	{
+		GameObject origin = new GameObject("Origin");
+		origin.transform.parent = audioSourceAttached.transform;
+		AudioSource source = origin.AddComponent<AudioSource>();
+		source.spatialBlend = 1.0f;
+		source.clip = asset.soundsAsset[index];
+		source.loop = false;
+		source.playOnAwake = false;
+		source.volume = 1;
+		source.minDistance = .3f;
+		source.maxDistance = 1;
+
+		origin.transform.position = new Vector3(Random.Range(-effectSpawnRange, effectSpawnRange), Random.Range(-effectSpawnRange, effectSpawnRange), Random.Range(-effectSpawnRange, effectSpawnRange));
+
+		source.Play();
+
+		yield return new WaitUntil(() => !source.isPlaying);
+
+		Destroy(source);
 	}
 
 	void SetupAudioSource(AudioSource source, int index, SoundScriptableObject asset)
