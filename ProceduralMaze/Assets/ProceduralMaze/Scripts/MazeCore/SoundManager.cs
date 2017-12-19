@@ -21,6 +21,7 @@ public struct OneShotSound {
 
 public class SoundManager : MonoBehaviour {
 
+	[Header("Complex Mode")]
 	public GameObject soundPanel;
 
 	private bool showSoundPanel = false;
