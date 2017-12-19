@@ -19,7 +19,7 @@ public struct OneShotSound {
 	public Button button;
 }
 
-public class SoundManager : MonoBehaviour {
+public partial class SoundManager : MonoBehaviour {
 
 	[Header("Complex Mode")]
 	public GameObject soundPanel;
@@ -46,6 +46,8 @@ public class SoundManager : MonoBehaviour {
 		}
 
 		InitializeSounds(t);
+
+		Setup();
 	}
 
 	void InitializeSounds(GameObject audioSourceAttached)
