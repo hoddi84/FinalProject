@@ -7,7 +7,7 @@ public class VRHandControllerManager : MonoBehaviour {
 
 	public Action onTriggerClicked = null;
 	public Action onTriggerUnclicked = null;
-	public Action<Collider> onTriggerClickedCollider = null;
+	public Action<Collider, SteamVR_TrackedController> onTriggerClickedCollider = null;
 	
 	public VRHandController controller1;
 	public VRHandController controller2;
@@ -38,11 +38,11 @@ public class VRHandControllerManager : MonoBehaviour {
 		print("Clicekd Trigger");
 	}
 
-	void OnTriggerClickedCollider(Collider clickedCollider)
+	void OnTriggerClickedCollider(Collider clickedCollider, SteamVR_TrackedController controller)
 	{
 		if (onTriggerClickedCollider != null)
 		{
-			onTriggerClickedCollider(clickedCollider);
+			onTriggerClickedCollider(clickedCollider, controller);
 		}
 		print("Clicked Trigger on Collider: " + clickedCollider.name);
 	}

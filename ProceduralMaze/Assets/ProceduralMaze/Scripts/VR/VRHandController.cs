@@ -15,7 +15,7 @@ public class VRHandController : MonoBehaviour {
 
 	public Action onTriggerClicked = null;
 	public Action onTriggerUnclicked = null;
-	public Action<Collider> onTriggerClickedCollider = null;
+	public Action<Collider, SteamVR_TrackedController> onTriggerClickedCollider = null;
 	private bool triggerPressed = false;
 
 	void Awake()
@@ -63,7 +63,7 @@ public class VRHandController : MonoBehaviour {
 			{
 				if (onTriggerClickedCollider != null)
 				{
-					onTriggerClickedCollider(other);
+					onTriggerClickedCollider(other, controller);
 					triggerPressed = false; // added, so only happens once.
 				}
 			}

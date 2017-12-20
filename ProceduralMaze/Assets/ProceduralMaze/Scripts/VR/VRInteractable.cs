@@ -21,11 +21,11 @@ public class VRInteractable : MonoBehaviour {
 
 	}
 
-	void ControllerInteracted(Collider other)
+	void ControllerInteracted(Collider other, SteamVR_TrackedController controller)
 	{
 		if (other.gameObject.GetInstanceID() == gameObject.GetInstanceID())
 		{
-			//StartCoroutine(UnitUtilities.TriggerVibration(controller, 1, .1f));
+			StartCoroutine(UnitUtilities.TriggerVibration(controller, 1, .1f));
 
 			if (onInteracted != null) 
 			{
