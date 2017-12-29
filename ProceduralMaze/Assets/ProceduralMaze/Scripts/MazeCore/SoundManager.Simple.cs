@@ -25,7 +25,11 @@ public partial class SoundManager : MonoBehaviour {
 	private void Awake()
 	{
 		simpleController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
-		simpleController.onScarySliderChanged += OnScarySliderChanged;
+
+		if (simpleController != null)
+		{
+			simpleController.onScarySliderChanged += OnScarySliderChanged;
+		}
 	}
 
 	private void OnScarySliderChanged(float value)

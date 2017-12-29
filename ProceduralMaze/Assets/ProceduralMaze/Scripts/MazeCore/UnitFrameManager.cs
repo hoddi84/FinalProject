@@ -15,7 +15,14 @@ public class UnitFrameManager : MonoBehaviour {
 
 	public float GetScaryMeterValue() 
 	{
-		return simpleInterfaceController.scarySlider.value;
+		if (simpleInterfaceController != null)
+		{
+			return simpleInterfaceController.scarySlider.value;
+		}
+		else 
+		{
+			return 0;
+		}
 	}
 
 	[Range(0.0f, 1.0f)]

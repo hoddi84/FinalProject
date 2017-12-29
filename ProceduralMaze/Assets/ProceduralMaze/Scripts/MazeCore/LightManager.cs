@@ -47,9 +47,11 @@ public class LightManager : MonoBehaviour {
 
 		colorPicker = FindObjectOfType(typeof(CUIColorPicker)) as CUIColorPicker;
 
-		onColorChanged = OnColorPickerChanged;
-		colorPicker.SetOnValueChangeCallback(onColorChanged);
-
+		if (colorPicker != null)
+		{
+			onColorChanged = OnColorPickerChanged;
+			colorPicker.SetOnValueChangeCallback(onColorChanged);
+		}
 	}
 
 	void Start()
