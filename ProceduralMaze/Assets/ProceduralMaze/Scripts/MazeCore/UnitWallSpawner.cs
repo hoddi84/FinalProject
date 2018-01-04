@@ -23,6 +23,7 @@ public class UnitWallSpawner : MonoBehaviour {
 		Dictionary<GameObject, WallType> contents = new Dictionary<GameObject, WallType>();
 
 		foreach (Transform wall in transform) {
+			
 			if (wall.name.Contains("WallLarge")) {
 				GameObject t = wall.gameObject;
 				contents.Add(t, WallType.Large);
