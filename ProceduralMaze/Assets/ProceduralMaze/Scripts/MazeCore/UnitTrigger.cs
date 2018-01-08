@@ -17,6 +17,11 @@ public class UnitTrigger : MonoBehaviour {
 	public string isType;
 	public string toType;
 
+	// test
+	public int idIs;
+	public int idFrom;
+	public int idTo;
+
     //new
     private EntryAxis entryAxis;
 	private Vector3 entryVector;

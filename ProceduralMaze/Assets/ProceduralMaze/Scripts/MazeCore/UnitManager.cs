@@ -59,6 +59,8 @@ public class UnitManager : MonoBehaviour {
 
     private GameObject parentOfUnits;
 
+    private GameObject currentUnit = null;
+
     private void Awake()
     {
         onInstantiate += UpdatePathDictionary;
@@ -310,18 +312,29 @@ public class UnitManager : MonoBehaviour {
     // Here we want to check if we have spawned this type, but also we want to check if we
     // should spawn a new random type, i.e. if the user has gone a circle.
     // HINT: If the new current type matches the previous type we know the user has gone backwards.
-    private void CheckInstantiatedUnit(UnitTrigger trigger, string type, GameObject[] unit)
+    private void CheckInstantiatedUnit(UnitTrigger trigger, string toType, GameObject[] unit)
     {
-        GameObject tmp = null;
-
-        if (!pathDict.ContainsKey(type))
+        if (!pathDict.ContainsKey(toType))
         {
+            GameObject tmp = null;
+
+            UnitTrigger currentUnitTrigger = currentUnit.GetComponent<UnitTrigger>();
+            int currentIsId = currentUnitTrigger.idIs;
+            int currentFromId = currentUnitTrigger.idFrom;
+            int currentToId = currentUnitTrigger.idTo;
+
             int rndIndex = UnityEngine.Random.Range(0, unit.Length);
             tmp = Instantiate(unit[rndIndex]);
 
+            UnitTrigger nextUnit = tmp.GetComponent<UnitTrigger>();
+            int nextIsId = currentIsId + 1;
+            int nextFromId = currentIsId;
+            int nextToId = nextIsId;
+            currentUnitTrigger.idTo = nextIsId;
+
             tmp.transform.parent = parentOfUnits.transform;
 
-            ForceDisableUnit(trigger);
+            //ForceDisableUnit(trigger);
             RegisterListeners(tmp);
 
             if (onInstantiate != null)
@@ -331,28 +344,49 @@ public class UnitManager : MonoBehaviour {
         }
         else
         {
-            InstantiateExistingUnit(type);
-            ForceDisableUnit(trigger);
+            InstantiateExistingUnit(unit, toType);
+            //ForceDisableUnit(trigger);
         }
     }
 
     // Here we want to check if the existing unit is the previous unit after
     // current unit, else we want to randomize a new unit.
-    private void InstantiateExistingUnit(string type)
+    private void InstantiateExistingUnit(GameObject[] unit, string type)
     {
         GameObject t;
         pathDict.TryGetValue(type, out t);
 
-        if (!t.activeInHierarchy)
+        // Get the ID's from the current unit we are in.
+        UnitTrigger currentUnitTrigger = currentUnit.GetComponent<UnitTrigger>();
+        int currentIsId = currentUnitTrigger.idIs;
+        int currentFromId = currentUnitTrigger.idFrom;
+        int currentToId = currentUnitTrigger.idTo;
+
+        UnitTrigger nextUnit = t.GetComponent<UnitTrigger>();
+        int nextIsId = nextUnit.idIs;
+        int nextFromId = nextUnit.idFrom;
+        int nextToId = nextUnit.idTo;
+
+        if (nextFromId == currentIsId)
         {
-            t.SetActive(true);
-            RegisterListeners(t);
+            if (!t.activeInHierarchy)
+            {
+                t.SetActive(true);
+                RegisterListeners(t);
+            }
+            else
+            {
+                DeregisterListeners(t);
+                t.SetActive(false);
+            }  
         }
         else
         {
-            DeregisterListeners(t);
-            t.SetActive(false);
-        }  
+            GameObject tmp;
+            int rndIndex = UnityEngine.Random.Range(0, unit.Length);
+            tmp = Instantiate(unit[rndIndex]);
+        }
+
     }
     
     private void ForceDisableUnit(UnitTrigger trigger)
@@ -387,6 +421,12 @@ public class UnitManager : MonoBehaviour {
         UnitTrigger trigger = tmp.GetComponentInChildren<UnitTrigger>();
 
         tmp.transform.parent = parentOfUnits.transform;
+
+        trigger.idIs = 1;
+        trigger.idFrom = 1;
+        trigger.idTo = 1;
+
+        currentUnit = tmp;
 
         RegisterListeners(tmp);
 
