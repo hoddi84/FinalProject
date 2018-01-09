@@ -9016,6 +9016,7 @@ GameObject:
   - component: {fileID: 793615194}
   - component: {fileID: 793615195}
   - component: {fileID: 793615196}
+  - component: {fileID: 793615198}
   - component: {fileID: 793615197}
   m_Layer: 0
   m_Name: SceneManager
@@ -9326,6 +9327,18 @@ MonoBehaviour:
   wallVerySmall: {fileID: 1918215623809714, guid: a57ab9e039d331946a56e87217dfe09e,
     type: 2}
   wallCorner: {fileID: 1223455176061404, guid: 59014bcc14bfb4a4da34449370ebbf5b, type: 2}
+--- !u!114 &793615198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 793615188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 944936a8757809445901a8a3b6a31139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodDecal: 0
 --- !u!1 &806986265
 GameObject:
   m_ObjectHideFlags: 0

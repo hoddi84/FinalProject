@@ -60,7 +60,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1107106757616630
 GameObject:
   m_ObjectHideFlags: 1
@@ -76,7 +76,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1160900819179962
 GameObject:
   m_ObjectHideFlags: 1
@@ -108,7 +108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1211998762379392
 GameObject:
   m_ObjectHideFlags: 1
@@ -124,7 +124,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1215402227337990
 GameObject:
   m_ObjectHideFlags: 1
@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1245150374834240
 GameObject:
   m_ObjectHideFlags: 1
@@ -156,7 +156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1247697330296006
 GameObject:
   m_ObjectHideFlags: 1
@@ -216,13 +216,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4328404983344936}
+  - component: {fileID: 114114091196873470}
   m_Layer: 10
   m_Name: Decals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1318183381218806
 GameObject:
   m_ObjectHideFlags: 1
@@ -255,7 +256,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1409124238372006
 GameObject:
   m_ObjectHideFlags: 1
@@ -420,7 +421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1910816723337554
 GameObject:
   m_ObjectHideFlags: 1
@@ -485,7 +486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4081691360570016
 Transform:
   m_ObjectHideFlags: 1
@@ -1413,7 +1414,28 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: -1285164
+  instanceID: -1424562
+--- !u!114 &114114091196873470
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1316557443724398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b2449c9eb54a64ebe6cb50bdcc905f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodDecals:
+  - {fileID: 1245150374834240}
+  - {fileID: 1107106757616630}
+  - {fileID: 1968219037046826}
+  - {fileID: 1211998762379392}
+  - {fileID: 1091278520911328}
+  - {fileID: 1378861313458118}
+  - {fileID: 1172555218367034}
+  - {fileID: 1215402227337990}
+  - {fileID: 1866279072645124}
 --- !u!114 &114127486954701402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1497,7 +1519,7 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: -1285042
+  instanceID: -1424440
 --- !u!114 &114138032720249440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1581,7 +1603,7 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: -1285066
+  instanceID: -1424464
 --- !u!114 &114217850373814420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1665,7 +1687,7 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: -1285086
+  instanceID: -1424484
 --- !u!114 &114427502739090098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1749,7 +1771,7 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: -1285166
+  instanceID: -1424564
 --- !u!114 &114534944073463410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1833,7 +1855,7 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: -1285158
+  instanceID: -1424556
 --- !u!114 &114540119852791944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1917,7 +1939,7 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: -1285168
+  instanceID: -1424566
 --- !u!114 &114607802827167188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2001,7 +2023,7 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: -1285160
+  instanceID: -1424558
 --- !u!114 &114784651744173730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2085,7 +2107,7 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: -1285162
+  instanceID: -1424560
 --- !u!137 &137315976702722456
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
