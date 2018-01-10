@@ -15,6 +15,10 @@ public class UIController : MonoBehaviour {
 	private bool isSimpleCheckOn;
 	private bool isFocusedCheckOn;
 
+	public Text mainTitleText;
+	public string titleSimple;
+	public string titleComplex;
+
 	void Start()
 	{
 		isSimpleCheckOn = simpleCheck.isOn;
@@ -24,10 +28,24 @@ public class UIController : MonoBehaviour {
 		focusedPanel.SetActive(focusedCheck.isOn);
 	}
 
+	void UpdateMainTitleText()
+	{
+		if (isSimpleCheckOn)
+		{
+			mainTitleText.text = titleSimple;
+		}
+		else
+		{
+			mainTitleText.text = titleComplex;
+		}
+	}
+
 	void Update()
 	{
 		simplePanel.SetActive(simpleCheck.isOn);
 		focusedPanel.SetActive(focusedCheck.isOn);
+
+		UpdateMainTitleText();
 	}
 
 	public void SimpleMode()

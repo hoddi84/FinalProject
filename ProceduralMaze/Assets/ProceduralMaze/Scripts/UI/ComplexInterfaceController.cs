@@ -14,12 +14,26 @@ public class ComplexInterfaceController : MonoBehaviour {
 	public Action<float> onLightIntensityChanged = null;
 	public Action<float> onAmbienceIntensityChanged = null;
 
+	public GameObject lightingPanel;
+	public GameObject soundPanel;
+
 	void Awake()
 	{
 		lightManager = FindObjectOfType(typeof(LightManager)) as LightManager;
 
 		lightIntensitySlider.onValueChanged.AddListener(UpdateLightIntensity);
 		lightAmbienceSlider.onValueChanged.AddListener(UpdateAmbienceIntensity);
+	}
+
+	void Start()
+	{
+		Initialize();
+	}
+
+	void Initialize()
+	{
+		lightingPanel.SetActive(true);
+		soundPanel.SetActive(false);
 	}
 
 	void UpdateLightIntensity(float newLightIntensity)
@@ -36,5 +50,17 @@ public class ComplexInterfaceController : MonoBehaviour {
 		{
 			onAmbienceIntensityChanged(newAmbienceIntensity);
 		}
+	}
+
+	public void EnableSoundPanel()
+	{
+		soundPanel.SetActive(true);
+		lightingPanel.SetActive(false);
+	}
+
+	public void EnableLightingPanel()
+	{
+		lightingPanel.SetActive(true);
+		soundPanel.SetActive(false);
 	}
 }
