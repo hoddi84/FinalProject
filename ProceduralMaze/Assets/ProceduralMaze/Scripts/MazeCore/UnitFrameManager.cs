@@ -11,7 +11,10 @@ public class UnitFrameManager : MonoBehaviour {
 
 	[HideInInspector]
 	public List<Sprite> availablePhotos;
+
+	private UIController uIController;
 	private SimpleInterfaceController simpleInterfaceController;
+	private ComplexInterfaceController complexInterfaceController;
 
 	public float GetScaryMeterValue() 
 	{
@@ -34,15 +37,28 @@ public class UnitFrameManager : MonoBehaviour {
 
 	void Awake()
 	{
-		simpleInterfaceController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
-		
-		if (simpleInterfaceController != null)
+		uIController = FindObjectOfType(typeof(UIController)) as UIController;
+
+		if (uIController != null)
 		{
+			simpleInterfaceController = uIController.GetComponent<SimpleInterfaceController>();
+			complexInterfaceController = uIController.GetComponent<ComplexInterfaceController>();
+
+			uIController.onControlModeSwitch += ChangeControlModes;
 			simpleInterfaceController.onScarySliderChanged += UpdateAvailablePhotos;
+			complexInterfaceController.onListChanged += UpdateAvailablePhotos;
 		}
-		else
-		{
-			UpdateAvailablePhotos(frameVariance);
+	}
+
+	void ChangeControlModes(ControlMode mode)
+	{
+		switch (mode) {
+			case ControlMode.SimpleControlMode:
+				UpdateAvailablePhotos(frameVariance);
+			break;
+			case ControlMode.ComplexControlMode:
+				availablePhotos.Clear();
+			break;
 		}
 	}
 
@@ -58,6 +74,11 @@ public class UnitFrameManager : MonoBehaviour {
 			UpdateAvailablePhotos(frameVariance);
 			_frameVariance = frameVariance;
 		}
+	}
+
+	public void UpdateAvailablePhotos(List<Sprite> newList)
+	{
+		availablePhotos = newList;
 	}
 
 	public void UpdateAvailablePhotos(float newFrameVariance)

@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ControlMode {
+	SimpleControlMode,
+	ComplexControlMode
+}
+
 public class UIController : MonoBehaviour {
 
 	public GameObject simplePanel;
@@ -19,6 +24,8 @@ public class UIController : MonoBehaviour {
 	public string titleSimple;
 	public string titleComplex;
 
+	public Action<ControlMode> onControlModeSwitch = null;
+
 	void Start()
 	{
 		isSimpleCheckOn = simpleCheck.isOn;
@@ -26,9 +33,14 @@ public class UIController : MonoBehaviour {
 
 		simplePanel.SetActive(simpleCheck.isOn);
 		focusedPanel.SetActive(focusedCheck.isOn);
+
+		if (onControlModeSwitch != null)
+		{
+			onControlModeSwitch(ControlMode.SimpleControlMode);
+		}
 	}
 
-	void UpdateMainTitleText()
+	void UpdateControlMode()
 	{
 		if (isSimpleCheckOn)
 		{
@@ -45,7 +57,7 @@ public class UIController : MonoBehaviour {
 		simplePanel.SetActive(simpleCheck.isOn);
 		focusedPanel.SetActive(focusedCheck.isOn);
 
-		UpdateMainTitleText();
+		UpdateControlMode();
 	}
 
 	public void SimpleMode()
@@ -70,6 +82,11 @@ public class UIController : MonoBehaviour {
 		if (!isSimpleCheckOn && !isFocusedCheckOn)
 		{
 			isFocusedCheckOn = true;
+			
+			if (onControlModeSwitch != null)
+			{
+				onControlModeSwitch(ControlMode.ComplexControlMode);
+			}
 		}
 	}
 
@@ -95,6 +112,11 @@ public class UIController : MonoBehaviour {
 		if (!isFocusedCheckOn && !isSimpleCheckOn)
 		{
 			isSimpleCheckOn = true;
+
+			if (onControlModeSwitch != null)
+			{
+				onControlModeSwitch(ControlMode.SimpleControlMode);
+			}
 		}
 	}
 }

@@ -22,6 +22,7 @@ public class ComplexInterfaceController : MonoBehaviour {
 	public FrameAssetsSriptableObject frameAssets;
 
 	private List<Sprite> activeFrames = new List<Sprite>();
+	public Action<List<Sprite>> onListChanged = null;
 
 	void Awake()
 	{
@@ -109,9 +110,9 @@ public class ComplexInterfaceController : MonoBehaviour {
 	{
 		activeFrames.Add(obj.GetComponent<Image>().sprite);
 
-		foreach (Sprite sprite in activeFrames)
+		if (onListChanged != null)
 		{
-			print(sprite.name);
+			onListChanged(activeFrames);
 		}
 	}
 
@@ -119,9 +120,9 @@ public class ComplexInterfaceController : MonoBehaviour {
 	{
 		activeFrames.Remove(obj.GetComponent<Image>().sprite);
 
-		foreach (Sprite sprite in activeFrames)
+		if (onListChanged != null)
 		{
-			print(sprite.name);
+			onListChanged(activeFrames);
 		}
 	}
 }

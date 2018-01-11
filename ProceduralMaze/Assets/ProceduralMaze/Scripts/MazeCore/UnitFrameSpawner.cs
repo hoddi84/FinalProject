@@ -55,7 +55,10 @@ public class UnitFrameSpawner : MonoBehaviour {
 
 		listOfSpawnPoints = RandomizeSpawnList(listOfSpawnPoints);
 
-		Initialize();
+		if (frameManager.availablePhotos.Count != 0)
+		{
+			Initialize();
+		}
 	}
 
 	void OnDisable()
