@@ -14,8 +14,14 @@ public class ComplexInterfaceController : MonoBehaviour {
 	public Action<float> onLightIntensityChanged = null;
 	public Action<float> onAmbienceIntensityChanged = null;
 
-	public GameObject lightingPanel;
-	public GameObject soundPanel;
+	public GameObject lightingControls;
+	public GameObject soundControls;
+	public GameObject frameControls;
+	public GameObject frameContents;
+	public GameObject frameContentPrefab;
+	public FrameAssetsSriptableObject frameAssets;
+
+	private List<Sprite> activeFrames = new List<Sprite>();
 
 	void Awake()
 	{
@@ -32,8 +38,10 @@ public class ComplexInterfaceController : MonoBehaviour {
 
 	void Initialize()
 	{
-		lightingPanel.SetActive(true);
-		soundPanel.SetActive(false);
+		lightingControls.SetActive(true);
+		soundControls.SetActive(false);
+
+		PopulateFrameView();
 	}
 
 	void UpdateLightIntensity(float newLightIntensity)
@@ -54,13 +62,66 @@ public class ComplexInterfaceController : MonoBehaviour {
 
 	public void EnableSoundPanel()
 	{
-		soundPanel.SetActive(true);
-		lightingPanel.SetActive(false);
+		soundControls.SetActive(true);
+		lightingControls.SetActive(false);
+		frameControls.SetActive(false);
 	}
 
 	public void EnableLightingPanel()
 	{
-		lightingPanel.SetActive(true);
-		soundPanel.SetActive(false);
+		lightingControls.SetActive(true);
+		soundControls.SetActive(false);
+		frameControls.SetActive(false);
+	}
+
+	public void EnableFrameControls()
+	{
+		frameControls.SetActive(true);
+		lightingControls.SetActive(false);
+		soundControls.SetActive(false);
+	}
+
+	private void PopulateFrameView()
+	{
+		foreach (Sprite sprite in frameAssets.healthyFlowers)
+		{
+			GameObject t = Instantiate(frameContentPrefab);
+			t.GetComponent<Image>().sprite = sprite;
+			t.transform.SetParent(frameContents.transform);
+		}
+
+		foreach (Sprite sprite in frameAssets.dyingFlowers)
+		{
+			GameObject t = Instantiate(frameContentPrefab);
+			t.GetComponent<Image>().sprite = sprite;
+			t.transform.SetParent(frameContents.transform);
+		}
+
+		foreach (Sprite sprite in frameAssets.scary)
+		{
+			GameObject t = Instantiate(frameContentPrefab);
+			t.GetComponent<Image>().sprite = sprite;
+			t.transform.SetParent(frameContents.transform);
+		}
+	}
+
+	public void AddToActiveFrames(GameObject obj)
+	{
+		activeFrames.Add(obj.GetComponent<Image>().sprite);
+
+		foreach (Sprite sprite in activeFrames)
+		{
+			print(sprite.name);
+		}
+	}
+
+	public void RemoveFromActiveFrames(GameObject obj)
+	{
+		activeFrames.Remove(obj.GetComponent<Image>().sprite);
+
+		foreach (Sprite sprite in activeFrames)
+		{
+			print(sprite.name);
+		}
 	}
 }
