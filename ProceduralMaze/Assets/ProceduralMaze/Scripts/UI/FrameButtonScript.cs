@@ -51,4 +51,16 @@ public class FrameButtonScript : MonoBehaviour {
 			}
 		}
 	}
+
+	public void SelectFrame()
+	{
+		isSelected = true;
+		GetComponent<Outline>().enabled = true;
+	}
+
+	public void DeselectFrame()
+	{
+		isSelected = false;
+		GetComponent<Outline>().enabled = false;
+	}
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class DecalManager : MonoBehaviour {
 
 	private SimpleInterfaceController simpleInterface;
+	private ComplexInterfaceController complexInterface;
 
 	[Range(0.0f, 1.0f)]
 	public float bloodDecal;
@@ -16,19 +17,24 @@ public class DecalManager : MonoBehaviour {
 	void Awake()
 	{
 		simpleInterface = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
+		complexInterface = FindObjectOfType(typeof(ComplexInterfaceController)) as ComplexInterfaceController;
 
 		if (simpleInterface != null)
-		{
-			bloodDecal = simpleInterface.scarySlider.value;
-			_bloodDecal = bloodDecal;
-			
+		{	
 			simpleInterface.onScarySliderChanged += UpdateBloodDecals;
 		}
-		else
+
+		if (complexInterface != null)
 		{
-			bloodDecal = 0;
-			_bloodDecal = bloodDecal;
+			complexInterface.onDecalBloodAmountChanged += UpdateBloodDecals;
 		}
+
+	}
+
+	void Start()
+	{
+		bloodDecal = 0;
+		_bloodDecal = bloodDecal;
 	}
 
 	void Update()

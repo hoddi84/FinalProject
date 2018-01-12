@@ -26,6 +26,8 @@ public class UnitDoor : MonoBehaviour {
 	private DirectorClickable directorClickableLock;
 	private DirectorClickable directorClickableOpen;
 
+	private UIController uiController;
+
 	private void Awake()
 	{
 		doorManager = FindObjectOfType(typeof(UnitDoorManager)) as UnitDoorManager;
@@ -37,6 +39,8 @@ public class UnitDoor : MonoBehaviour {
 
 		directorClickableLock = doorLockMechanic.GetComponentInChildren<DirectorClickable>();
 		directorClickableOpen = doorOpenMechanic.GetComponentInChildren<DirectorClickable>();	
+
+		uiController = FindObjectOfType(typeof(UIController)) as UIController;
 	}
 
 	void OnEnable()
@@ -73,6 +77,23 @@ public class UnitDoor : MonoBehaviour {
 		}
 
 		CheckDoorState();
+
+		if (uiController.isSimpleCheckOn)
+		{
+			if (doorLockMechanic.activeInHierarchy && doorOpenMechanic.activeInHierarchy)
+			{
+				doorLockMechanic.SetActive(false);
+				doorOpenMechanic.SetActive(false);
+			}
+		}
+		else
+		{
+			if (!doorLockMechanic.activeInHierarchy && !doorOpenMechanic.activeInHierarchy)
+			{
+				doorLockMechanic.SetActive(true);
+				doorOpenMechanic.SetActive(true);
+			}
+		}
 	}
 
 	/// <summary>

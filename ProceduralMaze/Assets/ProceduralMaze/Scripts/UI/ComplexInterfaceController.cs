@@ -8,21 +8,34 @@ public class ComplexInterfaceController : MonoBehaviour {
 
 	public Slider lightIntensitySlider;
 	public Slider lightAmbienceSlider;
+	public Slider decalBloodSlider;
 
 	private LightManager lightManager;
 
 	public Action<float> onLightIntensityChanged = null;
 	public Action<float> onAmbienceIntensityChanged = null;
+	public Action<float> onDecalBloodAmountChanged = null;
 
-	public GameObject lightingControls;
-	public GameObject soundControls;
-	public GameObject frameControls;
+	public GameObject cntrlLighting;
+	public GameObject cntrlSound;
+	public GameObject cntrlFrames;
+	public GameObject cntrlOther;
 	public GameObject frameContents;
 	public GameObject frameContentPrefab;
 	public FrameAssetsSriptableObject frameAssets;
 
 	private List<Sprite> activeFrames = new List<Sprite>();
 	public Action<List<Sprite>> onListChanged = null;
+	public Action onSelectAllFrames = null;
+	public Action onDeselectAllFrames = null;
+
+	// Tab Buttons
+	public GameObject btnLighting;
+	public GameObject btnSound;
+	public GameObject btnFrame;
+	public GameObject btnOther;
+	public Color btnDefaultColor;
+	public Color btnSelectedColor;
 
 	void Awake()
 	{
@@ -30,6 +43,7 @@ public class ComplexInterfaceController : MonoBehaviour {
 
 		lightIntensitySlider.onValueChanged.AddListener(UpdateLightIntensity);
 		lightAmbienceSlider.onValueChanged.AddListener(UpdateAmbienceIntensity);
+		decalBloodSlider.onValueChanged.AddListener(UpdateDecalBloodAmount);
 	}
 
 	void Start()
@@ -39,8 +53,15 @@ public class ComplexInterfaceController : MonoBehaviour {
 
 	void Initialize()
 	{
-		lightingControls.SetActive(true);
-		soundControls.SetActive(false);
+		cntrlLighting.SetActive(true);
+		cntrlSound.SetActive(false);
+		cntrlFrames.SetActive(false);
+		cntrlOther.SetActive(false);
+
+		btnLighting.GetComponent<Image>().color = btnSelectedColor;
+		btnSound.GetComponent<Image>().color = btnDefaultColor;
+		btnFrame.GetComponent<Image>().color = btnDefaultColor;
+		btnOther.GetComponent<Image>().color = btnDefaultColor;
 
 		PopulateFrameView();
 	}
@@ -61,25 +82,64 @@ public class ComplexInterfaceController : MonoBehaviour {
 		}
 	}
 
+	void UpdateDecalBloodAmount(float newValue)
+	{
+		if (onDecalBloodAmountChanged != null)
+		{
+			onDecalBloodAmountChanged(newValue);
+		}
+	}
+
 	public void EnableSoundPanel()
 	{
-		soundControls.SetActive(true);
-		lightingControls.SetActive(false);
-		frameControls.SetActive(false);
+		cntrlLighting.SetActive(false);
+		cntrlSound.SetActive(true);
+		cntrlFrames.SetActive(false);
+		cntrlOther.SetActive(false);
+
+		btnLighting.GetComponent<Image>().color = btnDefaultColor;
+		btnSound.GetComponent<Image>().color = btnSelectedColor;
+		btnFrame.GetComponent<Image>().color = btnDefaultColor;
+		btnOther.GetComponent<Image>().color = btnDefaultColor;
 	}
 
 	public void EnableLightingPanel()
 	{
-		lightingControls.SetActive(true);
-		soundControls.SetActive(false);
-		frameControls.SetActive(false);
+		cntrlLighting.SetActive(true);
+		cntrlSound.SetActive(false);
+		cntrlFrames.SetActive(false);
+		cntrlOther.SetActive(false);
+
+		btnLighting.GetComponent<Image>().color = btnSelectedColor;
+		btnSound.GetComponent<Image>().color = btnDefaultColor;
+		btnFrame.GetComponent<Image>().color = btnDefaultColor;
+		btnOther.GetComponent<Image>().color = btnDefaultColor;
 	}
 
 	public void EnableFrameControls()
 	{
-		frameControls.SetActive(true);
-		lightingControls.SetActive(false);
-		soundControls.SetActive(false);
+		cntrlLighting.SetActive(false);
+		cntrlSound.SetActive(false);
+		cntrlFrames.SetActive(true);
+		cntrlOther.SetActive(false);
+
+		btnLighting.GetComponent<Image>().color = btnDefaultColor;
+		btnSound.GetComponent<Image>().color = btnDefaultColor;
+		btnFrame.GetComponent<Image>().color = btnSelectedColor;
+		btnOther.GetComponent<Image>().color = btnDefaultColor;
+	}
+
+	public void EnableOtherControls()
+	{
+		cntrlLighting.SetActive(false);
+		cntrlSound.SetActive(false);
+		cntrlFrames.SetActive(false);
+		cntrlOther.SetActive(true);
+
+		btnLighting.GetComponent<Image>().color = btnDefaultColor;
+		btnSound.GetComponent<Image>().color = btnDefaultColor;
+		btnFrame.GetComponent<Image>().color = btnDefaultColor;
+		btnOther.GetComponent<Image>().color = btnSelectedColor;
 	}
 
 	private void PopulateFrameView()
@@ -88,6 +148,8 @@ public class ComplexInterfaceController : MonoBehaviour {
 		{
 			GameObject t = Instantiate(frameContentPrefab);
 			t.GetComponent<Image>().sprite = sprite;
+			onSelectAllFrames += t.GetComponent<FrameButtonScript>().SelectFrame;
+			onDeselectAllFrames += t.GetComponent<FrameButtonScript>().DeselectFrame;
 			t.transform.SetParent(frameContents.transform);
 		}
 
@@ -95,6 +157,8 @@ public class ComplexInterfaceController : MonoBehaviour {
 		{
 			GameObject t = Instantiate(frameContentPrefab);
 			t.GetComponent<Image>().sprite = sprite;
+			onSelectAllFrames += t.GetComponent<FrameButtonScript>().SelectFrame;
+			onDeselectAllFrames += t.GetComponent<FrameButtonScript>().DeselectFrame;
 			t.transform.SetParent(frameContents.transform);
 		}
 
@@ -102,6 +166,8 @@ public class ComplexInterfaceController : MonoBehaviour {
 		{
 			GameObject t = Instantiate(frameContentPrefab);
 			t.GetComponent<Image>().sprite = sprite;
+			onSelectAllFrames += t.GetComponent<FrameButtonScript>().SelectFrame;
+			onDeselectAllFrames += t.GetComponent<FrameButtonScript>().DeselectFrame;
 			t.transform.SetParent(frameContents.transform);
 		}
 	}
@@ -119,6 +185,47 @@ public class ComplexInterfaceController : MonoBehaviour {
 	public void RemoveFromActiveFrames(GameObject obj)
 	{
 		activeFrames.Remove(obj.GetComponent<Image>().sprite);
+
+		if (onListChanged != null)
+		{
+			onListChanged(activeFrames);
+		}
+	}
+
+	public void SelectAllFrames()
+	{
+		if (onSelectAllFrames != null)
+		{
+			onSelectAllFrames();
+		}
+
+		foreach (Sprite sprite in frameAssets.healthyFlowers)
+		{
+			activeFrames.Add(sprite);
+		}
+		foreach (Sprite sprite in frameAssets.dyingFlowers)
+		{
+			activeFrames.Add(sprite);
+		}
+		foreach (Sprite sprite in frameAssets.scary)
+		{
+			activeFrames.Add(sprite);
+		}
+
+		if (onListChanged != null)
+		{
+			onListChanged(activeFrames);
+		}
+	}
+
+	public void DeselectAllFrames()
+	{
+		if (onDeselectAllFrames != null)
+		{
+			onDeselectAllFrames();
+		}
+
+		activeFrames.Clear();
 
 		if (onListChanged != null)
 		{

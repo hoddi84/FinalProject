@@ -17,8 +17,8 @@ public class UIController : MonoBehaviour {
 	public Toggle simpleCheck;
 	public Toggle focusedCheck;
 
-	private bool isSimpleCheckOn;
-	private bool isFocusedCheckOn;
+	public bool isSimpleCheckOn;
+	public bool isFocusedCheckOn;
 
 	public Text mainTitleText;
 	public string titleSimple;
