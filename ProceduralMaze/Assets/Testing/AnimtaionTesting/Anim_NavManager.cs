@@ -5,23 +5,19 @@ using UnityEngine.AI;
 
 public class Anim_NavManager : MonoBehaviour {
 
-	public GameObject zombie;
-	private NavMeshAgent agent;
+	public GameObject[] characters;
 	private Vector3 currentStop;
-	private bool movingOnPath = false;
-	private Animator animator;
 
 	// Use this for initialization
 	void Start () {
 		
-		currentStop = zombie.transform.position;
-
-		animator = zombie.GetComponent<Animator>();
-		agent = zombie.GetComponent<NavMeshAgent>();
+		currentStop = characters[0].transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		ForceYPosition(characters, 0.0f);
 
 		if (Input.GetMouseButtonDown(0))
 		{
@@ -30,29 +26,45 @@ public class Anim_NavManager : MonoBehaviour {
 			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
 			{
 				currentStop = hit.point;
-				agent.SetDestination(hit.point);
+				foreach (GameObject agent in characters)
+				{
+					agent.GetComponent<NavMeshAgent>().SetDestination(currentStop);
+				}
 			}
 		}
 
-		if (Vector3.Distance(currentStop, zombie.transform.position) < .5f)
+		foreach (GameObject agent in characters)
 		{
-			if (animator.GetBool("Stop") == false)
+		if (Vector3.Distance(currentStop, agent.transform.position) < .5f)
+		{
+			if (agent.GetComponent<Animator>().GetBool("Stop") == false)
 			{
 				print("Stopped");
-				agent.isStopped = true;
-				movingOnPath = false;
-				animator.SetBool("Stop", true);
+				agent.GetComponent<NavMeshAgent>().isStopped = true;
+				agent.GetComponent<Animator>().SetBool("Stop", true);
 			}
 		}
 		else
 		{
-			if (animator.GetBool("Stop") == true)
+			if (agent.GetComponent<Animator>().GetBool("Stop") == true)
 			{
 				print("moving");
-				agent.isStopped = false;
-				animator.SetBool("Stop", false);
+				agent.GetComponent<NavMeshAgent>().isStopped = false;
+				agent.GetComponent<Animator>().SetBool("Stop", false);
 			}
+		}	
+		}	
+	}
+
+	/*
+	 * Annoying hack, playing animations causes model to hover slightly.
+	 * TODO: FIX
+	 */
+	private void ForceYPosition(GameObject[] objToForce, float yPos)
+	{
+		foreach (GameObject obj in objToForce)
+		{
+			obj.transform.position = new Vector3(obj.transform.position.x, yPos, obj.transform.position.z);
 		}
-		
 	}
 }
