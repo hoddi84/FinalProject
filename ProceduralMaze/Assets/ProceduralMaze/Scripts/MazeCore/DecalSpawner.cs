@@ -20,9 +20,9 @@ public class DecalSpawner : MonoBehaviour {
 
 	void SpawnDecals(float value)
 	{
-		if (value >= .7)
+		if (value >= 0)
 		{
-			int nrOfDecals = (int)(bloodDecals.Length * value / 2);
+			int nrOfDecals = (int)(bloodDecals.Length * value);
 
 			List<GameObject> listOfDecals = new List<GameObject>(bloodDecals);
 			listOfDecals = RandomizeSpawnList(listOfDecals);
@@ -31,7 +31,6 @@ public class DecalSpawner : MonoBehaviour {
 			{
 				listOfDecals[i].SetActive(true);
 			}
-			
 		}
 	}
 
