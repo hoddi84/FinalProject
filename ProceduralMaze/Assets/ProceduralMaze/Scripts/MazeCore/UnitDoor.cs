@@ -78,20 +78,23 @@ public class UnitDoor : MonoBehaviour {
 
 		CheckDoorState();
 
-		if (uiController.isSimpleCheckOn)
+		if (uiController != null)
 		{
-			if (doorLockMechanic.activeInHierarchy && doorOpenMechanic.activeInHierarchy)
+			if (uiController.isSimpleCheckOn)
 			{
-				doorLockMechanic.SetActive(false);
-				doorOpenMechanic.SetActive(false);
+				if (doorLockMechanic.activeInHierarchy && doorOpenMechanic.activeInHierarchy)
+				{
+					doorLockMechanic.SetActive(false);
+					doorOpenMechanic.SetActive(false);
+				}
 			}
-		}
-		else
-		{
-			if (!doorLockMechanic.activeInHierarchy && !doorOpenMechanic.activeInHierarchy)
+			else
 			{
-				doorLockMechanic.SetActive(true);
-				doorOpenMechanic.SetActive(true);
+				if (!doorLockMechanic.activeInHierarchy && !doorOpenMechanic.activeInHierarchy)
+				{
+					doorLockMechanic.SetActive(true);
+					doorOpenMechanic.SetActive(true);
+				}
 			}
 		}
 	}

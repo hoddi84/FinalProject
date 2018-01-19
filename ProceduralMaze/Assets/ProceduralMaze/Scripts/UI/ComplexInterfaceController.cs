@@ -34,8 +34,14 @@ public class ComplexInterfaceController : MonoBehaviour {
 	public GameObject btnSound;
 	public GameObject btnFrame;
 	public GameObject btnOther;
+
+	private bool btnLightingHover;
+	private bool btnSoundHover;
+	private bool btnFrameHover;
+	private bool btnOtherHover;
 	public Color btnDefaultColor;
 	public Color btnSelectedColor;
+	public Color btnHoverColor;
 
 	void Awake()
 	{
