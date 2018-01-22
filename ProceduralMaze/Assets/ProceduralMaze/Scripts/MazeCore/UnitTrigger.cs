@@ -21,10 +21,48 @@ public class UnitTrigger : MonoBehaviour {
 	private Vector3 entryVector;
 	private Vector3 outVector;
 
+	public string nameOfHide;
+	public string nameOfShow;
+
+	private GameObject objToHide;
+	private GameObject objToShow;
+
+	void Awake()
+	{
+		if (nameOfHide != "")
+		{
+			objToHide = GameObject.Find("/Core/HospitalRoom/Contents/" + nameOfHide);
+		}
+
+		if (nameOfShow != "")
+		{
+			objToShow = GameObject.Find("/Core/HospitalRoom/Contents/" + nameOfShow);
+		}
+	}
+
     void Start()
     {
         FindAxisOfEntry();
     }
+
+	void ToggleMainWalls()
+	{
+		if (objToHide != null)
+		{
+			if (objToHide.activeInHierarchy)
+			{
+				objToHide.SetActive(false);
+			}
+		}
+
+		if (objToShow != null)
+		{
+			if (!objToShow.activeInHierarchy)
+			{
+				objToShow.SetActive(true);
+			}
+		}
+	}
 
     void OnTriggerEnter(Collider other)
 	{
@@ -56,6 +94,7 @@ public class UnitTrigger : MonoBehaviour {
             if (onTriggerEntered != null)
             {
                 onTriggerEntered(this);
+				ToggleMainWalls();
             }
 		}
 	}

@@ -48,6 +48,10 @@ public class UnitFrameManager : MonoBehaviour {
 			simpleInterfaceController.onScarySliderChanged += UpdateAvailablePhotos;
 			complexInterfaceController.onListChanged += UpdateAvailablePhotos;
 		}
+		else
+		{
+			UpdateAvailablePhotos(frameVariance);
+		}
 	}
 
 	void ChangeControlModes(ControlMode mode)
