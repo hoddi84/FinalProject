@@ -309,68 +309,6 @@ public class UnitManager : MonoBehaviour {
         }
     }
 
-    private void CheckInstantiatedUnitOLD(UnitTrigger currentTrigger, string toType, GameObject[] unitsToSpawn)
-    {
-        print(currentTrigger.GetHashCode());
-        if (!pathDict.ContainsKey(toType))
-        {
-            SpawnRandomUnit(currentTrigger, toType, unitsToSpawn);
-        }
-        else
-        {
-            SpawnExistingUnit(currentTrigger, toType);
-        }
-    }
-
-    private void SpawnExistingUnit(UnitTrigger currentTrigger, string type)
-    {
-
-        if (currentTrigger.id != 0)
-        {
-
-        }
-
-        GameObject t;
-        pathDict.TryGetValue(type, out t);
-
-        if (!t.activeInHierarchy)
-        {
-            t.SetActive(true);
-            RegisterListeners(t);
-        }
-        else
-        {
-            DeregisterListeners(t);
-            t.SetActive(false);
-        }  
-    }
-
-    private void SpawnRandomUnit(UnitTrigger currentTrigger, string toType, GameObject[] unitsToSpawn)
-    {
-        GameObject newUnit = null;
-
-        int rndIndex = UnityEngine.Random.Range(0, unitsToSpawn.Length);
-        newUnit = Instantiate(unitsToSpawn[rndIndex]);
-
-        UnitTrigger[] triggers = newUnit.GetComponentsInChildren<UnitTrigger>();
-        foreach (UnitTrigger trigger in triggers)
-        {
-            if (trigger.toType == currentTrigger.isType)
-            {
-                trigger.id = currentTrigger.id;
-            }
-        }
-
-        newUnit.transform.parent = parentOfUnits.transform;
-
-        RegisterListeners(newUnit);
-
-        if (onInstantiate != null)
-        {
-            onInstantiate(currentTrigger.toType, newUnit);
-        }
-    }
-
     // Here we want to check if we have spawned this type, but also we want to check if we
     // should spawn a new random type, i.e. if the user has gone a circle.
     // HINT: If the new current type matches the previous type we know the user has gone backwards.
