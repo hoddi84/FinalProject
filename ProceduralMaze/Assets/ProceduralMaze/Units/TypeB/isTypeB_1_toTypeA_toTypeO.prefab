@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 114967985091638556}
   - component: {fileID: 65063205639391106}
   m_Layer: 0
-  m_Name: connect_TypeA
+  m_Name: connect_TypeA_HidePOS1_S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 114799781245499920}
   - component: {fileID: 65093494302418332}
   m_Layer: 0
-  m_Name: connect_TypeO
+  m_Name: connect_TypeO_ShowPOS1_S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1174,6 +1174,9 @@ MonoBehaviour:
   toType: TypeO
   nameOfHide: SOUTH
   nameOfShow: 
+  showOutside: 1
+  outsidePrefab: {fileID: 1686453887321020, guid: 314ec5abd2117be438a487b1b6fe30bb,
+    type: 2}
 --- !u!114 &114967985091638556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1190,3 +1193,6 @@ MonoBehaviour:
   toType: TypeA
   nameOfHide: 
   nameOfShow: SOUTH
+  showOutside: 0
+  outsidePrefab: {fileID: 1686453887321020, guid: 314ec5abd2117be438a487b1b6fe30bb,
+    type: 2}

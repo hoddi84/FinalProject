@@ -27,6 +27,11 @@ public class UnitTrigger : MonoBehaviour {
 	private GameObject objToHide;
 	private GameObject objToShow;
 
+	public bool showOutside;
+	public GameObject outsidePrefab;
+	private GameObject tmp_outside;
+
+
 	void Awake()
 	{
 		if (nameOfHide != "")
@@ -64,6 +69,24 @@ public class UnitTrigger : MonoBehaviour {
 		}
 	}
 
+	void ToggleOutside()
+	{
+		if (outsidePrefab != null)
+		{
+			if (showOutside)
+			{
+				tmp_outside = Instantiate(outsidePrefab);
+			}
+			else
+			{
+				if (tmp_outside != null)
+				{
+					Destroy(tmp_outside);
+				}
+			}
+		}
+	}
+
     void OnTriggerEnter(Collider other)
 	{
 		if (other.tag == "Player")
@@ -95,6 +118,7 @@ public class UnitTrigger : MonoBehaviour {
             {
                 onTriggerEntered(this);
 				ToggleMainWalls();
+				ToggleOutside();
             }
 		}
 	}

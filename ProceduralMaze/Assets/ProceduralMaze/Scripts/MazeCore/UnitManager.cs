@@ -62,6 +62,8 @@ public class UnitManager : MonoBehaviour {
 
     private GameObject currentUnit = null;
 
+    private GameObject parentOfAll;
+
     private void Awake()
     {
         onInstantiate += UpdatePathDictionary;
