@@ -54,6 +54,7 @@ public class UnitManager : MonoBehaviour {
     public GameObject[] unitK;
     public GameObject[] unitK1;
     public GameObject[] unitO;
+    public GameObject[] unitO1;
 
     private Dictionary<string, GameObject> pathDict = new Dictionary<string, GameObject>();
     private Action<string, GameObject> onInstantiate = null;
@@ -311,6 +312,9 @@ public class UnitManager : MonoBehaviour {
                 break;
             case "TypeO":
                 CheckInstantiatedUnit(trigger, "TypeO", unitO);
+                break;
+            case "TypeO1":
+                CheckInstantiatedUnit(trigger, "TypeO1", unitO1);
                 break;
         }
     }

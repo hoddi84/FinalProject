@@ -75,14 +75,14 @@ public class UnitTrigger : MonoBehaviour {
 		{
 			if (showOutside)
 			{
-				tmp_outside = Instantiate(outsidePrefab);
+				if (GameObject.Find(outsidePrefab.name + "(Clone)") == null)
+				{
+					Instantiate(outsidePrefab);
+				}
 			}
 			else
 			{
-				if (tmp_outside != null)
-				{
-					Destroy(tmp_outside);
-				}
+				Destroy(GameObject.Find(outsidePrefab.name + "(Clone)"));
 			}
 		}
 	}
