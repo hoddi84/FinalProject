@@ -382,6 +382,7 @@ GameObject:
   - component: {fileID: 23415915405594618}
   - component: {fileID: 54116180940811216}
   - component: {fileID: 64689202252965144}
+  - component: {fileID: 208873017390265332}
   m_Layer: 10
   m_Name: WallMedium
   m_TagString: Wall
@@ -2259,3 +2260,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_DirtyAABB: 1
+--- !u!208 &208873017390265332
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1932186036319920}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.67, y: 1.3850001, z: 0.038000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0.038000003}
+  m_TimeToStationary: 0.5

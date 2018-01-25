@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 23968009898235350}
   - component: {fileID: 54574245204829580}
   - component: {fileID: 64984871431274044}
+  - component: {fileID: 208087446174370262}
   m_Layer: 10
   m_Name: WallCorner
   m_TagString: Wall
@@ -3059,3 +3060,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_DirtyAABB: 0
+--- !u!208 &208087446174370262
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223455176061404}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.81700003, y: 1.3850001, z: 0.36}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: -0.003, y: 0, z: 0.29000002}
+  m_TimeToStationary: 0.5
