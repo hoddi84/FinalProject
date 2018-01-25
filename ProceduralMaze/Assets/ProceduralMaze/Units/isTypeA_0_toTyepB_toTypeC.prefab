@@ -1310,6 +1310,10 @@ MonoBehaviour:
   fromType: NULL
   isType: TypeA
   toType: TypeB
+  nameOfHide: 
+  nameOfShow: 
+  showOutside: 0
+  outsidePrefab: {fileID: 0}
 --- !u!114 &114654961404253596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1348,6 +1352,10 @@ MonoBehaviour:
   fromType: NULL
   isType: TypeA
   toType: TypeC
+  nameOfHide: 
+  nameOfShow: 
+  showOutside: 0
+  outsidePrefab: {fileID: 0}
 --- !u!114 &114922050515376638
 MonoBehaviour:
   m_ObjectHideFlags: 1
