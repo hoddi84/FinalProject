@@ -8,6 +8,7 @@ public class ElisaSceneController : MonoBehaviour {
 	
 	private bool isWaving = false;
 	private bool isDancing = false;
+	private bool isThriller = false;
 
 	void Awake()
 	{
@@ -41,6 +42,20 @@ public class ElisaSceneController : MonoBehaviour {
 			{
 				animator.SetBool("Dance", true);
 				isDancing = true;
+			}
+		}
+
+		if (Input.GetKeyDown(KeyCode.T))
+		{
+			if (isThriller)
+			{
+				animator.SetBool("Thriller", false);
+				isThriller = false;
+			}
+			else
+			{
+				animator.SetBool("Thriller", true);
+				isThriller = true;
 			}
 		}
 	}
