@@ -58,6 +58,17 @@ public class UnitManager : MonoBehaviour {
     public GameObject[] unitO2;
     public GameObject[] unitO3;
     public GameObject[] unitO4;
+    public GameObject[] unitL;
+    public GameObject[] unitL1;
+    public GameObject[] unitL2;
+    public GameObject[] unitL3;
+    public GameObject[] unitL4;
+    public GameObject[] unitL5;
+    public GameObject[] unitL6;
+    public GameObject[] unitL7;
+    public GameObject[] unitL8;
+    public GameObject[] unitL9;
+    public GameObject[] unitL10;
 
     private Dictionary<string, GameObject> pathDict = new Dictionary<string, GameObject>();
     private Action<string, GameObject> onInstantiate = null;
@@ -327,6 +338,39 @@ public class UnitManager : MonoBehaviour {
                 break;
             case "TypeO4":
                 CheckInstantiatedUnit(trigger, "TypeO4", unitO4);
+                break;
+            case "TypeL":
+                CheckInstantiatedUnit(trigger, "TypeL", unitL);
+                break;
+            case "TypeL1":
+                CheckInstantiatedUnit(trigger, "TypeL1", unitL1);
+                break;
+            case "TypeL2":
+                CheckInstantiatedUnit(trigger, "TypeL2", unitL2);
+                break;
+            case "TypeL3":
+                CheckInstantiatedUnit(trigger, "TypeL3", unitL3);
+                break;
+            case "TypeL4":
+                CheckInstantiatedUnit(trigger, "TypeL4", unitL4);
+                break;
+            case "TypeL5":
+                CheckInstantiatedUnit(trigger, "TypeL5", unitL5);
+                break;
+            case "TypeL6":
+                CheckInstantiatedUnit(trigger, "TypeL6", unitL6);
+                break;
+            case "TypeL7":
+                CheckInstantiatedUnit(trigger, "TypeL7", unitL7);
+                break;
+            case "TypeL8":
+                CheckInstantiatedUnit(trigger, "TypeL8", unitL8);
+                break;
+            case "TypeL9":
+                CheckInstantiatedUnit(trigger, "TypeL9", unitL9);
+                break;
+            case "TypeL10":
+                CheckInstantiatedUnit(trigger, "TypeL10", unitL10);
                 break;
         }
     }
