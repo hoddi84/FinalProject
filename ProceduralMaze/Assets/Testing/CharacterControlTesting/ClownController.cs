@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class ClownController : MonoBehaviour {
 
+	private enum Animation { WALK }
+	private const string WALK = "Walk";
 	public GameObject clown;
 	private NavMeshAgent agentClown;
 	private Animator animatorClown;
@@ -19,6 +21,28 @@ public class ClownController : MonoBehaviour {
 
 	public bool followPlayer;
 	public GameObject player;
+
+	bool GetAnimationState(Animation animation)
+	{
+		if (animation == Animation.WALK)
+		{
+			if (animatorClown.GetBool(WALK))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void SetAnimationState(Animation animation, bool state)
+	{
+		switch (animation) {
+
+			case Animation.WALK:
+				animatorClown.SetBool(WALK, state);
+				break;	
+		}
+	}
 
 	void Awake()
 	{
@@ -67,19 +91,20 @@ public class ClownController : MonoBehaviour {
 
 		CheckLookAtHeightChanged();
 
-
-		if (Vector3.Distance(currentPosition, clown.transform.position) >= .2f)
+		if (Vector3.Distance(currentPosition, clown.transform.position) >= .6f)
 		{
-			if (!animatorClown.GetBool("Walk"))
+			agentClown.isStopped = false;
+			if (!GetAnimationState(Animation.WALK))
 			{
-				animatorClown.SetBool("Walk", true);
+				SetAnimationState(Animation.WALK, true);
 			}
 		}
 		else
 		{
-			if (animatorClown.GetBool("Walk"))
+			agentClown.isStopped = true;
+			if (GetAnimationState(Animation.WALK))
 			{
-				animatorClown.SetBool("Walk", false);
+				SetAnimationState(Animation.WALK, false);
 			}
 		}	
 
