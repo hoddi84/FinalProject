@@ -23,6 +23,7 @@ public class ClownController : MonoBehaviour {
 	public GameObject player;
 
 	private ProMouseInput _mouseInput;
+	private UIController _uIController;
 
 	bool GetAnimationState(Animation animation)
 	{
@@ -49,13 +50,17 @@ public class ClownController : MonoBehaviour {
 	void Awake()
 	{
 		_mouseInput = FindObjectOfType<ProMouseInput>();
+		_uIController = FindObjectOfType<UIController>();
 		agentClown = clown.GetComponent<NavMeshAgent>();
 		animatorClown = clown.GetComponent<Animator>();
 		headLookController = clown.GetComponent<HeadLookController>();
 		currentPosition = clown.transform.position;
 
-		_mouseInput.onRenderTextureClickDown += SetAgentDestination;
-		_mouseInput.onRenderTextureClickDownLeft += SetAgentLookDirection;
+		if (_uIController != null)
+		{
+			_mouseInput.onRenderTextureClickDown += SetAgentDestination;
+			_mouseInput.onRenderTextureClickDownLeft += SetAgentLookDirection;
+		}
 	}
 
 	void Start () {
@@ -71,6 +76,11 @@ public class ClownController : MonoBehaviour {
 		if (followPlayer)
 		{
 			FollowPlayer(player);
+		}
+
+		if (_uIController == null)
+		{
+			EnableDefaultControls();
 		}
 
 		CheckLookAtHeightChanged();
@@ -138,6 +148,7 @@ public class ClownController : MonoBehaviour {
 			{
 				agentClown.SetDestination(hit.point);
 				currentPosition = hit.point;
+				currentPosition .y = 0;
 			}
 		}	
 
