@@ -15,6 +15,7 @@ public class ProMouseInput : MonoBehaviour {
     public GameObject renderTexture;
     public Camera overHeadCamera;
     public Action<Vector3, RaycastHit, Camera> onRenderTextureClickDown = null;
+    public Action<Vector3, RaycastHit, Camera> onRenderTextureClickDownLeft = null;
 
     [HideInInspector]
     public Vector3 renderTextureCoord;
@@ -69,6 +70,25 @@ public class ProMouseInput : MonoBehaviour {
                     }
 
                     renderTextureCoord = screenCoord;
+                }
+            }
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            Vector2 screenCoord;
+
+            if (GetMouseScreenPosition(renderTexture, out screenCoord))
+            {
+                RaycastHit hit;
+                Ray ray = overHeadCamera.ScreenPointToRay(screenCoord);
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (onRenderTextureClickDownLeft != null)
+                    {
+                        onRenderTextureClickDownLeft(screenCoord, hit, overHeadCamera);
+                    }
                 }
             }
         }

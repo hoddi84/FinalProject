@@ -16,7 +16,7 @@ public class ProMovable : MonoBehaviour {
         _mouseInput = FindObjectOfType(typeof(ProMouseInput)) as ProMouseInput;
         _mouseInput.onMouseButtonDownLeftRaycast += EnableObject;
         _mouseInput.onMouseButtonLeftUp += ReleaseObject;
-        _mouseInput.onRenderTextureClickDown = EnableObjectOverTexture;
+        _mouseInput.onRenderTextureClickDown += EnableObjectOverTexture;
 
         _height = transform.position.y;
     }

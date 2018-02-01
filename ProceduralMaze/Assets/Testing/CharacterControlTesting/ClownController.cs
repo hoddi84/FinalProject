@@ -22,6 +22,8 @@ public class ClownController : MonoBehaviour {
 	public bool followPlayer;
 	public GameObject player;
 
+	private ProMouseInput _mouseInput;
+
 	bool GetAnimationState(Animation animation)
 	{
 		if (animation == Animation.WALK)
@@ -46,10 +48,14 @@ public class ClownController : MonoBehaviour {
 
 	void Awake()
 	{
+		_mouseInput = FindObjectOfType<ProMouseInput>();
 		agentClown = clown.GetComponent<NavMeshAgent>();
 		animatorClown = clown.GetComponent<Animator>();
 		headLookController = clown.GetComponent<HeadLookController>();
 		currentPosition = clown.transform.position;
+
+		_mouseInput.onRenderTextureClickDown += SetAgentDestination;
+		_mouseInput.onRenderTextureClickDownLeft += SetAgentLookDirection;
 	}
 
 	void Start () {
@@ -62,6 +68,68 @@ public class ClownController : MonoBehaviour {
 		clown.transform.position = new Vector3(clown.transform.position.x, 0, clown.transform.position.z);
 		headLookController.target = lookAtPosition;
 
+		if (followPlayer)
+		{
+			FollowPlayer(player);
+		}
+
+		CheckLookAtHeightChanged();
+
+		if (Vector3.Distance(currentPosition, clown.transform.position) >= .1f)
+		{
+			agentClown.isStopped = false;
+			if (!GetAnimationState(Animation.WALK))
+			{
+				SetAnimationState(Animation.WALK, true);
+			}
+		}
+		else
+		{
+			agentClown.isStopped = true;
+			if (GetAnimationState(Animation.WALK))
+			{
+				SetAnimationState(Animation.WALK, false);
+			}
+		}	
+	}
+
+	void SetAgentDestination(Vector3 pos, RaycastHit hit, Camera camera)
+	{
+		if (agentClown != null)
+		{
+			currentPosition = camera.ScreenToWorldPoint(pos);
+			currentPosition.y = 0;
+			agentClown.SetDestination(currentPosition);
+		}
+	}
+
+	void SetAgentLookDirection(Vector3 pos, RaycastHit hit, Camera camera)
+	{
+		if (agentClown != null)
+		{
+			lookAtPosition = camera.ScreenToWorldPoint(pos);
+			lookAtPosition.y = lookAtHeight;
+		}
+	}
+
+	void CheckLookAtHeightChanged()
+	{
+		if (_lookAtHeight != lookAtHeight)
+		{
+			lookAtPosition = new Vector3(lookAtPosition.x, lookAtHeight, lookAtPosition.z);
+			_lookAtHeight = lookAtHeight;
+		}
+	}
+
+	void FollowPlayer(GameObject player)
+	{
+		Vector3 groundPlayer = new Vector3(player.transform.position.x, 0, player.transform.position.z);
+		agentClown.SetDestination(groundPlayer);
+		currentPosition = groundPlayer;
+	}
+
+	void EnableDefaultControls()
+	{
 		if (Input.GetMouseButtonDown(0))
 		{
 			RaycastHit hit;
@@ -83,74 +151,5 @@ public class ClownController : MonoBehaviour {
 				lookAtPosition = hit.point;
 			}
 		}
-
-		if (followPlayer)
-		{
-			FollowPlayer(player);
-		}
-
-		CheckLookAtHeightChanged();
-
-		if (Vector3.Distance(currentPosition, clown.transform.position) >= .6f)
-		{
-			agentClown.isStopped = false;
-			if (!GetAnimationState(Animation.WALK))
-			{
-				SetAnimationState(Animation.WALK, true);
-			}
-		}
-		else
-		{
-			agentClown.isStopped = true;
-			if (GetAnimationState(Animation.WALK))
-			{
-				SetAnimationState(Animation.WALK, false);
-			}
-		}	
-
-		if (Input.GetKeyDown(KeyCode.E))
-		{
-			StartCoroutine(LookYes());
-		}
-	}
-
-	IEnumerator LookYes()
-	{
-		float timeElapsed = 0;
-		float duration = .5f;
-
-		float lookMax = 5f;
-		float lookMin = -5f;
-
-		for (int i = 0; i < 6; i++)
-		{
-			while (timeElapsed <= duration)
-			{
-				lookAtHeight = Mathf.Lerp(lookMax, lookMin, (timeElapsed/duration));
-				timeElapsed += Time.deltaTime;
-				yield return new WaitForEndOfFrame();
-			}
-			float tmp = lookMax;
-			lookMax = lookMin;
-			lookMin = tmp;
-			timeElapsed = 0;
-		}
-		lookAtHeight = 1.9f;
-	}
-
-	void CheckLookAtHeightChanged()
-	{
-		if (_lookAtHeight != lookAtHeight)
-		{
-			lookAtPosition = new Vector3(lookAtPosition.x, lookAtHeight, lookAtPosition.z);
-			_lookAtHeight = lookAtHeight;
-		}
-	}
-
-	void FollowPlayer(GameObject player)
-	{
-		Vector3 groundPlayer = new Vector3(player.transform.position.x, 0, player.transform.position.z);
-		agentClown.SetDestination(groundPlayer);
-		currentPosition = groundPlayer;
 	}
 }

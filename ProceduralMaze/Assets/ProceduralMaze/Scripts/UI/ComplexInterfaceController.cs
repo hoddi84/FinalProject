@@ -19,6 +19,7 @@ public class ComplexInterfaceController : MonoBehaviour {
 	public GameObject cntrlLighting;
 	public GameObject cntrlSound;
 	public GameObject cntrlFrames;
+	public GameObject cntrlCharacters;
 	public GameObject cntrlOther;
 	public GameObject frameContents;
 	public GameObject frameContentPrefab;
@@ -33,6 +34,7 @@ public class ComplexInterfaceController : MonoBehaviour {
 	public GameObject btnLighting;
 	public GameObject btnSound;
 	public GameObject btnFrame;
+	public GameObject btnCharacter;
 	public GameObject btnOther;
 
 	private bool btnLightingHover;
@@ -62,11 +64,13 @@ public class ComplexInterfaceController : MonoBehaviour {
 		cntrlLighting.SetActive(true);
 		cntrlSound.SetActive(false);
 		cntrlFrames.SetActive(false);
+		cntrlCharacters.SetActive(false);
 		cntrlOther.SetActive(false);
 
 		btnLighting.GetComponent<Image>().color = btnSelectedColor;
 		btnSound.GetComponent<Image>().color = btnDefaultColor;
 		btnFrame.GetComponent<Image>().color = btnDefaultColor;
+		btnCharacter.GetComponent<Image>().color = btnDefaultColor;
 		btnOther.GetComponent<Image>().color = btnDefaultColor;
 
 		PopulateFrameView();
@@ -101,11 +105,13 @@ public class ComplexInterfaceController : MonoBehaviour {
 		cntrlLighting.SetActive(false);
 		cntrlSound.SetActive(true);
 		cntrlFrames.SetActive(false);
+		cntrlCharacters.SetActive(false);
 		cntrlOther.SetActive(false);
 
 		btnLighting.GetComponent<Image>().color = btnDefaultColor;
 		btnSound.GetComponent<Image>().color = btnSelectedColor;
 		btnFrame.GetComponent<Image>().color = btnDefaultColor;
+		btnCharacter.GetComponent<Image>().color = btnDefaultColor;
 		btnOther.GetComponent<Image>().color = btnDefaultColor;
 	}
 
@@ -114,11 +120,13 @@ public class ComplexInterfaceController : MonoBehaviour {
 		cntrlLighting.SetActive(true);
 		cntrlSound.SetActive(false);
 		cntrlFrames.SetActive(false);
+		cntrlCharacters.SetActive(false);
 		cntrlOther.SetActive(false);
 
 		btnLighting.GetComponent<Image>().color = btnSelectedColor;
 		btnSound.GetComponent<Image>().color = btnDefaultColor;
 		btnFrame.GetComponent<Image>().color = btnDefaultColor;
+		btnCharacter.GetComponent<Image>().color = btnDefaultColor;
 		btnOther.GetComponent<Image>().color = btnDefaultColor;
 	}
 
@@ -127,11 +135,28 @@ public class ComplexInterfaceController : MonoBehaviour {
 		cntrlLighting.SetActive(false);
 		cntrlSound.SetActive(false);
 		cntrlFrames.SetActive(true);
+		cntrlCharacters.SetActive(false);
 		cntrlOther.SetActive(false);
 
 		btnLighting.GetComponent<Image>().color = btnDefaultColor;
 		btnSound.GetComponent<Image>().color = btnDefaultColor;
 		btnFrame.GetComponent<Image>().color = btnSelectedColor;
+		btnCharacter.GetComponent<Image>().color = btnDefaultColor;
+		btnOther.GetComponent<Image>().color = btnDefaultColor;
+	}
+
+	public void EnableCharacterControls()
+	{
+		cntrlLighting.SetActive(false);
+		cntrlSound.SetActive(false);
+		cntrlFrames.SetActive(false);
+		cntrlCharacters.SetActive(true);
+		cntrlOther.SetActive(false);
+
+		btnLighting.GetComponent<Image>().color = btnDefaultColor;
+		btnSound.GetComponent<Image>().color = btnDefaultColor;
+		btnFrame.GetComponent<Image>().color = btnDefaultColor;
+		btnCharacter.GetComponent<Image>().color = btnSelectedColor;
 		btnOther.GetComponent<Image>().color = btnDefaultColor;
 	}
 
@@ -140,11 +165,13 @@ public class ComplexInterfaceController : MonoBehaviour {
 		cntrlLighting.SetActive(false);
 		cntrlSound.SetActive(false);
 		cntrlFrames.SetActive(false);
+		cntrlCharacters.SetActive(false);
 		cntrlOther.SetActive(true);
 
 		btnLighting.GetComponent<Image>().color = btnDefaultColor;
 		btnSound.GetComponent<Image>().color = btnDefaultColor;
 		btnFrame.GetComponent<Image>().color = btnDefaultColor;
+		btnCharacter.GetComponent<Image>().color = btnDefaultColor;
 		btnOther.GetComponent<Image>().color = btnSelectedColor;
 	}
 
