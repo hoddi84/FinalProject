@@ -22,7 +22,7 @@ public class DecalSpawner : MonoBehaviour {
 	{
 		if (value >= 0)
 		{
-			int nrOfDecals = (int)(bloodDecals.Length * value);
+			int nrOfDecals = (int)(bloodDecals.Length/2 * value);
 
 			List<GameObject> listOfDecals = new List<GameObject>(bloodDecals);
 			listOfDecals = RandomizeSpawnList(listOfDecals);
