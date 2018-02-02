@@ -8219,6 +8219,14 @@ Prefab:
       propertyPath: m_InflateMesh
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1485964876804124, guid: 761b34047676ae842985eabadf80c4cc, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773931135743666, guid: 761b34047676ae842985eabadf80c4cc, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 761b34047676ae842985eabadf80c4cc, type: 2}
   m_IsPrefabParent: 0
@@ -27793,7 +27801,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1923621875}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.896744, y: -0.0053253174, z: 0}
+  m_LocalPosition: {x: 4.896759, y: -0.0053253174, z: 0}
   m_LocalScale: {x: 0.994692, y: 0.994692, z: 0.994692}
   m_Children:
   - {fileID: 2097518503}
@@ -27803,7 +27811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4987879, y: 0.34001774}
   m_AnchorMax: {x: 0.9890629, y: 0.83501774}
-  m_AnchoredPosition: {x: 4.896744, y: -0.0053253174}
+  m_AnchoredPosition: {x: 4.896759, y: -0.0053253174}
   m_SizeDelta: {x: 9.85, y: 1.5742}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1923621877
