@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class CharacterManager : MonoBehaviour {
 
@@ -26,10 +27,59 @@ public class CharacterManager : MonoBehaviour {
 	private enum Animation { WALK }
 	private const string WALK = "Walk";
 
+	//Settings for UI
+	public Text txtToggleSpawn;
+	public Text txtToggleChar;
+
+	public int spawnIndex = 0;
+
+	private LightFlicker _lightFlicker;
+
 	void Awake()
 	{
 		_mouseInput = FindObjectOfType<ProMouseInput>();
 		_uiController = FindObjectOfType<UIController>();
+		_lightFlicker = FindObjectOfType<LightFlicker>();
+
+		if (_uiController != null)
+		{
+			_mouseInput.onRenderTextureClickDown += SetAgentDestination;
+			_mouseInput.onRenderTextureClickDownLeft += SetAgentLookDirection;
+		}
+	}
+
+	public void ToggleChar()
+	{
+		spawnIndex++;
+		if (spawnIndex > 1)
+		{
+			spawnIndex = 0;
+		}
+		if (spawnIndex == 0)
+		{
+			txtToggleChar.text = "Girl";
+		}
+		if (spawnIndex == 1)
+		{
+			txtToggleChar.text = "Clown";
+		}
+	}
+
+	public void ToggleSpawn()
+	{
+		if (!_isCharacterActive)
+		{
+			_isCharacterBeingSpawned = !_isCharacterBeingSpawned;
+			print("Spawning Enabled: " + _isCharacterBeingSpawned);
+			if (_isCharacterBeingSpawned)
+			{
+				txtToggleSpawn.text = "Disable Spawn";
+			}
+			else
+			{
+				txtToggleSpawn.text = "Enable Spawn";
+			}
+		}
 	}
 
 	void Update()
@@ -49,7 +99,7 @@ public class CharacterManager : MonoBehaviour {
 		{
 			if (_isCharacterActive)
 			{
-				DespawnCharacter(_currentControlled);
+				DespawnCharacter();
 			}
 		}
 
@@ -58,11 +108,35 @@ public class CharacterManager : MonoBehaviour {
 			EnableDefaultControls();
 		}
 
-		if (_currentControlled != null)
+		if (_currentControlled != null && _currentHeadLook != null)
 		{
 			CheckAnimationState();
 
 			_currentHeadLook.target = _currentHeadLookDirection;	
+		}
+	}
+
+	void SetAgentDestination(Vector3 pos, RaycastHit hit, Camera camera)
+	{
+		if (_isCharacterBeingSpawned && _currentControlled == null)
+		{
+			_currentAgentPosition = camera.ScreenToWorldPoint(pos);
+			SpawnCharacter(spawnIndex, _currentAgentPosition);
+		}
+		if (_currentControlled != null)
+		{
+			_currentAgentPosition = camera.ScreenToWorldPoint(pos);
+			_currentAgentPosition.y = 0;
+			_currentAgent.SetDestination(_currentAgentPosition);
+		}
+	}
+
+	void SetAgentLookDirection(Vector3 pos, RaycastHit hit, Camera camera)
+	{
+		if (_currentControlled != null)
+		{
+			_currentHeadLookDirection = camera.ScreenToWorldPoint(pos);
+			_currentHeadLookDirection.y = _currentHeadLookHeight;
 		}
 	}
 
@@ -112,13 +186,20 @@ public class CharacterManager : MonoBehaviour {
 		_isCharacterBeingSpawned = false;
 	}
 
-	void DespawnCharacter(GameObject currentControlled)
+	public void DespawnCharacter()
 	{
-		currentControlled.SetActive(false);
-		currentControlled = null;
+		if (_currentControlled != null)
+		{
+			StartCoroutine(_lightFlicker.FlickerLights(delegate() {
+				_currentControlled.SetActive(false);
+				_currentControlled = null;
 
-		_isCharacterActive = false;
-		_isCharacterBeingSpawned = true;
+				SetupControlledCharacter();
+
+				_isCharacterActive = false;
+				_isCharacterBeingSpawned = true;
+			}));
+		}
 	}
 
 	void SetupControlledCharacter(GameObject currentControlled = null)
@@ -130,6 +211,14 @@ public class CharacterManager : MonoBehaviour {
 			_currentAnimator = currentControlled.GetComponent<Animator>();
 			_currentHeadLook = currentControlled.GetComponent<HeadLookController>();
 			_currentHeadLookDirection = _currentControlled.transform.forward;
+		}
+		else
+		{
+			_currentAgent = null;
+			_currentAgentPosition = Vector3.zero;
+			_currentAnimator = null;
+			_currentHeadLook = null;
+			_currentHeadLookDirection = Vector3.zero;
 		}
 	}
 
@@ -164,21 +253,30 @@ public class CharacterManager : MonoBehaviour {
 
 	void CheckAnimationState()
 	{
-		if (Vector3.Distance(_currentAgentPosition, _currentControlled.transform.position) >= .1f)
+		if (_currentControlled != null)
 		{
-			_currentAgent.isStopped = false;
-			if (!GetAnimationState(Animation.WALK, _currentAnimator))
+			if (Vector3.Distance(_currentAgentPosition, _currentControlled.transform.position) >= .1f)
 			{
-				SetAnimationState(Animation.WALK, _currentAnimator, true);
+				if (_currentAgent != null)
+				{
+					_currentAgent.isStopped = false;
+					if (!GetAnimationState(Animation.WALK, _currentAnimator))
+					{
+						SetAnimationState(Animation.WALK, _currentAnimator, true);
+					}
+				}
 			}
+			else
+			{
+				if (_currentAgent != null)
+				{
+					_currentAgent.isStopped = true;
+					if (GetAnimationState(Animation.WALK, _currentAnimator))
+					{
+						SetAnimationState(Animation.WALK, _currentAnimator, false);
+					}
+				}
+			}	
 		}
-		else
-		{
-			_currentAgent.isStopped = true;
-			if (GetAnimationState(Animation.WALK, _currentAnimator))
-			{
-				SetAnimationState(Animation.WALK, _currentAnimator, false);
-			}
-		}	
 	}
 }

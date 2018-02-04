@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,22 +10,28 @@ public class LightFlicker : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.F))
-		{
-			StartCoroutine(FlickerLights());
-		}
+		currentAmbienceColor = RenderSettings.ambientLight;
 	}
 
-	IEnumerator FlickerLights()
+	public IEnumerator FlickerLights(Action action)
 	{
 		List<float> intensities;
 		Light[] lights = GetActiveLights(out intensities);
 
-		TurnOffAllLights(lights);
+		Color tmp = currentAmbienceColor;
 
-		yield return new WaitForSeconds(2.0f);
+		TurnOffAllLights(lights);
+		RenderSettings.ambientLight = Color.black;
+
+		if (action != null)
+		{
+			action();
+		}
+
+		yield return new WaitForSeconds(.5f);
 
 		TurnOnAllLights(lights, intensities);
+		RenderSettings.ambientLight = tmp;
 		
 
 		yield return null;

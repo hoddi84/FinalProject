@@ -3,24 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Place this class on objects that should be interactable
+/// for the director, i.e. the door open / close sprites for the
+/// doors.
+/// </summary>
 public class DirectorClickable : MonoBehaviour {
 
-	private ProMouseInput mouseInput;
+	private ProMouseInput _mouseInput;
 	public Action onHit = null;
 
 	void Awake()
 	{
-		mouseInput = FindObjectOfType(typeof(ProMouseInput)) as ProMouseInput;
+		_mouseInput = FindObjectOfType(typeof(ProMouseInput)) as ProMouseInput;
 	}
 
 	void OnEnable()
 	{
-		mouseInput.onMouseButtonDownLeftRaycast += ClickedObject;
+		_mouseInput.onMouseButtonDownLeftRaycast += ClickedObject;
 	}
 
 	void OnDisable()
 	{
-		mouseInput.onMouseButtonDownLeftRaycast -= ClickedObject;
+		_mouseInput.onMouseButtonDownLeftRaycast -= ClickedObject;
 	}
 
 	void ClickedObject(RaycastHit hit)
