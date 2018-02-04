@@ -1,37 +1,32 @@
 ﻿using System;
 using UnityEngine;
 
-public enum ColliderType {
-
-	DOOR_HANDLE,
-	WALL,
-}
-
 public class VRHandController : MonoBehaviour {
 
-	private SteamVR_TrackedController controller;
+	private SteamVR_TrackedController _trackedController;
+	private const string WALL = "Wall";
+	private const string DOOR_HANDLE = "DoorHandle";
 
-	public Action onTriggerClicked = null;
-	public Action onTriggerUnclicked = null;
-	public Action<Collider, SteamVR_TrackedController> onTriggerClickedCollider = null;
-	private bool triggerPressed = false;
+	public Action<Collider> onTriggerClicked = null;
+	public Action<Collider> onTriggerUnclicked = null;
+	private bool _triggerPressed = false;
 
 	void Awake()
 	{
-		controller = GetComponent<SteamVR_TrackedController>();
-		if (controller == null)
+		_trackedController = GetComponent<SteamVR_TrackedController>();
+		if (_trackedController == null)
 		{
 			gameObject.AddComponent<SteamVR_TrackedController>();
-			controller = GetComponent<SteamVR_TrackedController>();
+			_trackedController = GetComponent<SteamVR_TrackedController>();
 
-			controller.TriggerClicked += OnTriggerClicked;
-			controller.TriggerUnclicked += OnTriggerUnclicked;
+			_trackedController.TriggerClicked += OnTriggerClicked;
+			_trackedController.TriggerUnclicked += OnTriggerUnclicked;
 		}
 	}
 
 	void OnTriggerClicked(object sender, ClickedEventArgs e)
 	{
-		triggerPressed = true;
+		_triggerPressed = true;
 
 		if (onTriggerClicked != null)
 		{
@@ -41,7 +36,7 @@ public class VRHandController : MonoBehaviour {
 
 	void OnTriggerUnclicked(object sender, ClickedEventArgs e)
 	{
-		triggerPressed = false;
+		_triggerPressed = false;
 
 		if (onTriggerUnclicked != null)
 		{
@@ -51,38 +46,17 @@ public class VRHandController : MonoBehaviour {
 
 	void OnTriggerStay(Collider other)
 	{
-		if (other.tag == "Wall")
+		if (other.tag == WALL)
 		{
-			StartCoroutine(UnitUtilities.TriggerVibration(controller, 1, .1f));
-		}
-		else
-		{
-			if (triggerPressed)
-			{
-				if (onTriggerClickedCollider != null)
-				{
-					onTriggerClickedCollider(other, controller);
-					triggerPressed = false; // added, so only happens once.
-				}
-			}
+			StartCoroutine(UnitUtilities.TriggerVibration(_trackedController, 1, .1f));
 		}
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "DoorHandle")
+		if (other.tag == DOOR_HANDLE)
 		{
-			StartCoroutine(UnitUtilities.TriggerVibration(controller, 1, .1f));
+			StartCoroutine(UnitUtilities.TriggerVibration(_trackedController, 1, .1f));
 		}
 	}
-
-	void OnTriggerExit(Collider other)
-	{
-
-	}
-
-	// TODO
-	// Initialize with a rigidbody and a collider sphere.
-
-
 }
