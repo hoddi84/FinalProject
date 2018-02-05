@@ -1,21 +1,24 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitDoorTrigger : MonoBehaviour {
+namespace MazeCore.Door {
 
-	private const string PLAYER = "Player";
-	public Action onTriggerEntered = null;
-	
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.tag == PLAYER)
+	public class UnitDoorTrigger : MonoBehaviour {
+
+		private const string PLAYER = "Player";
+		
+		public Action onTriggerEntered = null;
+		
+		private void OnTriggerEnter(Collider other)
 		{
-			if (onTriggerEntered != null)
+			if (other.tag == PLAYER)
 			{
-				onTriggerEntered();
+				if (onTriggerEntered != null)
+				{
+					onTriggerEntered();
+				}
 			}
 		}
 	}
 }
+

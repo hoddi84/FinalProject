@@ -1,65 +1,79 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class UnitDoorManager : MonoBehaviour {
+namespace MazeCore.Door {
 
-	public float doorCloseTime;
-	public float doorOpenTime;
-	public float rotationAngle;
+	public class UnitDoorManager : MonoBehaviour {
 
-	public AudioClip openDoorClip;
-	public AudioClip openHandleClip;
-	public AudioClip closeDoorClip;
-	public Sprite doorSpriteClosed;
-	public Sprite doorSpriteOpen;
-	public Sprite doorSpriteLockOpen;
-	public Sprite doorSpriteLockClosed;
+		public float doorCloseTime;
+		public float doorOpenTime;
+		public float rotationAngle;
 
-	[Range(0.0f, 1.0f)]
-	public float presenceSliderValue;
-	private float _presenceSliderValue;
+		public AudioClip openDoorClip;
+		public AudioClip openHandleClip;
+		public AudioClip closeDoorClip;
+		public Sprite doorSpriteClosed;
+		public Sprite doorSpriteOpen;
+		public Sprite doorSpriteLockOpen;
+		public Sprite doorSpriteLockClosed;
 
-	[Range(0.0f, 1.0f)]
-	public float scarySliderValue;
-	private float _scarySliderValue;
+		[Range(0.0f, 1.0f)]
+		public float presenceSliderValue;
+		private float _presenceSliderValue;
 
-	private SimpleInterfaceController simpleController;
+		[Range(0.0f, 1.0f)]
+		public float scarySliderValue;
+		private float _scarySliderValue;
 
-	void Awake()
-	{
-		simpleController = FindObjectOfType(typeof(SimpleInterfaceController)) as SimpleInterfaceController;
-		
-		if (simpleController != null)
+		private SimpleInterfaceController _simpleController;
+
+		private void Awake()
 		{
-			simpleController.onPresenceSliderChanged += UpdatePresenceValue;
-			simpleController.onScarySliderChanged += UpdateScaryValue;
-		}
-	}
-
-	void Update()
-	{
-		if (_scarySliderValue != scarySliderValue)
-		{
-			UpdateScaryValue(scarySliderValue);
+			_simpleController = FindObjectOfType<SimpleInterfaceController>();
 		}
 
-		if (_presenceSliderValue != presenceSliderValue)
+		private void OnEnable()
 		{
-			UpdatePresenceValue(presenceSliderValue);
+			if (_simpleController != null)
+			{
+				_simpleController.onPresenceSliderChanged += UpdatePresenceValue;
+				_simpleController.onScarySliderChanged += UpdateScaryValue;
+			}
 		}
-	}
 
-	void UpdateScaryValue(float newScaryValue)
-	{
-		scarySliderValue = newScaryValue;
-		_scarySliderValue = scarySliderValue;
-	}
+		private void OnDisable()
+		{
+			if (_simpleController != null)
+			{
+				_simpleController.onPresenceSliderChanged -= UpdatePresenceValue;
+				_simpleController.onScarySliderChanged -= UpdateScaryValue;
+			}
+		}
 
-	void UpdatePresenceValue(float newPresenceValue)
-	{
-		presenceSliderValue = newPresenceValue;
-		_presenceSliderValue = presenceSliderValue;
+		private void Update()
+		{
+			if (_scarySliderValue != scarySliderValue)
+			{
+				UpdateScaryValue(scarySliderValue);
+			}
+
+			if (_presenceSliderValue != presenceSliderValue)
+			{
+				UpdatePresenceValue(presenceSliderValue);
+			}
+		}
+
+		private void UpdateScaryValue(float newScaryValue)
+		{
+			scarySliderValue = newScaryValue;
+			_scarySliderValue = scarySliderValue;
+		}
+
+		private void UpdatePresenceValue(float newPresenceValue)
+		{
+			presenceSliderValue = newPresenceValue;
+			_presenceSliderValue = presenceSliderValue;
+		}
 	}
 }
+
+

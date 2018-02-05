@@ -2,22 +2,25 @@
 using UnityEngine;
 using MazeVR;
 
-public class UnitDoor : MonoBehaviour {
+namespace MazeCore.Door {
 
-	private UnitDoorManager doorManager;
-	public GameObject doorHandle;
-	private VRInteractable vrInteractable;
+	public class UnitDoor : MonoBehaviour {
+
+	private UnitDoorManager _doorManager;
+	private VRInteractable _vrInteractable;
+	private UIController _uiController;
 	public GameObject doorFrame;
 	public GameObject rotatingDoor;
-	private float currentDoorRotation;
-	private Axis rotationAxis = Axis.Y;
+	public GameObject doorHandle;
 
-	public bool isDoorOpen = false;
-	private bool isDoorBusy = false;
-	private Action onDoneMoving = null;
+	private Axis _rotationAxis = Axis.Y;
+
+	private float _currentDoorRotation;
+	private bool _isDoorOpen = false;
+	private bool _isDoorBusy = false;
+	private bool _isDoorLocked = true;
 	private const float MAX_ROTATION_DIFF = 0.1f;
 
-	public bool isDoorLocked = true;
 	public GameObject doorLockMechanic;
 	public GameObject doorOpenMechanic;
 	private SpriteRenderer lockRenderer;
@@ -25,40 +28,38 @@ public class UnitDoor : MonoBehaviour {
 	private DirectorClickable directorClickableLock;
 	private DirectorClickable directorClickableOpen;
 
-	private UIController uiController;
-
 	private void Awake()
 	{
-		doorManager = FindObjectOfType(typeof(UnitDoorManager)) as UnitDoorManager;
-
-		vrInteractable = doorHandle.GetComponent<VRInteractable>();
+		_doorManager = FindObjectOfType<UnitDoorManager>();
+		_uiController = FindObjectOfType<UIController>();
+		_vrInteractable = doorHandle.GetComponent<VRInteractable>();
 		
 		lockRenderer = doorLockMechanic.GetComponentInChildren<SpriteRenderer>();
 		openRenderer = doorOpenMechanic.GetComponentInChildren<SpriteRenderer>();
 
 		directorClickableLock = doorLockMechanic.GetComponentInChildren<DirectorClickable>();
 		directorClickableOpen = doorOpenMechanic.GetComponentInChildren<DirectorClickable>();	
-
-		uiController = FindObjectOfType(typeof(UIController)) as UIController;
 	}
 
 	void OnEnable()
 	{
-		vrInteractable.onControllerInteracted += InteractWithDoor;
-
-		onDoneMoving += OnDoneMoving;
+		if (_vrInteractable != null)
+		{
+			_vrInteractable.onControllerInteracted += InteractWithDoor;
+		}
 
 		directorClickableLock.onHit += OnDirectorDoorLock;
 		directorClickableOpen.onHit += OnDirectorDoorOpen;
 
-		PerformPresenceMeterActions(doorManager.presenceSliderValue);
+		PerformPresenceMeterActions(_doorManager.presenceSliderValue);
 	}
 
 	void OnDisable()
 	{
-		vrInteractable.onControllerInteracted -= InteractWithDoor;
-
-		onDoneMoving -= OnDoneMoving;
+		if (_vrInteractable != null)
+		{
+			_vrInteractable.onControllerInteracted -= InteractWithDoor;
+		}
 
 		directorClickableLock.onHit -= OnDirectorDoorLock;
 		directorClickableOpen.onHit -= OnDirectorDoorOpen;
@@ -66,20 +67,17 @@ public class UnitDoor : MonoBehaviour {
 
 	private void Start()
 	{
-		currentDoorRotation = rotatingDoor.transform.eulerAngles.y;
+		_currentDoorRotation = rotatingDoor.transform.eulerAngles.y;
 	}
 
 	private void Update() 
 	{
-		if (Input.GetKeyDown(KeyCode.E)) {
-			InteractWithDoor();
-		}
 
 		CheckDoorState();
 
-		if (uiController != null)
+		if (_uiController != null)
 		{
-			if (uiController.isSimpleCheckOn)
+			if (_uiController.isSimpleCheckOn)
 			{
 				if (doorLockMechanic.activeInHierarchy && doorOpenMechanic.activeInHierarchy)
 				{
@@ -104,11 +102,11 @@ public class UnitDoor : MonoBehaviour {
 	/// <param name="action">Additional executed commands.</param>
 	public void PerformScaryMeterActions(Action action)
 	{
-		if (!isDoorBusy)
+		if (!_isDoorBusy)
 		{
 			float rnd = UnityEngine.Random.Range(0.0f, 1.0f);
 
-			if (rnd <= doorManager.scarySliderValue && isDoorOpen)
+			if (rnd <= _doorManager.scarySliderValue && _isDoorOpen)
 			{
 				CloseDoor();
 			}
@@ -135,7 +133,7 @@ public class UnitDoor : MonoBehaviour {
 			// No delay on closing door.
 			if (randomAction < .3)
 			{
-				if (isDoorOpen && !isDoorBusy)
+				if (_isDoorOpen && !_isDoorBusy)
 				{
 					CloseDoor(false);
 				}
@@ -144,7 +142,7 @@ public class UnitDoor : MonoBehaviour {
 			// Door has normal open delay.
 			else if (randomAction >= .3 && randomAction < .7)
 			{
-				if (!isDoorOpen && !isDoorBusy)
+				if (!_isDoorOpen && !_isDoorBusy)
 				{
 					OpenDoor();
 				}
@@ -153,7 +151,7 @@ public class UnitDoor : MonoBehaviour {
 			// Door is open.
 			else
 			{
-				if (!isDoorOpen && !isDoorBusy)
+				if (!_isDoorOpen && !_isDoorBusy)
 				{
 					OpenDoor(false, false);
 				}
@@ -166,9 +164,9 @@ public class UnitDoor : MonoBehaviour {
 	/// </summary>
 	private void InteractWithDoor() 
 	{
-		if (!isDoorBusy && !isDoorLocked)
+		if (!_isDoorBusy && !_isDoorLocked)
 		{
-			if (!isDoorOpen) 
+			if (!_isDoorOpen) 
 			{
 				OpenDoor();
 			}
@@ -181,37 +179,39 @@ public class UnitDoor : MonoBehaviour {
 
 	void OpenDoor(bool useDelay = true, bool useSound = true)
 	{
-		isDoorBusy = true;
+		_isDoorBusy = true;
 		float delayTime;
-		delayTime = useDelay ? doorManager.doorOpenTime : 0;
+		delayTime = useDelay ? _doorManager.doorOpenTime : 0;
 
 		if (useSound)
 		{
-			AudioSource.PlayClipAtPoint(doorManager.openHandleClip, doorFrame.transform.position);
+			AudioSource.PlayClipAtPoint(_doorManager.openHandleClip, doorFrame.transform.position);
 		}
-		StartCoroutine(UnitUtilities.RotateRoundAxis(delayTime, doorManager.rotationAngle, rotationAxis, rotatingDoor,
+		StartCoroutine(UnitUtilities.RotateRoundAxis(delayTime, _doorManager.rotationAngle, _rotationAxis, rotatingDoor,
 			delegate() {
 				if (useSound)
 				{
 					OnDoorOpen();
 				}
-		},
-		delegate() {
-			OnDoneMoving();
-		}, doorManager.openHandleClip.length));
+			},
+			delegate() {
+				OnDoneMoving();
+			}, 
+			_doorManager.openHandleClip.length));
 	}
 
 	void CloseDoor(bool useDelay = true)
 	{
-		isDoorBusy = true;
+		_isDoorBusy = true;
 		float delayTime;
-		delayTime = useDelay ? doorManager.doorCloseTime : 0;
+		delayTime = useDelay ? _doorManager.doorCloseTime : 0;
 
-		StartCoroutine(UnitUtilities.RotateRoundAxis(delayTime, -doorManager.rotationAngle, rotationAxis, rotatingDoor, 
-		delegate(){
-			OnDoneMoving();
-			OnDoorClosed();
-		}));
+		StartCoroutine(UnitUtilities.RotateRoundAxis(delayTime, -_doorManager.rotationAngle, _rotationAxis, rotatingDoor, 
+			delegate(){
+				OnDoneMoving();
+				OnDoorClosed();
+			}
+		));
 	}
 
 	/// <summary>
@@ -220,7 +220,7 @@ public class UnitDoor : MonoBehaviour {
 	/// </summary>
 	private void CheckDoorState() 
 	{
-		if (currentDoorRotation != rotatingDoor.transform.eulerAngles.y)
+		if (_currentDoorRotation != rotatingDoor.transform.eulerAngles.y)
 		{
 			float frameRotation = doorFrame.transform.eulerAngles.y;
 			float doorRotation = rotatingDoor.transform.eulerAngles.y;
@@ -229,37 +229,37 @@ public class UnitDoor : MonoBehaviour {
 
 			if (rotationDiff < MAX_ROTATION_DIFF) 
 			{
-				if (isDoorOpen) 
+				if (_isDoorOpen) 
 				{
-					isDoorOpen = false;
+					_isDoorOpen = false;
 				}
 			}
 			else 
 			{
-				if (!isDoorOpen)
+				if (!_isDoorOpen)
 				{
-					isDoorOpen = true;
+					_isDoorOpen = true;
 				}
 			}
-			currentDoorRotation = rotatingDoor.transform.eulerAngles.y;
+			_currentDoorRotation = rotatingDoor.transform.eulerAngles.y;
 		}	
 
-		if (!isDoorLocked)
+		if (!_isDoorLocked)
 		{
-			lockRenderer.sprite = doorManager.doorSpriteLockOpen;
+			lockRenderer.sprite = _doorManager.doorSpriteLockOpen;
 		}
 		else
 		{
-			lockRenderer.sprite = doorManager.doorSpriteLockClosed;
+			lockRenderer.sprite = _doorManager.doorSpriteLockClosed;
 		}
 
-		if (!isDoorOpen)
+		if (!_isDoorOpen)
 		{
-			openRenderer.sprite = doorManager.doorSpriteClosed;
+			openRenderer.sprite = _doorManager.doorSpriteClosed;
 		}
 		else
 		{
-			openRenderer.sprite = doorManager.doorSpriteOpen;
+			openRenderer.sprite = _doorManager.doorSpriteOpen;
 		}
 	}
 
@@ -270,21 +270,24 @@ public class UnitDoor : MonoBehaviour {
 
 	private void OnDirectorDoorLock()
 	{
-		isDoorLocked = !isDoorLocked;
+		_isDoorLocked = !_isDoorLocked;
 	}
 
 	private void OnDoorOpen() 
 	{
-		AudioSource.PlayClipAtPoint(doorManager.openDoorClip, doorFrame.transform.position);
+		AudioSource.PlayClipAtPoint(_doorManager.openDoorClip, doorFrame.transform.position);
 	}
 
 	private void OnDoorClosed()
 	{
-		AudioSource.PlayClipAtPoint(doorManager.closeDoorClip, doorFrame.transform.position);
+		AudioSource.PlayClipAtPoint(_doorManager.closeDoorClip, doorFrame.transform.position);
 	}
 
 	private void OnDoneMoving() 
 	{
-		isDoorBusy = false;
+		_isDoorBusy = false;
 	}
 }
+}
+
+

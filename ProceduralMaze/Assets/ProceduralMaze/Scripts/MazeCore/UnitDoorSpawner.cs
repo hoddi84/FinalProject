@@ -1,27 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class UnitDoorSpawner : MonoBehaviour {
+namespace MazeCore.Door {
 
-	public GameObject unitDoorPrefab;
-	private Transform[] doorSpawnPoints;
+	public class UnitDoorSpawner : MonoBehaviour {
 
-	void Awake()
-	{
-		doorSpawnPoints = gameObject.GetComponentsInChildren<Transform>();
+		private Transform[] _doorSpawnPoints;
+		
+		public GameObject unitDoorPrefab;
 
-		SpawnDoors();
-	}
-
-	void SpawnDoors()
-	{
-		foreach (Transform spawnPoint in doorSpawnPoints)
+		private void Awake()
 		{
-			if (spawnPoint.gameObject.GetInstanceID() != gameObject.GetInstanceID())
+			_doorSpawnPoints = gameObject.GetComponentsInChildren<Transform>();
+		}
+
+		private void Start()
+		{
+			SpawnDoors();
+		}
+
+		private void SpawnDoors()
+		{
+			foreach (Transform spawnPoint in _doorSpawnPoints)
 			{
-				GameObject tmp = Instantiate(unitDoorPrefab, spawnPoint.position, spawnPoint.rotation);
-				tmp.transform.parent = this.transform;
+				if (spawnPoint.gameObject.GetInstanceID() != gameObject.GetInstanceID())
+				{
+					GameObject tmp = Instantiate(unitDoorPrefab, spawnPoint.position, spawnPoint.rotation);
+					tmp.transform.parent = transform;
+				}
 			}
 		}
 	}

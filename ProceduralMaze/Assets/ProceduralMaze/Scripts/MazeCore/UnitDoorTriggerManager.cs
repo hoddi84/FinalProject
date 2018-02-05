@@ -1,67 +1,70 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitDoorTriggerManager : MonoBehaviour {
+namespace MazeCore.Door {
 
-	public Action onDoorTriggerEntered = null;
-	private BoxCollider activeCollider = null;
-	private UnitDoor unitDoor;
+	public class UnitDoorTriggerManager : MonoBehaviour {
 
-	void Awake()
-	{
-		unitDoor = transform.parent.gameObject.GetComponentInChildren<UnitDoor>();
-	}
+		private BoxCollider _activeCollider = null;
+		private UnitDoor _unitDoor = null;
 
-	void OnEnable()
-	{
-		RegisterCollider();
-	}
+		public Action onDoorTriggerEntered = null;
 
-	void OnDisable()
-	{
-		DeregisterCollider();
-	}
-
-	void Initialize()
-	{
-		BoxCollider[] colliders = GetComponentsInChildren<BoxCollider>(true);
-
-		int index = UnityEngine.Random.Range(0, colliders.Length);
-
-		for (int i = 0; i < colliders.Length; i++)
+		private void Awake()
 		{
-			if (i != index)
-			{
-				colliders[i].gameObject.SetActive(false);
-			}
-			else
-			{
-				colliders[i].gameObject.SetActive(true);
-			}
+			_unitDoor = transform.parent.gameObject.GetComponentInChildren<UnitDoor>();
 		}
 
-		activeCollider = colliders[index];
-	}
-
-	void RegisterCollider()
-	{
-		Initialize();
-		activeCollider.gameObject.GetComponent<UnitDoorTrigger>().onTriggerEntered += OnDoorTriggerEnter;
-	}
-
-	void DeregisterCollider()
-	{
-		activeCollider.gameObject.GetComponent<UnitDoorTrigger>().onTriggerEntered -= OnDoorTriggerEnter;
-		activeCollider = null;
-	}
-
-	void OnDoorTriggerEnter()
-	{
-		unitDoor.PerformScaryMeterActions(delegate() {
-			DeregisterCollider();
+		private void OnEnable()
+		{
 			RegisterCollider();
-		});
+		}
+
+		private void OnDisable()
+		{
+			DeregisterCollider();
+		}
+
+		private void Initialize()
+		{
+			BoxCollider[] colliders = GetComponentsInChildren<BoxCollider>(true);
+
+			int index = UnityEngine.Random.Range(0, colliders.Length);
+
+			for (int i = 0; i < colliders.Length; i++)
+			{
+				if (i != index)
+				{
+					colliders[i].gameObject.SetActive(false);
+				}
+				else
+				{
+					colliders[i].gameObject.SetActive(true);
+				}
+			}
+
+			_activeCollider = colliders[index];
+		}
+
+		private void RegisterCollider()
+		{
+			Initialize();
+			_activeCollider.gameObject.GetComponent<UnitDoorTrigger>().onTriggerEntered += OnDoorTriggerEnter;
+		}
+
+		private void DeregisterCollider()
+		{
+			_activeCollider.gameObject.GetComponent<UnitDoorTrigger>().onTriggerEntered -= OnDoorTriggerEnter;
+			_activeCollider = null;
+		}
+
+		private void OnDoorTriggerEnter()
+		{
+			_unitDoor.PerformScaryMeterActions(delegate() {
+				DeregisterCollider();
+				RegisterCollider();
+			});
+		}
 	}
 }
+
