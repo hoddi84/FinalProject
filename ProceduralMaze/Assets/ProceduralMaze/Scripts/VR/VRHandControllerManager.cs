@@ -1,58 +1,60 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class VRHandControllerManager : MonoBehaviour {
+namespace MazeVR {
 
-	public Action onTriggerClicked = null;
-	public Action onTriggerUnclicked = null;
-	public Action<Collider, SteamVR_TrackedController> onTriggerClickedCollider = null;
+	public class VRHandControllerManager : MonoBehaviour {
+
+	public Action<Collider> onTriggerClicked = null;
+	public Action<Collider> onTriggerUnclicked = null;
 	
 	public VRHandController controller1;
 	public VRHandController controller2;
 
-	void Awake()
+	void OnEnable()
 	{
 		if (controller1 != null)
 		{
-			controller1.onTriggerClicked += OnTriggerClicked;
-			controller1.onTriggerClickedCollider += OnTriggerClickedCollider;
-			controller1.onTriggerUnclicked += OnTriggerUnclicked;
+			controller1.onControllerTriggerClicked += OnTriggerClicked;
+			controller1.onControllerTriggerUnclicked += OnTriggerUnclicked;
 		}
 
 		if (controller2 != null)
 		{
-			controller2.onTriggerClicked += OnTriggerClicked;
-			controller2.onTriggerClickedCollider += OnTriggerClickedCollider;
-			controller2.onTriggerUnclicked += OnTriggerUnclicked;
+			controller2.onControllerTriggerClicked += OnTriggerClicked;
+			controller2.onControllerTriggerUnclicked += OnTriggerUnclicked;
 		}
 	}
 
-	void OnTriggerClicked()
+	void OnDisable()
+	{
+		if (controller1 != null)
+		{
+			controller1.onControllerTriggerClicked -= OnTriggerClicked;
+			controller1.onControllerTriggerUnclicked -= OnTriggerUnclicked;
+		}
+
+		if (controller2 != null)
+		{
+			controller2.onControllerTriggerClicked -= OnTriggerClicked;
+			controller2.onControllerTriggerUnclicked -= OnTriggerUnclicked;
+		}
+	}
+
+	void OnTriggerClicked(Collider clickedCollider)
 	{
 		if (onTriggerClicked != null) 
 		{
-			onTriggerClicked();
+			onTriggerClicked(clickedCollider);
 		}
-		print("Clicekd Trigger");
 	}
 
-	void OnTriggerClickedCollider(Collider clickedCollider, SteamVR_TrackedController controller)
-	{
-		if (onTriggerClickedCollider != null)
-		{
-			onTriggerClickedCollider(clickedCollider, controller);
-		}
-		print("Clicked Trigger on Collider: " + clickedCollider.name);
-	}
-
-	void OnTriggerUnclicked()
+	void OnTriggerUnclicked(Collider unclickedCollider)
 	{
 		if (onTriggerUnclicked != null) 
 		{
-			onTriggerUnclicked();
+			onTriggerUnclicked(unclickedCollider);
 		}
-		print("Unclicked Trigger");
 	}
+}
 }

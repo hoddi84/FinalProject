@@ -1,36 +1,53 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class VRInteractable : MonoBehaviour {
+namespace MazeVR {
 
-	private VRHandControllerManager controllerManager;
-	public Action onInteracted = null;
+	/// <summary>
+	/// This script should be placed on a gameObject
+	/// that can be interacted on with the VIVE controllers.
+	/// </summary>
 
-	void Awake() 
-	{
+	[RequireComponent(typeof(Rigidbody))]
+	public class VRInteractable : MonoBehaviour {
 
-		controllerManager = FindObjectOfType(typeof(VRHandControllerManager)) as VRHandControllerManager;
-		
-		if (controllerManager != null)
+		private VRHandControllerManager _controllerManager = null;
+
+		public Action onControllerInteracted = null;
+
+		void Awake() 
 		{
-			controllerManager.onTriggerClickedCollider += ControllerInteracted;
+			_controllerManager = FindObjectOfType<VRHandControllerManager>();
 		}
 
-	}
-
-	void ControllerInteracted(Collider other, SteamVR_TrackedController controller)
-	{
-		if (other.gameObject.GetInstanceID() == gameObject.GetInstanceID())
+		void OnEnable()
 		{
-			StartCoroutine(UnitUtilities.TriggerVibration(controller, 1, .1f));
-
-			if (onInteracted != null) 
+			if (_controllerManager != null)
 			{
-				onInteracted();
+				_controllerManager.onTriggerClicked += OnControllerInteracted;
+			}
+		}
+
+		void OnDisable()
+		{
+			if (_controllerManager != null)
+			{
+				_controllerManager.onTriggerClicked -= OnControllerInteracted;
+			}
+		}
+
+		void OnControllerInteracted(Collider clickedCollider)
+		{
+			if (clickedCollider.gameObject.GetInstanceID() == gameObject.GetInstanceID())
+			{
+				if (onControllerInteracted != null) 
+				{
+					onControllerInteracted();
+				}
 			}
 		}
 	}
 }
+
+
+

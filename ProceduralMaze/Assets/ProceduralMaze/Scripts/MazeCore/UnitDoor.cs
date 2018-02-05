@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using MazeVR;
 
 public class UnitDoor : MonoBehaviour {
 
@@ -45,7 +44,7 @@ public class UnitDoor : MonoBehaviour {
 
 	void OnEnable()
 	{
-		vrInteractable.onInteracted += InteractWithDoor;
+		vrInteractable.onControllerInteracted += InteractWithDoor;
 
 		onDoneMoving += OnDoneMoving;
 
@@ -57,7 +56,7 @@ public class UnitDoor : MonoBehaviour {
 
 	void OnDisable()
 	{
-		vrInteractable.onInteracted -= InteractWithDoor;
+		vrInteractable.onControllerInteracted -= InteractWithDoor;
 
 		onDoneMoving -= OnDoneMoving;
 

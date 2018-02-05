@@ -1,62 +1,104 @@
 ﻿using System;
 using UnityEngine;
 
-public class VRHandController : MonoBehaviour {
+namespace MazeVR {
 
-	private SteamVR_TrackedController _trackedController;
-	private const string WALL = "Wall";
-	private const string DOOR_HANDLE = "DoorHandle";
+	public class VRHandController : MonoBehaviour {
 
-	public Action<Collider> onTriggerClicked = null;
-	public Action<Collider> onTriggerUnclicked = null;
-	private bool _triggerPressed = false;
+		private SteamVR_TrackedController _trackedController = null;
+		private GameObject _selectedGameObject = null;
+		private bool _controllerTriggerPressed = false;
 
-	void Awake()
-	{
-		_trackedController = GetComponent<SteamVR_TrackedController>();
-		if (_trackedController == null)
+		private const string WALL = "Wall";
+		private const string DOOR_HANDLE = "DoorHandle";
+
+		public Action<Collider> onControllerTriggerClicked = null;
+		public Action<Collider> onControllerTriggerUnclicked = null;
+
+		void Awake()
 		{
-			gameObject.AddComponent<SteamVR_TrackedController>();
 			_trackedController = GetComponent<SteamVR_TrackedController>();
 
-			_trackedController.TriggerClicked += OnTriggerClicked;
-			_trackedController.TriggerUnclicked += OnTriggerUnclicked;
+			if (_trackedController == null)
+			{
+				gameObject.AddComponent<SteamVR_TrackedController>();
+				_trackedController = GetComponent<SteamVR_TrackedController>();
+			}
 		}
-	}
 
-	void OnTriggerClicked(object sender, ClickedEventArgs e)
-	{
-		_triggerPressed = true;
-
-		if (onTriggerClicked != null)
+		void OnEnable()
 		{
-			onTriggerClicked();
+			if (_trackedController != null)
+			{
+				_trackedController.TriggerClicked += OnControllerTriggerClicked;
+				_trackedController.TriggerUnclicked += OnControllerTriggerUnclicked;
+			}
 		}
-	}
 
-	void OnTriggerUnclicked(object sender, ClickedEventArgs e)
-	{
-		_triggerPressed = false;
-
-		if (onTriggerUnclicked != null)
+		void OnDisable()
 		{
-			onTriggerUnclicked();
+			if (_trackedController != null)
+			{
+				_trackedController.TriggerClicked -= OnControllerTriggerClicked;
+				_trackedController.TriggerUnclicked -= OnControllerTriggerUnclicked;
+			}
 		}
-	}
 
-	void OnTriggerStay(Collider other)
-	{
-		if (other.tag == WALL)
+		void VibrateOnInteracted(GameObject interactedGameObject, float strength, float length)
 		{
-			StartCoroutine(UnitUtilities.TriggerVibration(_trackedController, 1, .1f));
+			switch (interactedGameObject.tag) 
+			{
+				case WALL:
+					StartCoroutine(UnitUtilities.TriggerVibration(_trackedController, 1, .1f));
+				break;
+
+				case DOOR_HANDLE:
+					StartCoroutine(UnitUtilities.TriggerVibration(_trackedController, 1, .1f));
+				break;
+			}
 		}
-	}
 
-	void OnTriggerEnter(Collider other)
-	{
-		if (other.tag == DOOR_HANDLE)
+		void OnControllerTriggerClicked(object sender, ClickedEventArgs e)
 		{
-			StartCoroutine(UnitUtilities.TriggerVibration(_trackedController, 1, .1f));
+			_controllerTriggerPressed = true;
+
+			if (onControllerTriggerClicked != null)
+			{
+				onControllerTriggerClicked(_selectedGameObject.GetComponent<Collider>());
+			}
+
+			VibrateOnInteracted(_selectedGameObject, 1, .1f);
+		}
+
+		void OnControllerTriggerUnclicked(object sender, ClickedEventArgs e)
+		{
+			_controllerTriggerPressed = false;
+
+			if (onControllerTriggerUnclicked != null)
+			{
+				onControllerTriggerUnclicked(_selectedGameObject.GetComponent<Collider>());
+			}
+		}
+
+		void OnTriggerStay(Collider other)
+		{
+			VibrateOnInteracted(other.gameObject, 1, .1f);
+		}
+
+		void OnTriggerEnter(Collider other)
+		{
+			_selectedGameObject = other.gameObject;
+
+			VibrateOnInteracted(_selectedGameObject, 1, .1f);
+		}
+
+		void OnTriggerExit(Collider other)
+		{
+			if (_selectedGameObject.GetInstanceID() == other.gameObject.GetInstanceID())
+			{
+				_selectedGameObject = null;
+			}
 		}
 	}
 }
+
