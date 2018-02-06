@@ -22,8 +22,11 @@ namespace MazeCore.Lighting {
 
 		private void OnEnable()
 		{
-			_tmp = Instantiate(unitLight, transform.position, transform.rotation);
-			_tmp.transform.parent = _parentOfLights.transform;
+			if (unitLight != null)
+			{
+				_tmp = Instantiate(unitLight, transform.position, transform.rotation);
+				_tmp.transform.parent = _parentOfLights.transform;
+			}
 		}
 
 		private void OnDisable()
