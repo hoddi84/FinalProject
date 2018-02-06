@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using MazeUtiliy;
 
 public class CharacterManager : MonoBehaviour {
 
@@ -33,13 +34,10 @@ public class CharacterManager : MonoBehaviour {
 
 	public int spawnIndex = 0;
 
-	private LightFlicker _lightFlicker;
-
 	void Awake()
 	{
 		_mouseInput = FindObjectOfType<ProMouseInput>();
 		_uiController = FindObjectOfType<UIController>();
-		_lightFlicker = FindObjectOfType<LightFlicker>();
 
 		if (_uiController != null)
 		{
@@ -190,7 +188,9 @@ public class CharacterManager : MonoBehaviour {
 	{
 		if (_currentControlled != null)
 		{
-			StartCoroutine(_lightFlicker.FlickerLights(delegate() {
+			Light[] activeLights = FindObjectsOfType<Light>();
+
+			StartCoroutine(UtilityTools.FlickerLights(activeLights, delegate() {
 				_currentControlled.SetActive(false);
 				_currentControlled = null;
 

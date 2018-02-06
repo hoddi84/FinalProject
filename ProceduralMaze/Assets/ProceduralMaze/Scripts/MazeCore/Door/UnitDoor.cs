@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using MazeVR;
+using MazeUtiliy;
 
 namespace MazeCore.Door {
 
@@ -13,7 +14,7 @@ namespace MazeCore.Door {
 	public GameObject rotatingDoor;
 	public GameObject doorHandle;
 
-	private Axis _rotationAxis = Axis.Y;
+	private RotationAxis _rotationAxis = RotationAxis.Y;
 
 	private float _currentDoorRotation;
 	private bool _isDoorOpen = false;
@@ -23,10 +24,10 @@ namespace MazeCore.Door {
 
 	public GameObject doorLockMechanic;
 	public GameObject doorOpenMechanic;
-	private SpriteRenderer lockRenderer;
-	private SpriteRenderer openRenderer;
-	private DirectorClickable directorClickableLock;
-	private DirectorClickable directorClickableOpen;
+	private SpriteRenderer _lockRenderer;
+	private SpriteRenderer _openRenderer;
+	private DirectorClickable _directorClickableLock;
+	private DirectorClickable _directorClickableOpen;
 
 	private void Awake()
 	{
@@ -34,11 +35,11 @@ namespace MazeCore.Door {
 		_uiController = FindObjectOfType<UIController>();
 		_vrInteractable = doorHandle.GetComponent<VRInteractable>();
 		
-		lockRenderer = doorLockMechanic.GetComponentInChildren<SpriteRenderer>();
-		openRenderer = doorOpenMechanic.GetComponentInChildren<SpriteRenderer>();
+		_lockRenderer = doorLockMechanic.GetComponentInChildren<SpriteRenderer>();
+		_openRenderer = doorOpenMechanic.GetComponentInChildren<SpriteRenderer>();
 
-		directorClickableLock = doorLockMechanic.GetComponentInChildren<DirectorClickable>();
-		directorClickableOpen = doorOpenMechanic.GetComponentInChildren<DirectorClickable>();	
+		_directorClickableLock = doorLockMechanic.GetComponentInChildren<DirectorClickable>();
+		_directorClickableOpen = doorOpenMechanic.GetComponentInChildren<DirectorClickable>();	
 	}
 
 	void OnEnable()
@@ -48,8 +49,8 @@ namespace MazeCore.Door {
 			_vrInteractable.onControllerInteracted += InteractWithDoor;
 		}
 
-		directorClickableLock.onHit += OnDirectorDoorLock;
-		directorClickableOpen.onHit += OnDirectorDoorOpen;
+		_directorClickableLock.onHit += OnDirectorDoorLock;
+		_directorClickableOpen.onHit += OnDirectorDoorOpen;
 
 		PerformPresenceMeterActions(_doorManager.presenceSliderValue);
 	}
@@ -61,8 +62,8 @@ namespace MazeCore.Door {
 			_vrInteractable.onControllerInteracted -= InteractWithDoor;
 		}
 
-		directorClickableLock.onHit -= OnDirectorDoorLock;
-		directorClickableOpen.onHit -= OnDirectorDoorOpen;
+		_directorClickableLock.onHit -= OnDirectorDoorLock;
+		_directorClickableOpen.onHit -= OnDirectorDoorOpen;
 	}
 
 	private void Start()
@@ -187,7 +188,7 @@ namespace MazeCore.Door {
 		{
 			AudioSource.PlayClipAtPoint(_doorManager.openHandleClip, doorFrame.transform.position);
 		}
-		StartCoroutine(UnitUtilities.RotateRoundAxis(delayTime, _doorManager.rotationAngle, _rotationAxis, rotatingDoor,
+		StartCoroutine(UtilityTools.RotateRoundAxis(delayTime, _doorManager.rotationAngle, _rotationAxis, rotatingDoor,
 			delegate() {
 				if (useSound)
 				{
@@ -206,7 +207,7 @@ namespace MazeCore.Door {
 		float delayTime;
 		delayTime = useDelay ? _doorManager.doorCloseTime : 0;
 
-		StartCoroutine(UnitUtilities.RotateRoundAxis(delayTime, -_doorManager.rotationAngle, _rotationAxis, rotatingDoor, 
+		StartCoroutine(UtilityTools.RotateRoundAxis(delayTime, -_doorManager.rotationAngle, _rotationAxis, rotatingDoor, 
 			delegate(){
 				OnDoneMoving();
 				OnDoorClosed();
@@ -246,20 +247,20 @@ namespace MazeCore.Door {
 
 		if (!_isDoorLocked)
 		{
-			lockRenderer.sprite = _doorManager.doorSpriteLockOpen;
+			_lockRenderer.sprite = _doorManager.doorSpriteLockOpen;
 		}
 		else
 		{
-			lockRenderer.sprite = _doorManager.doorSpriteLockClosed;
+			_lockRenderer.sprite = _doorManager.doorSpriteLockClosed;
 		}
 
 		if (!_isDoorOpen)
 		{
-			openRenderer.sprite = _doorManager.doorSpriteClosed;
+			_openRenderer.sprite = _doorManager.doorSpriteClosed;
 		}
 		else
 		{
-			openRenderer.sprite = _doorManager.doorSpriteOpen;
+			_openRenderer.sprite = _doorManager.doorSpriteOpen;
 		}
 	}
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using MazeUtiliy;
 
 namespace MazeVR {
 
@@ -49,11 +50,11 @@ namespace MazeVR {
 			switch (interactedGameObject.tag) 
 			{
 				case WALL:
-					StartCoroutine(UnitUtilities.TriggerVibration(_trackedController, 1, .1f));
+					StartCoroutine(UtilityTools.TriggerVibration(_trackedController, 1, .1f));
 				break;
 
 				case DOOR_HANDLE:
-					StartCoroutine(UnitUtilities.TriggerVibration(_trackedController, 1, .1f));
+					StartCoroutine(UtilityTools.TriggerVibration(_trackedController, 1, .1f));
 				break;
 			}
 		}
