@@ -1,36 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class UnitLightSpawner : MonoBehaviour {
+namespace MazeCore.Lighting {
+	
+	public class UnitLightSpawner : MonoBehaviour {
 
-	public GameObject unitLight;
-	private GameObject tmp;
+		public GameObject unitLight;
 
-	private GameObject parentOfLights;
+		private GameObject _tmp;
+		private GameObject _parentOfLights;
 
-	void Awake()
-	{
-		parentOfLights = GameObject.Find("LIGHTS");
-		
-		if (parentOfLights == null)
+		private void Awake()
 		{
-			parentOfLights = new GameObject("LIGHTS");
+			_parentOfLights = GameObject.Find("LIGHTS");
+			
+			if (_parentOfLights == null)
+			{
+				_parentOfLights = new GameObject("LIGHTS");
+			}
+
 		}
 
-	}
-
-	void OnEnable()
-	{
-		tmp = Instantiate(unitLight, transform.position, transform.rotation);
-		tmp.transform.parent = parentOfLights.transform;
-	}
-
-	void OnDisable()
-	{
-		if (tmp != null)
+		private void OnEnable()
 		{
-			tmp.GetComponent<LightSettings>().DisableLight();
+			_tmp = Instantiate(unitLight, transform.position, transform.rotation);
+			_tmp.transform.parent = _parentOfLights.transform;
+		}
+
+		private void OnDisable()
+		{
+			if (_tmp != null)
+			{
+				_tmp.GetComponent<LightSettings>().DisableLight();
+			}
 		}
 	}
 }
+
+

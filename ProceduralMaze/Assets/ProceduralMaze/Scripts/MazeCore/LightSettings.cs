@@ -1,89 +1,113 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LightSettings : MonoBehaviour {
+namespace MazeCore.Lighting {
 
-	private LightManager lightManager;
-	private Light light;
+	public class LightSettings : MonoBehaviour {
 
-	private float lightInDuration = 1.0f;
-	private float lightOutDuration = .5f;
+		private LightManager _lightManager;
+		private Light _light;
 
-	void Awake()
-	{
-		lightManager = FindObjectOfType(typeof(LightManager)) as LightManager;	
-		light = GetComponentInChildren<Light>();	
+		private float _lightInDuration = 1.0f;
+		private float _lightOutDuration = .5f;
 
-		lightManager.onLightColorChanged += SetLightColor;		
-		lightManager.onLightIntensityChanged += SetLightIntensity;
-	}
-
-	void Start()
-	{
-		light.intensity = lightManager.lightIntensity;
-	}
-
-	void SetLightIntensity(float newIntensity)
-	{
-		if (light != null)
+		private void Awake()
 		{
-			light.intensity = newIntensity;
-		}
-	}
-
-	void SetLightColor(Color newColor)
-	{
-		if (light != null)
-		{
-			light.color = newColor;
-		}
-	}
-
-	IEnumerator LightingIntro(bool intro)
-	{
-		float duration = 0;
-		float elapsedTime = 0;
-
-		light.color = lightManager.lightColor;
-
-		if (intro)
-		{
-			duration = lightInDuration;
-		}
-		else
-		{
-			duration = lightOutDuration;
+			_lightManager = FindObjectOfType<LightManager>();
+			_light = GetComponentInChildren<Light>();	
 		}
 
-
-		while (elapsedTime < duration)
+		private void OnEnable()
 		{
+			if (_lightManager != null)
+			{
+				_lightManager.onLightColorChanged += SetLightColor;		
+				_lightManager.onLightIntensityChanged += SetLightIntensity;
+			}
+
+			StartCoroutine(LightingIntro(true));
+		}
+
+		private void OnDisable()
+		{
+			if (_lightManager != null)
+			{
+				_lightManager.onLightColorChanged -= SetLightColor;		
+				_lightManager.onLightIntensityChanged -= SetLightIntensity;
+			}
+		}
+
+		private void Start()
+		{
+			_light.intensity = _lightManager.lightIntensity;
+		}
+
+		/// <summary>
+		/// Callback executed when light intensity has been changed.
+		/// </summary>
+		/// <param name="newIntensity">New light intensity.</param>
+		private void SetLightIntensity(float newIntensity)
+		{
+			if (_light != null)
+			{
+				_light.intensity = newIntensity;
+			}
+		}
+
+		/// <summary>
+		/// Callback executed when light color has been changed.
+		/// </summary>
+		/// <param name="newColor">New light color.</param>
+		private void SetLightColor(Color newColor)
+		{
+			if (_light != null)
+			{
+				_light.color = newColor;
+			}
+		}
+
+		private IEnumerator LightingIntro(bool intro)
+		{
+			float duration = 0;
+			float elapsedTime = 0;
+
+			_light.color = _lightManager.lightColor;
+
 			if (intro)
 			{
-				light.intensity = Mathf.Lerp(0, lightManager.lightIntensity, (elapsedTime/duration));
+				duration = _lightInDuration;
 			}
-			else 
+			else
 			{
-				light.intensity = Mathf.Lerp(lightManager.lightIntensity, 0, (elapsedTime/duration));
+				duration = _lightOutDuration;
 			}
-			elapsedTime += Time.deltaTime;
-			yield return new WaitForEndOfFrame();
+
+
+			while (elapsedTime < duration)
+			{
+				if (intro)
+				{
+					_light.intensity = Mathf.Lerp(0, _lightManager.lightIntensity, (elapsedTime/duration));
+				}
+				else 
+				{
+					_light.intensity = Mathf.Lerp(_lightManager.lightIntensity, 0, (elapsedTime/duration));
+				}
+				elapsedTime += Time.deltaTime;
+				yield return new WaitForEndOfFrame();
+			}
+
+			if (!intro)
+			{
+				Destroy(gameObject);
+			}
 		}
 
-		if (!intro)
+		public void DisableLight()
 		{
-			Destroy(gameObject);
-		}
-	}
-
-	void OnEnable()
-	{
-		StartCoroutine(LightingIntro(true));
-	}
-
-	public void DisableLight()
-	{
-		StartCoroutine(LightingIntro(false));
+			StartCoroutine(LightingIntro(false));
+		}	
 	}
 }
+
+

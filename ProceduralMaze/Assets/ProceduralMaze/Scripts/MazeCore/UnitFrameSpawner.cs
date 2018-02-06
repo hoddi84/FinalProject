@@ -1,187 +1,207 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitFrameSpawner : MonoBehaviour {
+namespace MazeCore.Frame {
 
-	public GameObject framePrefab;
-	private Transform[] frameSpawnPoints;
-	private UnitFrameManager frameManager;
-	private float spawnChance;
-	private List<GameObject> listOfSpawned;
-	private List<Transform> listOfSpawnPoints;
-	private GameObject parentOfFrames;
+	public class UnitFrameSpawner : MonoBehaviour {
 
-	void Awake()
-	{
-		parentOfFrames = GameObject.Find("FRAMES");
+		public GameObject framePrefab;
 
-		if (parentOfFrames == null)
+		private UnitFrameManager _frameManager = null;
+		private Transform[] _frameSpawnPoints = null;
+		private List<GameObject> _listOfSpawned = null;
+		private List<Transform> _listOfSpawnPoints = null;
+		private GameObject _parentOfFrames = null;
+		private float _spawnChance = 0;
+
+		private void Awake()
 		{
-			parentOfFrames = new GameObject("FRAMES");
-		}
-	}
+			_parentOfFrames = GameObject.Find("FRAMES");
 
-	void OnEnable()
-	{
-		if (frameManager == null)
-		{
-			frameManager = FindObjectOfType(typeof(UnitFrameManager)) as UnitFrameManager;
-			spawnChance = frameManager.frameSpawnChance;
-		}
-
-		if (frameSpawnPoints == null)
-		{
-			frameSpawnPoints = gameObject.GetComponentsInChildren<Transform>();
-		}
-
-		if (listOfSpawned != null)
-		{
-			foreach (GameObject obj in listOfSpawned)
+			if (_parentOfFrames == null)
 			{
-				obj.SetActive(true);
+				_parentOfFrames = new GameObject("FRAMES");
 			}
-		}
-	}
 
-	void Start()
-	{
-		listOfSpawnPoints = new List<Transform>();
-
-		foreach (Transform transform in frameSpawnPoints)
-		{
-			listOfSpawnPoints.Add(transform);
+			_frameManager = FindObjectOfType<UnitFrameManager>();
+			_frameSpawnPoints = gameObject.GetComponentsInChildren<Transform>();
 		}
 
-		listOfSpawnPoints = RandomizeSpawnList(listOfSpawnPoints);
-
-		if (frameManager.availablePhotos.Count != 0)
+		private void OnEnable()
 		{
-			Initialize();
+			if (_frameManager != null) { _spawnChance = _frameManager.frameSpawnChance; }
+
+			ToggleSpawnedPhotoFrames(true);
 		}
-	}
 
-	void OnDisable()
-	{
-		if (listOfSpawned != null)
+		private void OnDisable()
 		{
-			foreach (GameObject obj in listOfSpawned)
+			ToggleSpawnedPhotoFrames(false);
+		}
+
+		private void Start()
+		{
+			_listOfSpawnPoints = new List<Transform>();
+
+			foreach (Transform transform in _frameSpawnPoints)
 			{
-				if (obj != null)
+				_listOfSpawnPoints.Add(transform);
+			}
+
+			_listOfSpawnPoints = RandomizeSpawnList(_listOfSpawnPoints);
+
+			if (_frameManager.availablePhotos.Count != 0) { Initialize(); }
+		}
+
+		/// <summary>
+		/// Toggle the photo frame gameObjects.
+		/// </summary>
+		/// <param name="active">Photo frame stata.</param>
+		private void ToggleSpawnedPhotoFrames(bool active)
+		{
+			if (_listOfSpawned != null)
+			{
+				foreach (GameObject obj in _listOfSpawned)
 				{
-					obj.SetActive(false);
+					if (obj != null)
+					{
+						if (active) { obj.SetActive(true); }
+						else { obj.SetActive(false); }
+					}
 				}
 			}
 		}
-	}
 
-	private List<T> RandomizeSpawnList<T>(List<T> someList)
-	{
-		List<T> randomized = new List<T>();
-		List<T> original = new List<T>(someList);
-
-		while (original.Count > 0)
+		/// <summary>
+		/// Rearranges the elements of a list in random order.
+		/// </summary>
+		/// <param name="someList">List to be randomized.</param>
+		/// <returns>Randomized list.</returns>
+		private List<T> RandomizeSpawnList<T>(List<T> someList)
 		{
-			int index = Random.Range(0, original.Count);
-			randomized.Add(original[index]);
-			original.RemoveAt(index);
-		}
-		return randomized;
-	}
+			List<T> randomized = new List<T>();
+			List<T> original = new List<T>(someList);
 
-	void Initialize()
-	{
-		listOfSpawned = new List<GameObject>();
-
-		foreach (Transform spawn in listOfSpawnPoints)
-		{
-			if (spawn.gameObject.GetInstanceID() != gameObject.GetInstanceID())
+			while (original.Count > 0)
 			{
-				float rnd = Random.Range(0.0f, 1.0f);
+				int index = Random.Range(0, original.Count);
+				randomized.Add(original[index]);
+				original.RemoveAt(index);
+			}
+			return randomized;
+		}
 
-				// spawn
-				if (rnd <= spawnChance)
+		/// <summary>
+		/// Initializes a Maze Unit with photo frames.
+		/// </summary>
+		private void Initialize()
+		{
+			_listOfSpawned = new List<GameObject>();
+
+			foreach (Transform spawn in _listOfSpawnPoints)
+			{
+				if (spawn.gameObject.GetInstanceID() != gameObject.GetInstanceID())
 				{
-					if (listOfSpawned.Count == 0)
-					{
-						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
+					float rnd = Random.Range(0.0f, 1.0f);
 
-						AddRotation(t, frameManager.GetScaryMeterValue());
-						AssignPhotoToFrame(t);
-						t.transform.parent = parentOfFrames.transform;
-						listOfSpawned.Add(t);
-					}
-					else
+					// spawn
+					if (rnd <= _spawnChance)
 					{
-						GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
-
-						AddRotation(t, frameManager.GetScaryMeterValue());
-						AssignPhotoToFrame(t);
-						t.transform.parent = parentOfFrames.transform;
-						if (CheckIfCollision(listOfSpawned, t))
+						if (_listOfSpawned.Count == 0)
 						{
-							Destroy(t);
+							GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
+
+							AddRotation(t, _frameManager.GetScaryMeterValue());
+							AssignPhotoToFrame(t);
+							t.transform.parent = _parentOfFrames.transform;
+							_listOfSpawned.Add(t);
 						}
 						else
 						{
-							listOfSpawned.Add(t);
+							GameObject t = Instantiate(framePrefab, spawn.transform.position, spawn.rotation);
+
+							AddRotation(t, _frameManager.GetScaryMeterValue());
+							AssignPhotoToFrame(t);
+							t.transform.parent = _parentOfFrames.transform;
+							if (CheckIfCollision(_listOfSpawned, t))
+							{
+								Destroy(t);
+							}
+							else
+							{
+								_listOfSpawned.Add(t);
+							}
 						}
 					}
 				}
 			}
 		}
-	}
 
-	// Add rotation to the painting frames.
-	// Higher scary value, chance for more rotation.
-	void AddRotation(GameObject frame, float scaryMeterValue)
-	{
-		UnitFrameSpawnerRotation frameToRotate = frame.GetComponentInChildren<UnitFrameSpawnerRotation>();
-		BoxCollider collider = frame.GetComponentInChildren<BoxCollider>();
-
-		Vector3 center = collider.bounds.center;
-		Transform rotatingFrame = frameToRotate.gameObject.transform;
-		Transform parentRotation = rotatingFrame.parent.transform;
-
-		float yExtents = collider.bounds.extents.y;
-		float zExtents = collider.bounds.extents.z;
-
-		Vector3 pointEndZ = new Vector3(center.x, center.y, center.z + zExtents);
-		Vector3 pointEndY = new Vector3(center.x, center.y + yExtents, center.z);
-
-		Vector3 dir = pointEndZ - center;
-		dir = Quaternion.Euler(0,parentRotation.rotation.eulerAngles.y, 0) * dir;
-		pointEndZ = dir + center;
-
-		Vector3 heightLine = pointEndY - center;
-		Vector3 widthLine = pointEndZ - center;
-
-		Vector3 rotationAxis = Vector3.Cross(heightLine, widthLine);
-
-		float randomRotation = Random.Range(-frameManager.maxFrameRotation, frameManager.maxFrameRotation);
-		rotatingFrame.RotateAround(center, rotationAxis, randomRotation*scaryMeterValue);
-	}
-
-	// Assign random picture from manager.
-	void AssignPhotoToFrame(GameObject t)
-	{
-		int rnd = Random.Range(0, frameManager.availablePhotos.Count);
-
-		t.GetComponentInChildren<SpriteRenderer>().sprite = frameManager.availablePhotos[rnd];
-	}
-
-	bool CheckIfCollision(List<GameObject> listOfSpawned, GameObject newSpawn)
-	{
-		foreach (GameObject spawned in listOfSpawned)
+		/// <summary>
+		/// Add rotation to a frame.
+		/// </summary>
+		/// <param name="frame">The frame to rotate.</param>
+		/// <param name="scaryMeterValue">Amount of rotation.</param>
+		private void AddRotation(GameObject frame, float scaryMeterValue)
 		{
-			BoxCollider spawnedCollider = spawned.GetComponentInChildren<BoxCollider>();
-			BoxCollider newSpawnCollider = newSpawn.GetComponentInChildren<BoxCollider>();
+			UnitFrameSpawnerRotation frameToRotate = frame.GetComponentInChildren<UnitFrameSpawnerRotation>();
+			BoxCollider collider = frame.GetComponentInChildren<BoxCollider>();
 
-			if (spawnedCollider.bounds.Intersects(newSpawnCollider.bounds))
-			{
-				return true;
-			}
+			Vector3 center = collider.bounds.center;
+			Transform rotatingFrame = frameToRotate.gameObject.transform;
+			Transform parentRotation = rotatingFrame.parent.transform;
+
+			float yExtents = collider.bounds.extents.y;
+			float zExtents = collider.bounds.extents.z;
+
+			Vector3 pointEndZ = new Vector3(center.x, center.y, center.z + zExtents);
+			Vector3 pointEndY = new Vector3(center.x, center.y + yExtents, center.z);
+
+			Vector3 dir = pointEndZ - center;
+			dir = Quaternion.Euler(0,parentRotation.rotation.eulerAngles.y, 0) * dir;
+			pointEndZ = dir + center;
+
+			Vector3 heightLine = pointEndY - center;
+			Vector3 widthLine = pointEndZ - center;
+
+			Vector3 rotationAxis = Vector3.Cross(heightLine, widthLine);
+
+			float randomRotation = Random.Range(-_frameManager.maxFrameRotation, _frameManager.maxFrameRotation);
+			rotatingFrame.RotateAround(center, rotationAxis, randomRotation*scaryMeterValue);
 		}
-		return false;
+
+		/// <summary>
+		/// Assign a random photo to a frame from available photos.
+		/// </summary>
+		/// <param name="t">The frame to add a photo to.</param>
+		private void AssignPhotoToFrame(GameObject t)
+		{
+			int rnd = Random.Range(0, _frameManager.availablePhotos.Count);
+
+			t.GetComponentInChildren<SpriteRenderer>().sprite = _frameManager.availablePhotos[rnd];
+		}
+
+		/// <summary>
+		/// Check if a new photo frame collides with existing frames.
+		/// </summary>
+		/// <param name="listOfSpawned">List of frames that have been spawned.</param>
+		/// <param name="newSpawn">Frame to spawn.</param>
+		/// <returns>Returns true if new frame to spawn collides with existing frames.</returns>
+		private bool CheckIfCollision(List<GameObject> listOfSpawned, GameObject newSpawn)
+		{
+			foreach (GameObject spawned in listOfSpawned)
+			{
+				BoxCollider spawnedCollider = spawned.GetComponentInChildren<BoxCollider>();
+				BoxCollider newSpawnCollider = newSpawn.GetComponentInChildren<BoxCollider>();
+
+				if (spawnedCollider.bounds.Intersects(newSpawnCollider.bounds))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 }
+
+

@@ -1,8 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class UnitFrameSpawnerRotation : MonoBehaviour {
+namespace MazeCore.Frame{
 
+    /// <summary>
+    /// Placed on contents gameObject in a PictureFrame.
+    /// </summary>
+    public class UnitFrameSpawnerRotation : MonoBehaviour {
 
+    }
 }
+
+

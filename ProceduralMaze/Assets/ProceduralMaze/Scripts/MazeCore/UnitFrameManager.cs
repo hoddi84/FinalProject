@@ -1,101 +1,109 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using MazeUtiliy;
 
-public class UnitFrameManager : MonoBehaviour {
+namespace MazeCore.Frame {
 
-	[Range(0.0f, 1.0f)]
-	public float frameSpawnChance = 0f;
-	public FrameAssetsSriptableObject photoAssets;
+	public class UnitFrameManager : MonoBehaviour {
 
-	[HideInInspector]
-	public List<Sprite> availablePhotos;
+		[Range(0.0f, 1.0f)]
+		public float frameSpawnChance = 0f;
+		public FrameAssetsSriptableObject photoAssets;
 
-	private UIController uIController;
-	private SimpleInterfaceController simpleInterfaceController;
-	private ComplexInterfaceController complexInterfaceController;
+		[HideInInspector]
+		public List<Sprite> availablePhotos;
 
-	public float GetScaryMeterValue() 
-	{
-		if (simpleInterfaceController != null)
+		private UIController _uIController;
+		private SimpleInterfaceController _simpleInterfaceController;
+		private ComplexInterfaceController _complexInterfaceController;
+
+		public float GetScaryMeterValue() 
 		{
-			return simpleInterfaceController.scarySlider.value;
+			if (_simpleInterfaceController != null) { return _simpleInterfaceController.scarySlider.value; }
+			else { return 0; }
 		}
-		else 
+
+		[Range(0.0f, 1.0f)]
+		public float frameVariance;
+		private float _frameVariance;
+
+		[Range(0.0f, 4.0f)]
+		public float maxFrameRotation;
+
+		private void Awake()
 		{
-			return 0;
-		}
-	}
+			_uIController = FindObjectOfType<UIController>();
 
-	[Range(0.0f, 1.0f)]
-	public float frameVariance;
-	private float _frameVariance;
+			if (_uIController != null)
+			{
+				_simpleInterfaceController = _uIController.GetComponent<SimpleInterfaceController>();
+				_complexInterfaceController = _uIController.GetComponent<ComplexInterfaceController>();
 
-	[Range(0.0f, 4.0f)]
-	public float maxFrameRotation;
-
-	void Awake()
-	{
-		uIController = FindObjectOfType(typeof(UIController)) as UIController;
-
-		if (uIController != null)
-		{
-			simpleInterfaceController = uIController.GetComponent<SimpleInterfaceController>();
-			complexInterfaceController = uIController.GetComponent<ComplexInterfaceController>();
-
-			uIController.onControlModeSwitch += ChangeControlModes;
-			simpleInterfaceController.onScarySliderChanged += UpdateAvailablePhotos;
-			complexInterfaceController.onListChanged += UpdateAvailablePhotos;
-		}
-		else
-		{
-			UpdateAvailablePhotos(frameVariance);
-		}
-	}
-
-	void ChangeControlModes(ControlMode mode)
-	{
-		switch (mode) {
-			case ControlMode.SimpleControlMode:
+				_uIController.onControlModeSwitch += ChangeControlModes;
+				_simpleInterfaceController.onScarySliderChanged += UpdateAvailablePhotos;
+				_complexInterfaceController.onListChanged += UpdateAvailablePhotos;
+			}
+			else
+			{
 				UpdateAvailablePhotos(frameVariance);
-			break;
-			case ControlMode.ComplexControlMode:
-				availablePhotos.Clear();
-			break;
+			}
 		}
-	}
 
-	void Start()
-	{
-		_frameVariance = frameVariance;
-	}
-
-	void Update()
-	{
-		if (_frameVariance != frameVariance)
+		private void ChangeControlModes(ControlMode mode)
 		{
-			UpdateAvailablePhotos(frameVariance);
+			switch (mode) {
+				case ControlMode.SimpleControlMode:
+					UpdateAvailablePhotos(frameVariance);
+				break;
+				case ControlMode.ComplexControlMode:
+					availablePhotos.Clear();
+				break;
+			}
+		}
+
+		private void Start()
+		{
 			_frameVariance = frameVariance;
 		}
-	}
 
-	public void UpdateAvailablePhotos(List<Sprite> newList)
-	{
-		availablePhotos = newList;
-	}
-
-	public void UpdateAvailablePhotos(float newFrameVariance)
-	{
-		if (newFrameVariance < .5f)
+		private void Update()
 		{
-			UtilityTools.IncreaseVariance(photoAssets.healthyFlowers, photoAssets.dyingFlowers, 0, newFrameVariance, .5f, ref availablePhotos);
-		}
-		else if (newFrameVariance >= .5f && newFrameVariance <= 1f)
-		{
-			UtilityTools.IncreaseVariance(photoAssets.dyingFlowers, photoAssets.scary, .5f, newFrameVariance, .5f, ref availablePhotos);
+			if (_frameVariance != frameVariance)
+			{
+				UpdateAvailablePhotos(frameVariance);
+				_frameVariance = frameVariance;
+			}
 		}
 
-		frameVariance = newFrameVariance;
+		/// <summary>
+		/// Callback for when the list of selected photos in the complex
+		/// interface mode changes.
+		/// </summary>
+		/// <param name="newList">List of selected photos.</param>
+		public void UpdateAvailablePhotos(List<Sprite> newList)
+		{
+			availablePhotos = newList;
+		}
+
+		/// <summary>
+		/// Callback for when the scary meter in the simple interface
+		/// mode changes.
+		/// </summary>
+		/// <param name="newFrameVariance">The current scary meter value.</param>
+		public void UpdateAvailablePhotos(float newFrameVariance)
+		{
+			if (newFrameVariance < .5f)
+			{
+				UtilityTools.IncreaseVariance(photoAssets.healthyFlowers, photoAssets.dyingFlowers, 0, newFrameVariance, .5f, ref availablePhotos);
+			}
+			else if (newFrameVariance >= .5f && newFrameVariance <= 1f)
+			{
+				UtilityTools.IncreaseVariance(photoAssets.dyingFlowers, photoAssets.scary, .5f, newFrameVariance, .5f, ref availablePhotos);
+			}
+
+			frameVariance = newFrameVariance;
+		}
 	}
 }
+
+
