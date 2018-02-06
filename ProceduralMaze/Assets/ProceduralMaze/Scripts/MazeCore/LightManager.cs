@@ -92,12 +92,22 @@ namespace MazeCore.Lighting {
 			CheckIfAmbienceColorChanged();
 		}
 
+		/// <summary>
+		/// Callback executed when the color on color picker has 
+		/// been changed.
+		/// </summary>
+		/// <param name="newColor">New color of lights and ambience lighting.</param>
 		private void OnColorPickerChanged(Color newColor)
 		{
 			ambienceColor = newColor;
 			lightColor = newColor;
 		}
 
+		/// <summary>
+		/// Callback executed when changes occur in simple or complex 
+		/// interface mode, i.e scary meter in simple mode.
+		/// </summary>
+		/// <param name="newAmbienceIntensity">New ambience intensity value.</param>
 		private void UpdateAmbienceIntensity(float newAmbienceIntensity)
 		{
 			RenderSettings.ambientLight = Color.Lerp(ambienceColor, Color.black, newAmbienceIntensity);
@@ -106,6 +116,11 @@ namespace MazeCore.Lighting {
 			_ambienceIntensity = ambienceIntensity;
 		}
 
+		/// <summary>
+		/// Callback executed when changes occur in simple or complex
+		/// interface mode, i.e. light intensity slider in complex mode.
+		/// </summary>
+		/// <param name="newIntensity">New light intensity value.</param>
 		private void UpdateLightIntensity(float newIntensity)
 		{
 			if (onLightIntensityChanged != null)
