@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using MazeUtiliy;
 
 namespace MazeCore.Frame {
 
@@ -48,7 +49,7 @@ namespace MazeCore.Frame {
 				_listOfSpawnPoints.Add(transform);
 			}
 
-			_listOfSpawnPoints = RandomizeSpawnList(_listOfSpawnPoints);
+			_listOfSpawnPoints = UtilityTools.RandomizeList(_listOfSpawnPoints);
 
 			if (_frameManager.availablePhotos.Count != 0) { Initialize(); }
 		}
@@ -70,25 +71,6 @@ namespace MazeCore.Frame {
 					}
 				}
 			}
-		}
-
-		/// <summary>
-		/// Rearranges the elements of a list in random order.
-		/// </summary>
-		/// <param name="someList">List to be randomized.</param>
-		/// <returns>Randomized list.</returns>
-		private List<T> RandomizeSpawnList<T>(List<T> someList)
-		{
-			List<T> randomized = new List<T>();
-			List<T> original = new List<T>(someList);
-
-			while (original.Count > 0)
-			{
-				int index = Random.Range(0, original.Count);
-				randomized.Add(original[index]);
-				original.RemoveAt(index);
-			}
-			return randomized;
 		}
 
 		/// <summary>

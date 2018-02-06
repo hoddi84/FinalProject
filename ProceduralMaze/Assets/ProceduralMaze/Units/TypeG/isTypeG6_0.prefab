@@ -1793,7 +1793,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.87, y: 2.36, z: 0.02}
-  m_Center: {x: 1.19, y: 1.22, z: 0.46}
+  m_Center: {x: 1.19, y: 1.22, z: 0.69}
 --- !u!65 &65415155932819734
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1831,6 +1831,10 @@ MonoBehaviour:
   fromType: TypeG6
   isType: TypeG6
   toType: TypeA
+  nameOfHide: 
+  nameOfShow: 
+  showOutside: 0
+  outsidePrefab: {fileID: 0}
 --- !u!114 &114370677236836696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1845,6 +1849,10 @@ MonoBehaviour:
   fromType: TypeG5
   isType: TypeG6
   toType: TypeG5
+  nameOfHide: 
+  nameOfShow: 
+  showOutside: 0
+  outsidePrefab: {fileID: 0}
 --- !u!114 &114386359161920050
 MonoBehaviour:
   m_ObjectHideFlags: 1

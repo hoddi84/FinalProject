@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using MazeUtiliy;
 
 namespace MazeCore.Decals {
 
@@ -34,32 +35,13 @@ namespace MazeCore.Decals {
 				int decalAmount = (int)(bloodDecals.Length/2 * value);
 
 				List<GameObject> listOfDecals = new List<GameObject>(bloodDecals);
-				listOfDecals = RandomizeSpawnList(listOfDecals);
+				listOfDecals = UtilityTools.RandomizeList(listOfDecals);
 
 				for (int i = 0; i < decalAmount; i++)
 				{
 					listOfDecals[i].SetActive(true);
 				}
 			}
-		}
-
-		/// <summary>
-		/// Randomize elements in a list.
-		/// </summary>
-		/// <param name="someList">List to be randomized.</param>
-		/// <returns>Randomized List.</returns>
-		private List<T> RandomizeSpawnList<T>(List<T> someList)
-		{
-			List<T> randomized = new List<T>();
-			List<T> original = new List<T>(someList);
-
-			while (original.Count > 0)
-			{
-				int index = Random.Range(0, original.Count);
-				randomized.Add(original[index]);
-				original.RemoveAt(index);
-			}
-			return randomized;
 		}
 	}
 }

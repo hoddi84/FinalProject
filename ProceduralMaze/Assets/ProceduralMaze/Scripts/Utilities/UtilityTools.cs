@@ -186,6 +186,25 @@ namespace MazeUtiliy {
 				lights[i].intensity = intensities[i];
 			}
 		}
+
+		/// <summary>
+		/// Rearranges the elements of a list in random order.
+		/// </summary>
+		/// <param name="someList">List to be randomized.</param>
+		/// <returns>Randomized list.</returns>
+		public static List<T> RandomizeList<T>(List<T> someList)
+		{
+			List<T> randomized = new List<T>();
+			List<T> original = new List<T>(someList);
+
+			while (original.Count > 0)
+			{
+				int index = UnityEngine.Random.Range(0, original.Count);
+				randomized.Add(original[index]);
+				original.RemoveAt(index);
+			}
+			return randomized;
+		}
 	}
 }
 
