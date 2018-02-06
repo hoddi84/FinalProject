@@ -10,11 +10,6 @@ namespace MazeCore.Door {
 
 		public Action onDoorTriggerEntered = null;
 
-		private void Awake()
-		{
-			_unitDoor = transform.parent.gameObject.GetComponentInChildren<UnitDoor>();
-		}
-
 		private void OnEnable()
 		{
 			RegisterCollider();
@@ -23,6 +18,14 @@ namespace MazeCore.Door {
 		private void OnDisable()
 		{
 			DeregisterCollider();
+		}
+
+		private void Update()
+		{
+			if (_unitDoor == null)
+			{
+				_unitDoor = transform.parent.gameObject.GetComponentInChildren<UnitDoor>();
+			}
 		}
 
 		private void Initialize()

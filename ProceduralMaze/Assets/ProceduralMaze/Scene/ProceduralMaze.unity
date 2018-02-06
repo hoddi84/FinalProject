@@ -11714,75 +11714,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a48a4ce95a70d499ed37a77da59465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundPanel: {fileID: 1259562101}
   ambienceSoundAsset: {fileID: 11400000, guid: 6802fc26c91690f49bef17e4e0d74f90, type: 2}
   specialSoundsAsset: {fileID: 11400000, guid: 06ef5938e26a68146a8fd348a6a48eea, type: 2}
   effectSoundsAsset: {fileID: 11400000, guid: 91ea0cba33207ad49bb9f642f670cff8, type: 2}
-  ambienceSound:
-  - text: {fileID: 191197389}
-    activeToggle: {fileID: 1471967942}
-    volumeSlider: {fileID: 2098658393}
-    audioSource: {fileID: 0}
-  - text: {fileID: 2143738247}
-    activeToggle: {fileID: 163830925}
-    volumeSlider: {fileID: 679050156}
-    audioSource: {fileID: 0}
-  - text: {fileID: 214622251}
-    activeToggle: {fileID: 222616318}
-    volumeSlider: {fileID: 1073181774}
-    audioSource: {fileID: 0}
-  - text: {fileID: 462140518}
-    activeToggle: {fileID: 1366901877}
-    volumeSlider: {fileID: 1141067888}
-    audioSource: {fileID: 0}
-  - text: {fileID: 1526066524}
-    activeToggle: {fileID: 2082235306}
-    volumeSlider: {fileID: 1359361602}
-    audioSource: {fileID: 0}
-  - text: {fileID: 1118763936}
-    activeToggle: {fileID: 368682633}
-    volumeSlider: {fileID: 1845318007}
-    audioSource: {fileID: 0}
-  specialSound:
-  - text: {fileID: 1594406982}
-    activeToggle: {fileID: 874277740}
-    volumeSlider: {fileID: 1824366564}
-    audioSource: {fileID: 0}
-  - text: {fileID: 1706717242}
-    activeToggle: {fileID: 2017391279}
-    volumeSlider: {fileID: 1650133730}
-    audioSource: {fileID: 0}
-  effectSound:
-  - text: {fileID: 630986883}
-    button: {fileID: 2098534250}
-  - text: {fileID: 1924058619}
-    button: {fileID: 1480309683}
-  - text: {fileID: 1827951425}
-    button: {fileID: 2132701800}
-  - text: {fileID: 358905650}
-    button: {fileID: 1245824188}
+  audioUnits: []
+  ambienceSounds: []
+  specialSounds: []
+  effectSounds: []
   effectSpawnRange: 2.72
-  audioUnit:
-  - audioSource: {fileID: 510748341}
-    audioStart: 0
-    audioEnd: 0.554
-    increasingAudio: 1
-    maxVolume: 1
-  - audioSource: {fileID: 1894509254}
-    audioStart: 0.636
-    audioEnd: 1
-    increasingAudio: 1
-    maxVolume: 1
-  - audioSource: {fileID: 43474555}
-    audioStart: 0.636
-    audioEnd: 1
-    increasingAudio: 1
-    maxVolume: 1
-  - audioSource: {fileID: 1320296437}
-    audioStart: 0.562
-    audioEnd: 1
-    increasingAudio: 1
-    maxVolume: 0.042
+  ambienceSoundList:
+  - {fileID: 576725286}
+  - {fileID: 920304530}
+  - {fileID: 1403590175}
+  - {fileID: 1217809968}
+  - {fileID: 1596157540}
+  - {fileID: 1293293955}
+  specialSoundList:
+  - {fileID: 2004035847}
+  - {fileID: 577836322}
+  effectSoundList:
+  - {fileID: 1965636888}
+  - {fileID: 496036507}
+  - {fileID: 1163898221}
+  - {fileID: 577943169}
 --- !u!114 &793615197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11813,7 +11767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 944936a8757809445901a8a3b6a31139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bloodDecal: 0
+  bloodDecalAmount: 0
 --- !u!1 &813904047
 GameObject:
   m_ObjectHideFlags: 0
@@ -18002,7 +17956,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1207452736
 Transform:
   m_ObjectHideFlags: 0
@@ -27890,7 +27844,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1923621875}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.896744, y: -0.0053253174, z: 0}
+  m_LocalPosition: {x: 4.8967133, y: -0.0053253174, z: 0}
   m_LocalScale: {x: 0.994692, y: 0.994692, z: 0.994692}
   m_Children:
   - {fileID: 2097518503}
@@ -27900,7 +27854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4987879, y: 0.34001774}
   m_AnchorMax: {x: 0.9890629, y: 0.83501774}
-  m_AnchoredPosition: {x: 4.896744, y: -0.0053253174}
+  m_AnchoredPosition: {x: 4.8967133, y: -0.0053253174}
   m_SizeDelta: {x: 9.85, y: 1.5742}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1923621877
