@@ -1,91 +1,107 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitWallSpawner : MonoBehaviour {
+namespace MazeCore {
 
-	private UnitWallTypes wallTypes;
+	public class UnitWallSpawner : MonoBehaviour {
 
-	private enum WallType { Large, Medium, Small, Smallest, VerySmall, Corner};
+		private UnitWallTypes _wallTypes;
+		private const string WALL_LARGE = "WallLarge";
+		private const string WALL_MEDIUM = "WallMedium";
+		private const string WALL_SMALL = "WallSmall";
+		private const string WALL_VERYSMALL = "WallVerySmall";
+		private const string WALL_SMALLEST = "WallSmallest"; 
+		private const string WALL_CORNER = "Corner";
 
-	void Awake() 
-	{
-		wallTypes = FindObjectOfType(typeof(UnitWallTypes)) as UnitWallTypes;
-	}
+		private enum WallType { Large, Medium, Small, Smallest, VerySmall, Corner, NULL};
 
-	void Start()
-	{
-		Setup();
-	}
-
-	void Setup()
-	{
-		Dictionary<GameObject, WallType> contents = new Dictionary<GameObject, WallType>();
-
-		foreach (Transform wall in transform) {
-			
-			if (wall.name.Contains("WallLarge")) {
-				GameObject t = wall.gameObject;
-				contents.Add(t, WallType.Large);
-			}
-			else if (wall.name.Contains("WallMedium")) {
-				GameObject t = wall.gameObject;
-				contents.Add(t, WallType.Medium);
-			}
-			else if (wall.name.Contains("WallSmallest")) {
-				GameObject t = wall.gameObject;
-				contents.Add(t, WallType.Smallest);
-			}
-			else if (wall.name.Contains("WallSmall")) {
-				GameObject t = wall.gameObject;
-				contents.Add(t, WallType.Small);
-			}
-			else if (wall.name.Contains("WallVerySmall")) {
-				GameObject t = wall.gameObject;
-				contents.Add(t, WallType.VerySmall);
-			}
-			else if (wall.name.Contains("Corner")) {
-				GameObject t = wall.gameObject;
-				contents.Add(t, WallType.Corner);
-			}
+		private void Awake() 
+		{
+			_wallTypes = FindObjectOfType<UnitWallTypes>();
 		}
 
-		foreach (KeyValuePair<GameObject, WallType> entry in contents)
+		private void Start()
 		{
-			GameObject tmp = null;
+			InstantiateWalls();
+		}
 
-			switch (entry.Value) {
-				case WallType.Large:
-					tmp = wallTypes.wallLarge;
-				break;
+		/// <summary>
+		/// Replaces existing walls in an instantiated Unit prefab with it's corresponding
+		/// wall prefab.
+		/// </summary>
+		private void InstantiateWalls()
+		{
+			Dictionary<GameObject, WallType> contents = new Dictionary<GameObject, WallType>();
+			WallType wallType = WallType.NULL;
 
-				case WallType.Medium:
-					tmp = wallTypes.wallMedium;
-				break;
+			foreach (Transform wall in transform) {
+	
+				if (wall.name.Contains(WALL_LARGE)) {
+					wallType = WallType.Large;
+				}
+				else if (wall.name.Contains(WALL_MEDIUM)) {
+					wallType = WallType.Medium;
+				}
+				else if (wall.name.Contains(WALL_SMALLEST)) {
+					wallType = WallType.Smallest;
+				}
+				else if (wall.name.Contains(WALL_SMALL)) {
+					wallType = WallType.Small;
+				}
+				else if (wall.name.Contains(WALL_VERYSMALL)) {
+					wallType = WallType.VerySmall;
+				}
+				else if (wall.name.Contains(WALL_CORNER)) {
+					wallType = WallType.Corner;
+				}
 
-				case WallType.Small:
-					tmp = wallTypes.wallSmall;
-				break;
-
-				case WallType.Smallest:
-					tmp = wallTypes.wallSmallest;
-				break;
-
-				case WallType.VerySmall:
-					tmp = wallTypes.wallVerySmall;
-				break;
-
-				case WallType.Corner:
-					tmp = wallTypes.wallCorner;
-				break;
+				if (wallType != WallType.NULL)
+				{
+					GameObject t = wall.gameObject;
+					contents.Add(t, wallType);
+				}
 			}
 
-			if (tmp != null)
+			foreach (KeyValuePair<GameObject, WallType> entry in contents)
 			{
-				GameObject t = Instantiate(tmp, entry.Key.transform.position, entry.Key.transform.rotation);
-				t.transform.parent = transform;
-				Destroy(entry.Key);
+				GameObject tmp = null;
+
+				switch (entry.Value) {
+					case WallType.Large:
+						tmp = _wallTypes.wallLarge;
+					break;
+
+					case WallType.Medium:
+						tmp = _wallTypes.wallMedium;
+					break;
+
+					case WallType.Small:
+						tmp = _wallTypes.wallSmall;
+					break;
+
+					case WallType.Smallest:
+						tmp = _wallTypes.wallSmallest;
+					break;
+
+					case WallType.VerySmall:
+						tmp = _wallTypes.wallVerySmall;
+					break;
+
+					case WallType.Corner:
+						tmp = _wallTypes.wallCorner;
+					break;
+				}
+
+				if (tmp != null)
+				{
+					GameObject t = Instantiate(tmp, entry.Key.transform.position, entry.Key.transform.rotation);
+					t.transform.parent = transform;
+					Destroy(entry.Key);
+				}
 			}
+			contents.Clear();
 		}
 	}
 }
+
+

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TriggerTest : MonoBehaviour {
 
+	private enum EntryAxis { X, Y, Z }
 	private EntryAxis entryAxis;
 	private Vector3 entryVector;
 	private Vector3 outVector;

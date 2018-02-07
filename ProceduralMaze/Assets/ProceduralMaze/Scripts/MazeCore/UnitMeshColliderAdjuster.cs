@@ -1,27 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-/*
- * Place this scripts on Units, to change the MeshCollider that is
- * attached to walls, such that it is convex and a trigger, which enables
- * the VIVE controllers to vibrate upon touching them.
- */
-public class UnitMeshColliderAdjuster : MonoBehaviour {
+namespace MazeCore {
 
-	void Awake()
-	{
-		AdjustMeshColliders();
-	}
+	/// <summary>
+	/// Place this scripts on Units, to change the MeshCollider that is
+	/// attached to walls, such that it is convex and a trigger, which enables
+	/// the VIVE controllers to vibrate upon touching them.
+	/// </summary>
+	public class UnitMeshColliderAdjuster : MonoBehaviour {
 
-	void AdjustMeshColliders()
-	{
-		MeshCollider[] colliders = gameObject.GetComponentsInChildren<MeshCollider>();
-
-		foreach (MeshCollider collider in colliders)
+		void Awake()
 		{
-			collider.convex = true;
-			collider.isTrigger = true;
+			AdjustMeshColliders();
+		}
+
+		void AdjustMeshColliders()
+		{
+			MeshCollider[] colliders = gameObject.GetComponentsInChildren<MeshCollider>();
+
+			foreach (MeshCollider collider in colliders)
+			{
+				collider.convex = true;
+				collider.isTrigger = true;
+			}
 		}
 	}
 }

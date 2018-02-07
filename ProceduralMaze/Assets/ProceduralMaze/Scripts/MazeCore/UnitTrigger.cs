@@ -1,169 +1,187 @@
 ﻿using System;
 using UnityEngine;
 
-public enum EntryAxis 
-{
-	X,
-	Y,
-	Z,
-}
+namespace MazeCore {
 
-public class UnitTrigger : MonoBehaviour {
+	public class UnitTrigger : MonoBehaviour {
 
-    private const string PLAYER = "Player";
-    public Action<UnitTrigger> onTriggerEntered = null;
+		private enum EntryAxis { X,Y,Z, }
+		private const string PLAYER = "Player";
+		private const string EMPTY = "";
+		private const string PATH_TO_SURROUNDING_WALLS = "/Core/HospitalRoom/Contents/";
+		private const string CLONE = "(Clone)";
+		private EntryAxis _entryAxis;
+		private Vector3 _entryVector;
+		private Vector3 _outVector;
 
-	public string fromType;
-	public string isType;
-	public string toType;
+		private GameObject _objToHide;
+		private GameObject _objToShow;
 
-    private EntryAxis entryAxis;
-	private Vector3 entryVector;
-	private Vector3 outVector;
+		[Header("Outsite Settings")]
+		public GameObject outsidePrefab;
+		public string nameOfHide;
+		public string nameOfShow;
+		public bool showOutside;
+		
+		public Action<UnitTrigger> onTriggerEntered = null;
 
-	public string nameOfHide;
-	public string nameOfShow;
+		[Header("Unit Connections")]
+		public string fromType;
+		public string isType;
+		public string toType;
 
-	private GameObject objToHide;
-	private GameObject objToShow;
-
-	public bool showOutside;
-	public GameObject outsidePrefab;
-	private GameObject tmp_outside;
-
-
-	void Awake()
-	{
-		if (nameOfHide != "")
+		private void Awake()
 		{
-			objToHide = GameObject.Find("/Core/HospitalRoom/Contents/" + nameOfHide);
-		}
-
-		if (nameOfShow != "")
-		{
-			objToShow = GameObject.Find("/Core/HospitalRoom/Contents/" + nameOfShow);
-		}
-	}
-
-    void Start()
-    {
-        FindAxisOfEntry();
-    }
-
-	void ToggleMainWalls()
-	{
-		if (objToHide != null)
-		{
-			if (objToHide.activeInHierarchy)
+			if (nameOfHide != EMPTY)
 			{
-				objToHide.SetActive(false);
+				_objToHide = GameObject.Find(PATH_TO_SURROUNDING_WALLS + nameOfHide);
+			}
+
+			if (nameOfShow != EMPTY)
+			{
+				_objToShow = GameObject.Find(PATH_TO_SURROUNDING_WALLS + nameOfShow);
 			}
 		}
 
-		if (objToShow != null)
+		private void Start()
 		{
-			if (!objToShow.activeInHierarchy)
-			{
-				objToShow.SetActive(true);
-			}
+			FindAxisOfEntry();
 		}
-	}
 
-	void ToggleOutside()
-	{
-		if (outsidePrefab != null)
+		/// <summary>
+		/// Toggle surrounding walls.
+		/// </summary>
+		private void ToggleMainWalls()
 		{
-			if (showOutside)
+			if (_objToHide != null)
 			{
-				if (GameObject.Find(outsidePrefab.name + "(Clone)") == null)
+				if (_objToHide.activeInHierarchy)
 				{
-					Instantiate(outsidePrefab);
+					_objToHide.SetActive(false);
 				}
 			}
-			else
+
+			if (_objToShow != null)
 			{
-				Destroy(GameObject.Find(outsidePrefab.name + "(Clone)"));
+				if (!_objToShow.activeInHierarchy)
+				{
+					_objToShow.SetActive(true);
+				}
 			}
 		}
-	}
 
-    void OnTriggerEnter(Collider other)
-	{
-		if (other.tag == "Player")
+		/// <summary>
+		/// Toggle outside environment.
+		/// </summary>
+		private void ToggleOutsideEnvironment()
 		{
-			entryVector = other.transform.position;	
-		}
-	}
-
-	void OnTriggerExit(Collider other)
-	{
-		if (other.tag == "Player")
-		{
-			outVector = other.transform.position;
-			CheckWay(entryVector, outVector, entryAxis);
-		}
-	}
-
-	void CheckWayMessage(float entry, float exit)
-	{
-		float maxDiff = .15f;
-		if (Mathf.Abs(entry - exit) <= maxDiff)
-		{
-			//print("Came out same way");
-		}
-		else
-		{
-			//print("Came out other way");
-            if (onTriggerEntered != null)
-            {
-                onTriggerEntered(this);
-				ToggleMainWalls();
-				ToggleOutside();
-            }
-		}
-	}
-
-	void CheckWay(Vector3 entryVector, Vector3 outVector, EntryAxis axis)
-	{
-		switch (axis) 
-		{
-			case EntryAxis.X:
-				CheckWayMessage(entryVector.x, outVector.x);
-				break;
-
-			case EntryAxis.Y:
-				CheckWayMessage(entryVector.y, outVector.y);
-				break;
-
-			case EntryAxis.Z:
-				CheckWayMessage(entryVector.z, outVector.z);
-				break;
-		}
-	}
-
-	void FindAxisOfEntry()
-	{
-		float smallest = 0;
-
-		float x = gameObject.GetComponent<Collider>().bounds.extents.x;
-		float y = gameObject.GetComponent<Collider>().bounds.extents.y;
-		float z = gameObject.GetComponent<Collider>().bounds.extents.z;
-
-		if (x < y)
-		{
-			smallest = x;
-			entryAxis = EntryAxis.X;
-		}
-		else 
-		{
-			smallest = y;
-			entryAxis = EntryAxis.Y;
+			if (outsidePrefab != null)
+			{
+				if (showOutside)
+				{
+					if (GameObject.Find(outsidePrefab.name + CLONE) == null)
+					{
+						Instantiate(outsidePrefab);
+					}
+				}
+				else
+				{
+					Destroy(GameObject.Find(outsidePrefab.name + CLONE));
+				}
+			}
 		}
 
-		if (z < smallest)
+		private void OnTriggerEnter(Collider other)
 		{
-			smallest = z;
-			entryAxis = EntryAxis.Z;
+			if (other.tag == PLAYER)
+			{
+				_entryVector = other.transform.position;	
+			}
+		}
+
+		private void OnTriggerExit(Collider other)
+		{
+			if (other.tag == PLAYER)
+			{
+				_outVector = other.transform.position;
+				CheckColliderExit(_entryVector, _outVector, _entryAxis);
+			}
+		}
+
+		/// <summary>
+		/// Calculates the difference betweeen entry and exit points when going through
+		/// a UnitTrigger collider, if difference is acceptable than we assume that a player
+		/// has passed through the complete collider.
+		/// </summary>
+		/// <param name="entry">Entry value.</param>
+		/// <param name="exit">Exit value.</param>
+		private void CheckIfPassThrough(float entry, float exit)
+		{
+			float maxDiff = .15f;
+
+			if (Mathf.Abs(entry - exit) > maxDiff)
+			{
+				if (onTriggerEntered != null)
+				{
+					onTriggerEntered(this);
+					ToggleMainWalls();
+					ToggleOutsideEnvironment();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Pass correct positions to CheckIfPassThrough deprending on the axis 
+		/// of entry.
+		/// </summary>
+		/// <param name="entryPosition">Entry position.</param>
+		/// <param name="exitPosition">Exit position.</param>
+		/// <param name="axis">Axis of entry.</param>
+		private void CheckColliderExit(Vector3 entryPosition, Vector3 exitPosition, EntryAxis axis)
+		{
+			switch (axis) 
+			{
+				case EntryAxis.X:
+					CheckIfPassThrough(entryPosition.x, exitPosition.x);
+					break;
+
+				case EntryAxis.Y:
+					CheckIfPassThrough(entryPosition.y, exitPosition.y);
+					break;
+
+				case EntryAxis.Z:
+					CheckIfPassThrough(entryPosition.z, exitPosition.z);
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Find the axis of entry of the collider of the UnitTrigger.
+		/// </summary>
+		private void FindAxisOfEntry()
+		{
+			float smallest = 0;
+
+			float x = gameObject.GetComponent<Collider>().bounds.extents.x;
+			float y = gameObject.GetComponent<Collider>().bounds.extents.y;
+			float z = gameObject.GetComponent<Collider>().bounds.extents.z;
+
+			if (x < y)
+			{
+				smallest = x;
+				_entryAxis = EntryAxis.X;
+			}
+			else 
+			{
+				smallest = y;
+				_entryAxis = EntryAxis.Y;
+			}
+
+			if (z < smallest)
+			{
+				smallest = z;
+				_entryAxis = EntryAxis.Z;
+			}
 		}
 	}
 }

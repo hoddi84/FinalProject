@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CollisionTest : MonoBehaviour {
 
+	private enum EntryAxis { X, Y, Z }
 	private EntryAxis entryAxis;
 	// Use this for initialization
 	void Start () {
