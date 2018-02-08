@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using MazeUI;
 
 namespace MazeCore.Door {
 

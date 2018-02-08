@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using MazeUtiliy;
+using MazeUI;
 
 public class CharacterManager : MonoBehaviour {
 

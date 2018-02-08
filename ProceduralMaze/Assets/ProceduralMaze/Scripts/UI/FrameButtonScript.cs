@@ -1,66 +1,83 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FrameButtonScript : MonoBehaviour {
+namespace MazeUI {
 
-	private ComplexInterfaceController complexController;
+	public class FrameButtonScript : MonoBehaviour {
 
-	private Action<GameObject> onFrameSelected = null;
-	private Action<GameObject> onFrameDeselected = null;
+		private ComplexInterfaceController _complexController;
 
-	private bool isSelected = false;
+		private Action<GameObject> onFrameSelected = null;
+		private Action<GameObject> onFrameDeselected = null;
+		private bool _isSelected = false;
 
-	void Awake()
-	{
-		complexController = FindObjectOfType(typeof(ComplexInterfaceController)) as ComplexInterfaceController;
-		onFrameSelected += complexController.AddToActiveFrames;
-		onFrameDeselected += complexController.RemoveFromActiveFrames;
-	}
-
-	void Start()
-	{
-		Initialize();
-	}
-
-	void Initialize()
-	{
-		GetComponent<Outline>().enabled = false;
-	}
-
-	public void ClickOnFrame()
-	{
-		isSelected = !isSelected;
-
-		if (isSelected)
+		private void Awake()
 		{
-			GetComponent<Outline>().enabled = true;
-			if (onFrameSelected != null)
+			_complexController = FindObjectOfType<ComplexInterfaceController>();
+		}
+
+		private void OnEnable()
+		{
+			onFrameSelected = _complexController.AddToActiveFrames;
+			onFrameDeselected = _complexController.RemoveFromActiveFrames;
+		}
+
+		private void OnDisable()
+		{
+			onFrameSelected = null;
+			onFrameDeselected = null;
+		}
+
+		private void Start()
+		{
+			Initialize();
+		}
+
+		private void Initialize()
+		{
+			ShowFrameOutline(false);
+		}
+
+		public void ClickOnFrame()
+		{
+			_isSelected = !_isSelected;
+
+			if (_isSelected)
 			{
-				onFrameSelected(gameObject);
+				ShowFrameOutline(true);
+				if (onFrameSelected != null)
+				{
+					onFrameSelected(gameObject);
+				}
+			}
+			else
+			{
+				ShowFrameOutline(false);
+				if (onFrameDeselected != null)
+				{
+					onFrameDeselected(gameObject);
+				}
 			}
 		}
-		else
+
+		public void SelectFrame()
 		{
-			GetComponent<Outline>().enabled = false;
-			if (onFrameDeselected != null)
-			{
-				onFrameDeselected(gameObject);
-			}
+			_isSelected = true;
+			ShowFrameOutline(true);
 		}
-	}
 
-	public void SelectFrame()
-	{
-		isSelected = true;
-		GetComponent<Outline>().enabled = true;
-	}
+		public void DeselectFrame()
+		{
+			_isSelected = false;
+			ShowFrameOutline(false);
+		}
 
-	public void DeselectFrame()
-	{
-		isSelected = false;
-		GetComponent<Outline>().enabled = false;
+		private void ShowFrameOutline(bool show)
+		{
+			GetComponent<Outline>().enabled = show;
+		}
 	}
 }
+
+

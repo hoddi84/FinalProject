@@ -2,6 +2,7 @@
 using UnityEngine;
 using MazeVR;
 using MazeUtiliy;
+using MazeUI;
 
 namespace MazeCore.Door {
 

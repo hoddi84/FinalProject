@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using MazeUtiliy;
+using MazeUI;
 
 namespace MazeCore.Frame {
 
@@ -41,7 +42,7 @@ namespace MazeCore.Frame {
 
 				_uIController.onControlModeSwitch += ChangeControlModes;
 				_simpleInterfaceController.onScarySliderChanged += UpdateAvailablePhotos;
-				_complexInterfaceController.onListChanged += UpdateAvailablePhotos;
+				_complexInterfaceController.onFrameListChanged += UpdateAvailablePhotos;
 			}
 			else
 			{
@@ -49,13 +50,13 @@ namespace MazeCore.Frame {
 			}
 		}
 
-		private void ChangeControlModes(ControlMode mode)
+		private void ChangeControlModes(UIController.ControlMode mode)
 		{
 			switch (mode) {
-				case ControlMode.SimpleControlMode:
+				case UIController.ControlMode.SimpleControlMode:
 					UpdateAvailablePhotos(frameVariance);
 				break;
-				case ControlMode.ComplexControlMode:
+				case UIController.ControlMode.ComplexControlMode:
 					availablePhotos.Clear();
 				break;
 			}
