@@ -6,16 +6,17 @@ namespace MazeCore.Lighting {
 
 		public GameObject unitLight;
 
-		private GameObject _tmp;
-		private GameObject _parentOfLights;
+		private GameObject _tmp = null;
+		private GameObject _parentOfLights = null;
+		private const string LIGHTS = "LIGHTS";
 
 		private void Awake()
 		{
-			_parentOfLights = GameObject.Find("LIGHTS");
+			_parentOfLights = GameObject.Find(LIGHTS);
 			
 			if (_parentOfLights == null)
 			{
-				_parentOfLights = new GameObject("LIGHTS");
+				_parentOfLights = new GameObject(LIGHTS);
 			}
 
 		}
