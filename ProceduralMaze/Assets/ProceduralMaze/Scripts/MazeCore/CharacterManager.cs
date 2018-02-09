@@ -9,12 +9,9 @@ using MazeUI;
 
 public class CharacterManager : MonoBehaviour {
 
-	public GameObject[] characters;
-
 	private ProMouseInput _mouseInput;
 	private UIController _uiController;
 
-	// Settings for selected character.
 	private GameObject _currentControlled = null;
 	private Animator _currentAnimator;
 	private NavMeshAgent _currentAgent;
@@ -28,12 +25,16 @@ public class CharacterManager : MonoBehaviour {
 
 	private enum Animation { WALK }
 	private const string WALK = "Walk";
+	private const string AGENT_GIRL = "Girl";
+	private const string AGENT_CLOWN = "Clown";
 
-	//Settings for UI
 	public Text txtToggleSpawn;
 	public Text txtToggleChar;
 
+	public GameObject[] characters;
+	public GameObject[] characterBtns;
 	public int spawnIndex = 0;
+	private bool _frameSelected = false;
 
 	void Awake()
 	{
@@ -45,40 +46,38 @@ public class CharacterManager : MonoBehaviour {
 			_mouseInput.onRenderTextureClickDown += SetAgentDestination;
 			_mouseInput.onRenderTextureClickDownLeft += SetAgentLookDirection;
 		}
-	}
 
-	public void ToggleChar()
-	{
-		spawnIndex++;
-		if (spawnIndex > 1)
+		foreach (GameObject obj in characterBtns)
 		{
-			spawnIndex = 0;
-		}
-		if (spawnIndex == 0)
-		{
-			txtToggleChar.text = "Girl";
-		}
-		if (spawnIndex == 1)
-		{
-			txtToggleChar.text = "Clown";
+			obj.GetComponent<CharacterButtonSelect>().onFrameSelected += OnFrameSelected;
 		}
 	}
 
-	public void ToggleSpawn()
+	void OnFrameSelected(GameObject frame, bool selected)
 	{
-		if (!_isCharacterActive)
+		if (selected && !_frameSelected)
 		{
-			_isCharacterBeingSpawned = !_isCharacterBeingSpawned;
-			print("Spawning Enabled: " + _isCharacterBeingSpawned);
-			if (_isCharacterBeingSpawned)
+			switch (frame.name)
 			{
-				txtToggleSpawn.text = "Disable Spawn";
+				case "GirlButton":
+					spawnIndex = 0;
+				break;
+
+				case "ClownButton":
+					spawnIndex = 1;
+				break;
 			}
-			else
-			{
-				txtToggleSpawn.text = "Enable Spawn";
-			}
+			_frameSelected = true;
+			_isCharacterBeingSpawned = true;
 		}
+
+		if (!selected)
+		{
+			_frameSelected = false;
+			_isCharacterBeingSpawned = false;
+
+		}
+
 	}
 
 	void Update()
@@ -115,26 +114,26 @@ public class CharacterManager : MonoBehaviour {
 		}
 	}
 
-	void SetAgentDestination(Vector3 pos, RaycastHit hit, Camera camera)
+	void SetAgentDestination(Vector3 newDestination, RaycastHit hit, Camera camera)
 	{
 		if (_isCharacterBeingSpawned && _currentControlled == null)
 		{
-			_currentAgentPosition = camera.ScreenToWorldPoint(pos);
+			_currentAgentPosition = camera.ScreenToWorldPoint(newDestination);
 			SpawnCharacter(spawnIndex, _currentAgentPosition);
 		}
 		if (_currentControlled != null)
 		{
-			_currentAgentPosition = camera.ScreenToWorldPoint(pos);
+			_currentAgentPosition = camera.ScreenToWorldPoint(newDestination);
 			_currentAgentPosition.y = 0;
 			_currentAgent.SetDestination(_currentAgentPosition);
 		}
 	}
 
-	void SetAgentLookDirection(Vector3 pos, RaycastHit hit, Camera camera)
+	void SetAgentLookDirection(Vector3 lookPosition, RaycastHit hit, Camera camera)
 	{
 		if (_currentControlled != null)
 		{
-			_currentHeadLookDirection = camera.ScreenToWorldPoint(pos);
+			_currentHeadLookDirection = camera.ScreenToWorldPoint(lookPosition);
 			_currentHeadLookDirection.y = _currentHeadLookHeight;
 		}
 	}
@@ -230,28 +229,6 @@ public class CharacterManager : MonoBehaviour {
 		_currentAgentPosition = newPosition;
 	}
 
-	bool GetAnimationState(Animation animation, Animator currentAnimator)
-	{
-		if (animation == Animation.WALK)
-		{
-			if (currentAnimator.GetBool(WALK))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	void SetAnimationState(Animation animation, Animator currentAnimator, bool state)
-	{
-		switch (animation) {
-
-			case Animation.WALK:
-				currentAnimator.SetBool(WALK, state);
-				break;	
-		}
-	}
-
 	void CheckAnimationState()
 	{
 		if (_currentControlled != null)
@@ -278,6 +255,28 @@ public class CharacterManager : MonoBehaviour {
 					}
 				}
 			}	
+		}
+	}
+
+	bool GetAnimationState(Animation animation, Animator currentAnimator)
+	{
+		if (animation == Animation.WALK)
+		{
+			if (currentAnimator.GetBool(WALK))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void SetAnimationState(Animation animation, Animator currentAnimator, bool state)
+	{
+		switch (animation) {
+
+			case Animation.WALK:
+				currentAnimator.SetBool(WALK, state);
+				break;	
 		}
 	}
 }

@@ -59,8 +59,6 @@ namespace MazeUI {
 
 		private void Start()
 		{
-			Initialize();
-
 			_listOfControlPanels = new List<GameObject>(){
 				cntrlLighting,
 				cntrlSound,
@@ -76,6 +74,8 @@ namespace MazeUI {
 				btnCharacter,
 				btnOther
 			};
+
+			Initialize();
 		}
 
 		private void Initialize()
