@@ -20,37 +20,54 @@ public class CharacterManager : MonoBehaviour {
 	private Vector3 _currentHeadLookDirection;
 	private float _currentHeadLookHeight = 1.5f;
 
-	private bool _isCharacterActive = false;
-	private bool _isCharacterBeingSpawned = false;
-
 	private enum Animation { WALK }
 	private const string WALK = "Walk";
 	private const string AGENT_GIRL = "Girl";
 	private const string AGENT_CLOWN = "Clown";
 	private const string AGENT_ZOMBIE = "Zombie";
 
-	public GameObject[] characters;
-	public GameObject[] characterBtns;
+	private bool _isCharacterActive = false;
+	private bool _isCharacterBeingSpawned = false;
+
 	private int _spawnIndex = 0;
 	private bool _frameSelected = false;
-
-	public GameObject eyePlayer;
 	private bool _lookAtPlayer = false;
 
+	public GameObject[] characters;
+	public GameObject[] characterBtns;
+	public GameObject eyePlayer;
+	
 	private void Awake()
 	{
 		_mouseInput = FindObjectOfType<ProMouseInput>();
 		_uiController = FindObjectOfType<UIController>();
+	}
 
+	private void OnEnable()
+	{
 		if (_uiController != null)
 		{
 			_mouseInput.onRenderTextureClickDown += SetAgentDestination;
 			_mouseInput.onRenderTextureClickDownLeft += SetAgentLookDirection;
 		}
 
-		foreach (GameObject obj in characterBtns)
+		foreach (GameObject btn in characterBtns)
 		{
-			obj.GetComponent<CharacterButtonSelect>().onFrameSelected += OnFrameSelected;
+			btn.GetComponent<CharacterButtonSelect>().onFrameSelected += OnFrameSelected;
+		}
+	}
+
+	private void OnDisable()
+	{
+		if (_uiController != null)
+		{
+			_mouseInput.onRenderTextureClickDown -= SetAgentDestination;
+			_mouseInput.onRenderTextureClickDownLeft -= SetAgentLookDirection;
+		}
+
+		foreach (GameObject btn in characterBtns)
+		{
+			btn.GetComponent<CharacterButtonSelect>().onFrameSelected -= OnFrameSelected;
 		}
 	}
 
@@ -80,7 +97,6 @@ public class CharacterManager : MonoBehaviour {
 		{
 			_frameSelected = false;
 			_isCharacterBeingSpawned = false;
-
 		}
 	}
 
@@ -97,7 +113,6 @@ public class CharacterManager : MonoBehaviour {
 
 			if (_lookAtPlayer) { _currentHeadLook.target = eyePlayer.transform.position; }
 			else { _currentHeadLook.target = _currentHeadLookDirection;	}
-			
 		}
 	}
 
@@ -124,11 +139,6 @@ public class CharacterManager : MonoBehaviour {
 			_currentHeadLookDirection = camera.ScreenToWorldPoint(lookPosition);
 			_currentHeadLookDirection.y = _currentHeadLookHeight;
 		}
-	}
-
-	public void LookAtPlayer()
-	{
-		_lookAtPlayer = true;
 	}
 
 	private void EnableDefaultControls()
@@ -161,36 +171,6 @@ public class CharacterManager : MonoBehaviour {
 					_currentHeadLookDirection = hit.point;
 				}
 			}
-		}
-	}
-
-	private void SpawnCharacter(int index, Vector3 spawnPosition)
-	{
-		_currentControlled = characters[index];
-		_currentControlled.SetActive(true);
-		_currentControlled.transform.position = spawnPosition;
-
-		SetupControlledCharacter(_currentControlled);
-
-		_isCharacterActive = true;
-		_isCharacterBeingSpawned = false;
-	}
-
-	public void DespawnCharacter()
-	{
-		if (_currentControlled != null)
-		{
-			Light[] activeLights = FindObjectsOfType<Light>();
-
-			StartCoroutine(UtilityTools.FlickerLights(activeLights, delegate() {
-				_currentControlled.SetActive(false);
-				_currentControlled = null;
-
-				SetupControlledCharacter();
-
-				_isCharacterActive = false;
-				_isCharacterBeingSpawned = true;
-			}));
 		}
 	}
 
@@ -270,5 +250,40 @@ public class CharacterManager : MonoBehaviour {
 				currentAnimator.SetBool(WALK, state);
 				break;	
 		}
+	}
+
+	private void SpawnCharacter(int index, Vector3 spawnPosition)
+	{
+		_currentControlled = characters[index];
+		_currentControlled.SetActive(true);
+		_currentControlled.transform.position = spawnPosition;
+
+		SetupControlledCharacter(_currentControlled);
+
+		_isCharacterActive = true;
+		_isCharacterBeingSpawned = false;
+	}
+
+	public void DespawnCharacter()
+	{
+		if (_currentControlled != null)
+		{
+			Light[] activeLights = FindObjectsOfType<Light>();
+
+			StartCoroutine(UtilityTools.FlickerLights(activeLights, delegate() {
+				_currentControlled.SetActive(false);
+				_currentControlled = null;
+
+				SetupControlledCharacter();
+
+				_isCharacterActive = false;
+				_isCharacterBeingSpawned = true;
+			}));
+		}
+	}
+
+	public void LookAtPlayer()
+	{
+		_lookAtPlayer = true;
 	}
 }
