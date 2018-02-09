@@ -13,10 +13,10 @@ public class CharacterManager : MonoBehaviour {
 	private UIController _uiController;
 
 	private GameObject _currentControlled = null;
-	private Animator _currentAnimator;
-	private NavMeshAgent _currentAgent;
+	private Animator _currentAnimator = null;
+	private NavMeshAgent _currentAgent = null;
+	private HeadLookController _currentHeadLook = null;
 	private Vector3 _currentAgentPosition;
-	private HeadLookController _currentHeadLook;
 	private Vector3 _currentHeadLookDirection;
 	private float _currentHeadLookHeight = 1.5f;
 
@@ -27,16 +27,17 @@ public class CharacterManager : MonoBehaviour {
 	private const string WALK = "Walk";
 	private const string AGENT_GIRL = "Girl";
 	private const string AGENT_CLOWN = "Clown";
-
-	public Text txtToggleSpawn;
-	public Text txtToggleChar;
+	private const string AGENT_ZOMBIE = "Zombie";
 
 	public GameObject[] characters;
 	public GameObject[] characterBtns;
-	public int spawnIndex = 0;
+	private int _spawnIndex = 0;
 	private bool _frameSelected = false;
 
-	void Awake()
+	public GameObject eyePlayer;
+	private bool _lookAtPlayer = false;
+
+	private void Awake()
 	{
 		_mouseInput = FindObjectOfType<ProMouseInput>();
 		_uiController = FindObjectOfType<UIController>();
@@ -53,18 +54,22 @@ public class CharacterManager : MonoBehaviour {
 		}
 	}
 
-	void OnFrameSelected(GameObject frame, bool selected)
+	private void OnFrameSelected(GameObject frame, bool selected)
 	{
 		if (selected && !_frameSelected)
 		{
 			switch (frame.name)
 			{
-				case "GirlButton":
-					spawnIndex = 0;
+				case AGENT_GIRL:
+					_spawnIndex = 0;
 				break;
 
-				case "ClownButton":
-					spawnIndex = 1;
+				case AGENT_CLOWN:
+					_spawnIndex = 1;
+				break;
+
+				case AGENT_ZOMBIE:
+					_spawnIndex = 2;
 				break;
 			}
 			_frameSelected = true;
@@ -77,30 +82,10 @@ public class CharacterManager : MonoBehaviour {
 			_isCharacterBeingSpawned = false;
 
 		}
-
 	}
 
-	void Update()
+	private void Update()
 	{
-		// Enable spawning of character.
-		if (Input.GetKeyDown(KeyCode.P))
-		{
-			if (!_isCharacterActive)
-			{
-				_isCharacterBeingSpawned = !_isCharacterBeingSpawned;
-				print("Spawning Enabled: " + _isCharacterBeingSpawned);
-			}
-		}
-
-		// Despawn character.
-		if (Input.GetKeyDown(KeyCode.O))
-		{
-			if (_isCharacterActive)
-			{
-				DespawnCharacter();
-			}
-		}
-
 		if (_uiController == null)
 		{
 			EnableDefaultControls();
@@ -110,16 +95,18 @@ public class CharacterManager : MonoBehaviour {
 		{
 			CheckAnimationState();
 
-			_currentHeadLook.target = _currentHeadLookDirection;	
+			if (_lookAtPlayer) { _currentHeadLook.target = eyePlayer.transform.position; }
+			else { _currentHeadLook.target = _currentHeadLookDirection;	}
+			
 		}
 	}
 
-	void SetAgentDestination(Vector3 newDestination, RaycastHit hit, Camera camera)
+	private void SetAgentDestination(Vector3 newDestination, RaycastHit hit, Camera camera)
 	{
 		if (_isCharacterBeingSpawned && _currentControlled == null)
 		{
 			_currentAgentPosition = camera.ScreenToWorldPoint(newDestination);
-			SpawnCharacter(spawnIndex, _currentAgentPosition);
+			SpawnCharacter(_spawnIndex, _currentAgentPosition);
 		}
 		if (_currentControlled != null)
 		{
@@ -129,8 +116,9 @@ public class CharacterManager : MonoBehaviour {
 		}
 	}
 
-	void SetAgentLookDirection(Vector3 lookPosition, RaycastHit hit, Camera camera)
+	private void SetAgentLookDirection(Vector3 lookPosition, RaycastHit hit, Camera camera)
 	{
+		_lookAtPlayer = false;
 		if (_currentControlled != null)
 		{
 			_currentHeadLookDirection = camera.ScreenToWorldPoint(lookPosition);
@@ -138,9 +126,13 @@ public class CharacterManager : MonoBehaviour {
 		}
 	}
 
-	void EnableDefaultControls()
+	public void LookAtPlayer()
 	{
-		// Spawn character.
+		_lookAtPlayer = true;
+	}
+
+	private void EnableDefaultControls()
+	{
 		if (Input.GetMouseButtonDown(0))
 		{
 			RaycastHit hit;
@@ -172,7 +164,7 @@ public class CharacterManager : MonoBehaviour {
 		}
 	}
 
-	void SpawnCharacter(int index, Vector3 spawnPosition)
+	private void SpawnCharacter(int index, Vector3 spawnPosition)
 	{
 		_currentControlled = characters[index];
 		_currentControlled.SetActive(true);
@@ -202,7 +194,7 @@ public class CharacterManager : MonoBehaviour {
 		}
 	}
 
-	void SetupControlledCharacter(GameObject currentControlled = null)
+	private void SetupControlledCharacter(GameObject currentControlled = null)
 	{
 		if (currentControlled != null)
 		{
@@ -222,14 +214,14 @@ public class CharacterManager : MonoBehaviour {
 		}
 	}
 
-	void MoveControlledCharacter(Vector3 newPosition)
+	private void MoveControlledCharacter(Vector3 newPosition)
 	{
 		newPosition.y = 0;
 		_currentAgent.SetDestination(newPosition);
 		_currentAgentPosition = newPosition;
 	}
 
-	void CheckAnimationState()
+	private void CheckAnimationState()
 	{
 		if (_currentControlled != null)
 		{
@@ -258,7 +250,7 @@ public class CharacterManager : MonoBehaviour {
 		}
 	}
 
-	bool GetAnimationState(Animation animation, Animator currentAnimator)
+	private bool GetAnimationState(Animation animation, Animator currentAnimator)
 	{
 		if (animation == Animation.WALK)
 		{
@@ -270,7 +262,7 @@ public class CharacterManager : MonoBehaviour {
 		return false;
 	}
 
-	void SetAnimationState(Animation animation, Animator currentAnimator, bool state)
+	private void SetAnimationState(Animation animation, Animator currentAnimator, bool state)
 	{
 		switch (animation) {
 
