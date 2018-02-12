@@ -6,6 +6,7 @@
 		_NormalMapIntensity ("Normal Intensity", Range(0,10)) = 1
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
+        _Color ("Color", Color) = (1,1,1,1)
     }
 
     SubShader {
@@ -49,6 +50,7 @@
         half _Glossiness;
         half _Metallic;
 		half _NormalMapIntensity;
+        float4 _Color;
 
 		void vert(inout appdata_full v,  out Input o) {
             UNITY_INITIALIZE_OUTPUT(Input, o);
@@ -56,7 +58,7 @@
 
         void surf (Input IN, inout SurfaceOutputStandard o) {
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
-            o.Albedo = c.rgb;
+            o.Albedo = c.rgb * _Color;
 			o.Normal = UnpackNormal(tex2D(_NormalMap, IN.uv_NormalMap));
 			o.Normal *= float3(_NormalMapIntensity, _NormalMapIntensity, 1);
             o.Metallic = _Metallic;
