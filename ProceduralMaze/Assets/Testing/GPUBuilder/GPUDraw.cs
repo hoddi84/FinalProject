@@ -5,17 +5,19 @@ using UnityEngine;
 public class GPUDraw : MonoBehaviour {
 
 	[System.Serializable]
-	public struct DrawMesh {
+	public class DrawMesh {
 		public Material material;
 		public Mesh mesh;
-		public float xMin;
-		public float xMax;
-		public float yMin;
-		public float yMax;
-		public float zMin;
-		public float zMax;
-		public float szMin;
-		public float szMax;
+		public Texture albedo;
+		public Texture normal;
+		[MinMaxRange(0, 100)]
+		public RangedFloat xRange;
+		[MinMaxRange(0, 100)]
+		public RangedFloat yRange;
+		[MinMaxRange(0, 100)]
+		public RangedFloat zRange;
+		[MinMaxRange(0, 5)]
+		public RangedFloat szRange;
 		public int count;
 		private int _count;
 		[HideInInspector]
@@ -25,6 +27,7 @@ public class GPUDraw : MonoBehaviour {
 		public GPUDrawer drawer;
 		public int GetCount() {return _count; }
 		public void SetCount() { _count = count; }
+		public int boundsMultiplier;
 	}
 
 	public DrawMesh[] drawMeshes;
@@ -50,22 +53,30 @@ public class GPUDraw : MonoBehaviour {
 
 		foreach (DrawMesh drawMesh in drawMeshes)
 		{
-			drawMesh.drawer.Draw(drawMesh.mesh, drawMesh.material, drawMesh.count, drawMesh.positions, drawMesh.bounds);
+			drawMesh.drawer.Draw(drawMesh.count, drawMesh.positions, drawMesh.bounds);
 		}
+	}
+
+	private Vector4 SpawnShape(float x, float y, float z, float sz)
+	{
+		Vector4 tmp = new Vector4(x, y, z, sz);
+		//Vector4 tmp = new Vector4(Mathf.Sin(x) * y, z, Mathf.Cos(x) * y, sz);
+	
+		return tmp;
 	}
 
 	private void SetAllBounds(DrawMesh[] drawMeshes)
 	{
 		for (int i = 0; i < drawMeshes.Length; i++)
 		{
-			float xCenter = drawMeshes[i].xMax - drawMeshes[i].xMin;
-			float yCenter = drawMeshes[i].yMax - drawMeshes[i].yMin;
-			float zCenter = drawMeshes[i].zMax - drawMeshes[i].zMin;
+			float xCenter = drawMeshes[i].xRange.maxValue - drawMeshes[i].xRange.minValue;
+			float yCenter = drawMeshes[i].yRange.maxValue - drawMeshes[i].yRange.minValue;
+			float zCenter = drawMeshes[i].zRange.maxValue - drawMeshes[i].zRange.minValue;
 			Vector3 center = new Vector3(xCenter, yCenter, zCenter);
 
-			float xSz = drawMeshes[i].xMax - xCenter;
-			float ySz = drawMeshes[i].yMax - yCenter;
-			float zSz = drawMeshes[i].zMax - zCenter;
+			float xSz = drawMeshes[i].xRange.maxValue - xCenter + drawMeshes[i].boundsMultiplier;
+			float ySz = drawMeshes[i].yRange.maxValue - yCenter + drawMeshes[i].boundsMultiplier;;
+			float zSz = drawMeshes[i].zRange.maxValue - zCenter + drawMeshes[i].boundsMultiplier;;
 			Vector3 sz = new Vector3(xSz, ySz, zSz);
 
 			drawMeshes[i].bounds = new Bounds(center, sz);
@@ -79,12 +90,12 @@ public class GPUDraw : MonoBehaviour {
 			drawMeshes[i].positions = new Vector4[drawMeshes[i].count];
 			for (int k = 0; k < drawMeshes[i].positions.Length; k++)
 			{
-				float x = Random.Range(drawMeshes[i].xMin, drawMeshes[i].xMax);
-				float y = Random.Range(drawMeshes[i].yMin, drawMeshes[i].yMax);
-				float z = Random.Range(drawMeshes[i].zMin, drawMeshes[i].zMax);
-				float sz = Random.Range(drawMeshes[i].szMin, drawMeshes[i].szMax);
-				//drawMeshes[i].positions[k] = new Vector4(x, y, z, sz);
-				drawMeshes[i].positions[k] = new Vector4(Mathf.Sin(x) * z, y, Mathf.Cos(x) * z, sz);
+				float x = Random.Range(drawMeshes[i].xRange.minValue, drawMeshes[i].xRange.maxValue);
+				float y = Random.Range(drawMeshes[i].yRange.minValue, drawMeshes[i].yRange.maxValue);
+				float z = Random.Range(drawMeshes[i].zRange.minValue, drawMeshes[i].zRange.maxValue);
+				float sz = Random.Range(drawMeshes[i].szRange.minValue, drawMeshes[i].szRange.maxValue);
+				
+				drawMeshes[i].positions[k] = SpawnShape(x, y, z, sz);
 			}
 			drawMeshes[i].SetCount();
 		}
@@ -94,7 +105,7 @@ public class GPUDraw : MonoBehaviour {
 	{
 		for (int i = 0; i < drawMeshes.Length; i++)
 		{
-			drawMeshes[i].drawer = new GPUDrawer(drawMeshes[i].mesh, drawMeshes[i].material);
+			drawMeshes[i].drawer = new GPUDrawer(drawMeshes[i].mesh, drawMeshes[i].albedo, drawMeshes[i].normal, drawMeshes[i].material);
 		}
 	}
 
@@ -109,12 +120,11 @@ public class GPUDraw : MonoBehaviour {
 					Vector4[] additional = new Vector4[drawMeshes[i].count - drawMeshes[i].GetCount()];
 					for (int k = 0; k < additional.Length; k++)
 					{
-						float x = Random.Range(drawMeshes[i].xMin, drawMeshes[i].xMax);
-						float y = Random.Range(drawMeshes[i].yMin, drawMeshes[i].yMax);
-						float z = Random.Range(drawMeshes[i].zMin, drawMeshes[i].zMax);
-						float sz = Random.Range(drawMeshes[i].szMin, drawMeshes[i].szMax);
-						//additional[k] = new Vector4(x, y, z, sz);
-						additional[k] = new Vector4(Mathf.Sin(x) * z, y, Mathf.Cos(x) * z, sz);
+						float x = Random.Range(drawMeshes[i].xRange.minValue, drawMeshes[i].xRange.maxValue);
+						float y = Random.Range(drawMeshes[i].yRange.minValue, drawMeshes[i].yRange.maxValue);
+						float z = Random.Range(drawMeshes[i].zRange.minValue, drawMeshes[i].zRange.maxValue);
+						float sz = Random.Range(drawMeshes[i].szRange.minValue, drawMeshes[i].szRange.maxValue);
+						additional[k] = SpawnShape(x, y ,z, sz);
 					}
 
 					List<Vector4> tmp = new List<Vector4>();

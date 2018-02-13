@@ -383,6 +383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1115879488}
   - component: {fileID: 1115879487}
+  - component: {fileID: 1115879489}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -402,36 +403,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawMeshes:
-  - material: {fileID: 2100000, guid: 457bc34d2c36b36429ecf5578bdd6877, type: 2}
+  - material: {fileID: 0}
     mesh: {fileID: 4300000, guid: 2eb9f3337c0b6f8478b791c6c7a21940, type: 3}
-    xMin: 12
-    xMax: 22
-    yMin: 10
-    yMax: 20
-    zMin: 10
-    zMax: 20
-    szMin: 0.1
-    szMax: 0.4
-    count: 50
+    albedo: {fileID: 2800000, guid: 34b3b11cfa3100b4fa98d62aefd92f97, type: 3}
+    normal: {fileID: 2800000, guid: f231207d489844545a30f45b2d2b0e92, type: 3}
+    xRange:
+      minValue: 0
+      maxValue: 30
+    yRange:
+      minValue: 0
+      maxValue: 30
+    zRange:
+      minValue: 0
+      maxValue: 30
+    szRange:
+      minValue: 0.125
+      maxValue: 0.36363608
+    count: 1000
     positions: []
     bounds:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
-  - material: {fileID: 2100000, guid: e8a131d2ac3fde1468a9e6d8d54342b8, type: 2}
-    mesh: {fileID: 4300000, guid: 74ce60b745c2af140b699c4031a34dfb, type: 3}
-    xMin: 12
-    xMax: 22
-    yMin: 12
-    yMax: 22
-    zMin: 12
-    zMax: 22
-    szMin: 0.5
-    szMax: 3
-    count: 50
-    positions: []
-    bounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
+    boundsMultiplier: 100
 --- !u!4 &1115879488
 Transform:
   m_ObjectHideFlags: 0
@@ -445,3 +438,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1115879489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1115879486}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7480b2037788bdf44b698ea89ae03851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 100000, guid: 0c5fa332187126b49a1e9939b653c735, type: 2}
+  count: 10000
+  enableInstancing: 1
+  xRange:
+    minValue: 0
+    maxValue: 40
+  yRange:
+    minValue: 0
+    maxValue: 40
+  zRange:
+    minValue: 3.4285715
+    maxValue: 40
+  szRange:
+    minValue: 0.25882354
+    maxValue: 1
