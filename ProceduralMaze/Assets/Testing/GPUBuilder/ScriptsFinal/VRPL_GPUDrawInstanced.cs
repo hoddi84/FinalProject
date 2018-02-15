@@ -1,47 +1,41 @@
 ﻿using UnityEngine;
 
-public class GPUDrawer {
+public class VRPL_GPUDrawInstanced {
 
 	private Mesh _mesh;
 	private Material _material;
     private ComputeBuffer _bufferPosition;
+	private ComputeBuffer _bufferQuaternion;
     private ComputeBuffer _bufferArgs;
     private int _instanceCount = -1;
     private uint[] _args = new uint[5] { 0, 0, 0, 0, 0 };
 	private const string POSITION_BUFFER = "positions";
+	private const string QUATERNION_BUFFER = "quaternions";
 	private const string GPU_SURFACE_INSTANCED = "GPUBuilder/GPUSurfaceInstanced";
 	private const string TEX_ALBEDO = "_MainTex";
 	private const string TEX_NORMAL = "_NormalMap";
+	private Bounds _bounds = new Bounds (
+		Vector3.zero,
+		new Vector3(100f, 100f, 100f)
+	);
 
-	public GPUDrawer(Mesh mesh, Texture albedo, Texture normal = null, Material material = null)
+	public void Draw(VRPL_GPUDrawNodeGroup drawNodeList)
 	{
-		_mesh = mesh;
-		_bufferArgs = new ComputeBuffer(1, _args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
-
-		if (material != null)
+		if (_mesh == null)
 		{
-			_material = material;
-			return;
-		}
-
-		CreateMaterial(albedo, normal);
-	}
-
-	public void Draw(int instanceCount, Vector4[] positions, Bounds bounds)
-	{
-		if (_bufferArgs == null)
-		{
+			_mesh = drawNodeList.mesh;
 			_bufferArgs = new ComputeBuffer(1, _args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
+			CreateMaterial(drawNodeList.texture);
 		}
 
-		if (instanceCount > 0)
+		if (drawNodeList.instanceCount > 0)
 		{
-			if (_instanceCount != instanceCount)
-			{	_instanceCount = instanceCount;
-				UpdateBuffers(positions, _instanceCount);
+			if (_instanceCount != drawNodeList.instanceCount)
+			{	_instanceCount = drawNodeList.instanceCount;
+				UpdateBuffers(drawNodeList.GetWorldPoitionsAsVec4(), drawNodeList.GetWorldRotationsAsQuaternions(), _instanceCount);
 			}
 
-			Graphics.DrawMeshInstancedIndirect(_mesh, 0, _material, bounds, _bufferArgs);
+			Graphics.DrawMeshInstancedIndirect(_mesh, 0, _material, _bounds, _bufferArgs);
 		}
 	}
 
@@ -58,20 +52,21 @@ public class GPUDrawer {
 		{
 			_material.SetTexture(TEX_ALBEDO, textures[0]);
 		}
-		if (textures[1] != null)
-		{
-			_material.SetTexture(TEX_NORMAL, textures[1]);
-		}
 	}
 
-    private void UpdateBuffers(Vector4[] positions, int instanceCount) {
+    private void UpdateBuffers(Vector4[] positions, Quaternion[] quaternions, int instanceCount) {
 
         ReleaseBuffer(_bufferPosition);
+		ReleaseBuffer(_bufferQuaternion);
 
         _bufferPosition = new ComputeBuffer(instanceCount, 16);
         _bufferPosition.SetData(positions);
 
+		_bufferQuaternion = new ComputeBuffer(instanceCount, 16);
+		_bufferQuaternion.SetData(quaternions);
+
         _material.SetBuffer(POSITION_BUFFER, _bufferPosition);
+		_material.SetBuffer(QUATERNION_BUFFER, _bufferQuaternion);
 
 		uint numIndices = (_mesh != null) ? (uint)_mesh.GetIndexCount(0) : 0;
         _args[0] = numIndices;
