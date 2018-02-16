@@ -25,6 +25,9 @@ public class CharacterManager : MonoBehaviour {
 	private const string AGENT_GIRL = "Girl";
 	private const string AGENT_CLOWN = "Clown";
 	private const string AGENT_ZOMBIE = "Zombie";
+	private const string AGENT_MALCOLM = "Malcolm";
+	private const string AGENT_PARASITE = "Parasite";
+	private const string AGENT_JASPER = "Jasper";
 
 	private bool _isCharacterActive = false;
 	private bool _isCharacterBeingSpawned = false;
@@ -88,6 +91,19 @@ public class CharacterManager : MonoBehaviour {
 				case AGENT_ZOMBIE:
 					_spawnIndex = 2;
 				break;
+
+				case AGENT_MALCOLM:
+					_spawnIndex = 3;
+				break;
+
+				case AGENT_JASPER:
+					_spawnIndex = 4;
+				break;
+
+				case AGENT_PARASITE:
+					_spawnIndex = 5;
+				break;
+
 			}
 			_frameSelected = true;
 			_isCharacterBeingSpawned = true;
