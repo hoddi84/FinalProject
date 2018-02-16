@@ -4223,7 +4223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &356967937
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9206,7 +9206,7 @@ Prefab:
       objectReference: {fileID: 1499908681}
     - target: {fileID: 1068329513265214, guid: baef23edbc550f948bd0a57541eb601b, type: 2}
       propertyPath: m_Name
-      value: Clown
+      value: Agent_WhiteClown
       objectReference: {fileID: 0}
     - target: {fileID: 114975054852514898, guid: baef23edbc550f948bd0a57541eb601b,
         type: 2}
@@ -9359,7 +9359,7 @@ Prefab:
       objectReference: {fileID: 196326730}
     - target: {fileID: 1068329513265214, guid: baef23edbc550f948bd0a57541eb601b, type: 2}
       propertyPath: m_Name
-      value: Parasite
+      value: Agent_Parasite
       objectReference: {fileID: 0}
     - target: {fileID: 114975054852514898, guid: baef23edbc550f948bd0a57541eb601b,
         type: 2}
@@ -13297,7 +13297,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 793615199}
-        m_MethodName: DespawnCharacter
+        m_MethodName: SetWalkAnimationState
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16002,7 +16002,7 @@ Prefab:
       objectReference: {fileID: 2020249932}
     - target: {fileID: 1068329513265214, guid: baef23edbc550f948bd0a57541eb601b, type: 2}
       propertyPath: m_Name
-      value: Jasper
+      value: Agent_Jasper
       objectReference: {fileID: 0}
     - target: {fileID: 114975054852514898, guid: baef23edbc550f948bd0a57541eb601b,
         type: 2}
@@ -17459,7 +17459,7 @@ NavMeshAgent:
   m_Speed: 0.57
   m_Acceleration: 8
   avoidancePriority: 99
-  m_AngularSpeed: 160
+  m_AngularSpeed: 170
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
@@ -21903,7 +21903,7 @@ Prefab:
       objectReference: {fileID: 2109804438}
     - target: {fileID: 1068329513265214, guid: baef23edbc550f948bd0a57541eb601b, type: 2}
       propertyPath: m_Name
-      value: Malcolm
+      value: Agent_Malcolm
       objectReference: {fileID: 0}
     - target: {fileID: 114975054852514898, guid: baef23edbc550f948bd0a57541eb601b,
         type: 2}
@@ -25716,7 +25716,7 @@ NavMeshAgent:
   m_Speed: 0.35
   m_Acceleration: 8
   avoidancePriority: 99
-  m_AngularSpeed: 110
+  m_AngularSpeed: 115
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
@@ -27171,7 +27171,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1068329513265214, guid: baef23edbc550f948bd0a57541eb601b, type: 2}
       propertyPath: m_Name
-      value: Zombie
+      value: Agent_ZombieGirl
       objectReference: {fileID: 0}
     - target: {fileID: 114975054852514898, guid: baef23edbc550f948bd0a57541eb601b,
         type: 2}
@@ -29661,7 +29661,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1923621875}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 200.03693, y: 52.505302, z: 0}
+  m_LocalPosition: {x: 200.03691, y: 52.505302, z: 0}
   m_LocalScale: {x: 0.994692, y: 0.994692, z: 0.994692}
   m_Children:
   - {fileID: 2097518503}
@@ -29671,7 +29671,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4987879, y: 0.34001774}
   m_AnchorMax: {x: 0.9890629, y: 0.83501774}
-  m_AnchoredPosition: {x: 4.8966064, y: -0.0053253174}
+  m_AnchoredPosition: {x: 4.896591, y: -0.0053253174}
   m_SizeDelta: {x: 9.85, y: 1.5742}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1923621877
@@ -32565,7 +32565,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 793615199}
-        m_MethodName: LookAtPlayer
+        m_MethodName: SetRunAnimationState
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -33518,7 +33518,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1068329513265214, guid: baef23edbc550f948bd0a57541eb601b, type: 2}
       propertyPath: m_Name
-      value: Girl
+      value: Agent_GirlScout
       objectReference: {fileID: 0}
     - target: {fileID: 114975054852514898, guid: baef23edbc550f948bd0a57541eb601b,
         type: 2}

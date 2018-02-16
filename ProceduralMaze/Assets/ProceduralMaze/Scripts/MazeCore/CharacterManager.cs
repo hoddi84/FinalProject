@@ -20,17 +20,22 @@ public class CharacterManager : MonoBehaviour {
 	private Vector3 _currentHeadLookDirection;
 	private float _currentHeadLookHeight = 1.5f;
 
-	private enum Animation { WALK }
+	private enum Animation { WALK, RUN }
 	private const string WALK = "Walk";
-	private const string AGENT_GIRL = "Girl";
-	private const string AGENT_CLOWN = "Clown";
-	private const string AGENT_ZOMBIE = "Zombie";
-	private const string AGENT_MALCOLM = "Malcolm";
-	private const string AGENT_PARASITE = "Parasite";
-	private const string AGENT_JASPER = "Jasper";
+	private const string RUN = "Run";
+	private const string AGENT_GIRLSCOUT = "Agent_GirlScout";
+	private const string AGENT_WHITECLOWN = "Agent_WhiteClown";
+	private const string AGENT_ZOMBIEGIRL = "Agent_ZombieGirl";
+	private const string AGENT_MALCOLM = "Agent_Malcolm";
+	private const string AGENT_PARASITE = "Agent_Parasite";
+	private const string AGENT_JASPER = "Agent_Jasper";
 
 	private bool _isCharacterActive = false;
 	private bool _isCharacterBeingSpawned = false;
+
+	private bool _isWalking = true;
+	private bool _isRunning = false;
+	private bool _agentIsMoving = false;
 
 	private int _spawnIndex = 0;
 	private bool _frameSelected = false;
@@ -80,15 +85,15 @@ public class CharacterManager : MonoBehaviour {
 		{
 			switch (frame.name)
 			{
-				case AGENT_GIRL:
+				case AGENT_GIRLSCOUT:
 					_spawnIndex = 0;
 				break;
 
-				case AGENT_CLOWN:
+				case AGENT_WHITECLOWN:
 					_spawnIndex = 1;
 				break;
 
-				case AGENT_ZOMBIE:
+				case AGENT_ZOMBIEGIRL:
 					_spawnIndex = 2;
 				break;
 
@@ -217,19 +222,42 @@ public class CharacterManager : MonoBehaviour {
 		_currentAgentPosition = newPosition;
 	}
 
+	public void SetWalkAnimationState()
+	{
+		_isWalking = true;
+		_isRunning = false;
+	}
+
+	public void SetRunAnimationState()
+	{
+		_isRunning = true;
+		_isWalking = false;
+	}
+
 	private void CheckAnimationState()
 	{
 		if (_currentControlled != null)
 		{
 			if (Vector3.Distance(_currentAgentPosition, _currentControlled.transform.position) >= .1f)
 			{
+
 				if (_currentAgent != null)
 				{
 					_currentAgent.isStopped = false;
-					if (!GetAnimationState(Animation.WALK, _currentAnimator))
+					if (_isWalking)
 					{
-						SetAnimationState(Animation.WALK, _currentAnimator, true);
+						if (!GetAnimationState(Animation.WALK, _currentAnimator))
+						{
+							SetAnimationState(Animation.WALK, _currentAnimator, true);
+						}
 					}
+					if (_isRunning)
+					{
+						if (!GetAnimationState(Animation.RUN, _currentAnimator))
+						{
+							SetAnimationState(Animation.RUN, _currentAnimator, true);
+						}
+					}	
 				}
 			}
 			else
@@ -237,10 +265,20 @@ public class CharacterManager : MonoBehaviour {
 				if (_currentAgent != null)
 				{
 					_currentAgent.isStopped = true;
-					if (GetAnimationState(Animation.WALK, _currentAnimator))
+					if (_isWalking)
 					{
-						SetAnimationState(Animation.WALK, _currentAnimator, false);
+						if (GetAnimationState(Animation.WALK, _currentAnimator))
+						{
+							SetAnimationState(Animation.WALK, _currentAnimator, false);
+						}
 					}
+					if (_isRunning)
+					{
+						if (GetAnimationState(Animation.RUN, _currentAnimator))
+						{
+							SetAnimationState(Animation.RUN, _currentAnimator, false);
+						}
+					}	
 				}
 			}	
 		}
@@ -255,6 +293,13 @@ public class CharacterManager : MonoBehaviour {
 				return true;
 			}
 		}
+		if (animation == Animation.RUN)
+		{
+			if (currentAnimator.GetBool(RUN))
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -264,7 +309,77 @@ public class CharacterManager : MonoBehaviour {
 
 			case Animation.WALK:
 				currentAnimator.SetBool(WALK, state);
-				break;	
+				if (state)
+				{
+					if (_currentControlled.name == AGENT_GIRLSCOUT)
+					{
+						_currentAgent.speed = 0.22f;
+						_currentAgent.angularSpeed = 120.0f;
+					}
+					if (_currentControlled.name == AGENT_WHITECLOWN)
+					{
+						_currentAgent.speed = 0.35f;
+						_currentAgent.angularSpeed = 115.0f;
+					}
+					if (_currentControlled.name == AGENT_ZOMBIEGIRL)
+					{
+						_currentAgent.speed = .2f;
+						_currentAgent.angularSpeed = 120.0f;
+					}
+					if (_currentControlled.name == AGENT_MALCOLM)
+					{
+						_currentAgent.speed = .47f;
+						_currentAgent.angularSpeed = 160.0f;
+					}
+					if (_currentControlled.name == AGENT_JASPER)
+					{
+						_currentAgent.speed = 0.57f;
+						_currentAgent.angularSpeed = 170.0f;
+					}
+					if (_currentControlled.name == AGENT_PARASITE)
+					{
+						_currentAgent.speed = 0.45f;
+						_currentAgent.angularSpeed = 140.0f;
+					}
+				}
+			break;	
+
+			case Animation.RUN:
+				currentAnimator.SetBool(RUN, state);
+				if (state)
+				{
+					if (_currentControlled.name == AGENT_GIRLSCOUT)
+					{
+						_currentAgent.speed = 1.5f;
+						_currentAgent.angularSpeed = 170.0f;
+					}
+					if (_currentControlled.name == AGENT_WHITECLOWN)
+					{
+						_currentAgent.speed = 0.4f;
+						_currentAgent.angularSpeed = 115.0f;
+					}
+					if (_currentControlled.name == AGENT_ZOMBIEGIRL)
+					{
+						_currentAgent.speed = .8f;
+						_currentAgent.angularSpeed = 120.0f;
+					}
+					if (_currentControlled.name == AGENT_MALCOLM)
+					{
+						_currentAgent.speed = 1.4f;
+						_currentAgent.angularSpeed = 160.0f;
+					}
+					if (_currentControlled.name == AGENT_JASPER)
+					{
+						_currentAgent.speed = 1.35f;
+						_currentAgent.angularSpeed = 180.0f;
+					}
+					if (_currentControlled.name == AGENT_PARASITE)
+					{
+						_currentAgent.speed = 2.0f;
+						_currentAgent.angularSpeed = 160.0f;
+					}
+				}
+			break;
 		}
 	}
 
