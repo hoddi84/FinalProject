@@ -69,7 +69,8 @@ public class GPUSort : MonoBehaviour {
 				Mesh mesh = filter.sharedMesh;
 				Texture texture = renderer.sharedMaterial.mainTexture;
 				Vector3 worldPosition = transform.position;
-				Quaternion worldRotation = transform.localRotation;
+				Quaternion rotQ = transform.localRotation;
+				Vector4 worldRotation = new Vector4(rotQ.w, rotQ.x, rotQ.y, rotQ.z);
 
 				VRPL_GPUDrawNode node = new VRPL_GPUDrawNode(name, mesh, texture, worldPosition, worldRotation);
 				nodeList.Add(node);

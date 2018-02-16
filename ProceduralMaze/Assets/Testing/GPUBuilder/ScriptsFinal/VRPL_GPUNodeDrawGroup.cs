@@ -7,7 +7,7 @@ public class VRPL_GPUDrawNodeGroup {
 	public Mesh mesh = null;
 	public Texture texture = null;
 	public List<Vector4> worldPositions = new List<Vector4>();
-	public List<Quaternion> worldRotations = new List<Quaternion>();
+	public List<Vector4> worldRotations = new List<Vector4>();
 	public List<string> names = new List<string>();
 	public int instanceCount = 0;
 	public VRPL_GPUDrawInstanced drawer = new VRPL_GPUDrawInstanced();
@@ -45,10 +45,10 @@ public class VRPL_GPUDrawNodeGroup {
 		return vec4;
 	}
 
-	public Quaternion[] GetWorldRotationsAsQuaternions()
+	public Vector4[] GetWorldRotationsAsQuaternions()
 	{
-		Quaternion[] q = new Quaternion[worldRotations.Count];
-		worldRotations.CopyTo(q);
-		return q;
+		Vector4[] vec4 = new Vector4[worldRotations.Count];
+		worldRotations.CopyTo(vec4);
+		return vec4;
 	}
 }

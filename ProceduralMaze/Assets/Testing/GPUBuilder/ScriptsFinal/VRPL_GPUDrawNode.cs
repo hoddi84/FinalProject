@@ -6,9 +6,9 @@ public class VRPL_GPUDrawNode {
 	public Mesh mesh;
 	public Texture texture;
 	public Vector4 worldPosition;
-	public Quaternion worldRotation;
+	public Vector4 worldRotation;
 
-	public VRPL_GPUDrawNode(string name, Mesh mesh, Texture texture, Vector4 worldPosition, Quaternion worldRotation)
+	public VRPL_GPUDrawNode(string name, Mesh mesh, Texture texture, Vector4 worldPosition, Vector4 worldRotation)
 	{
 		this.name = name;
 		this.mesh = mesh;
