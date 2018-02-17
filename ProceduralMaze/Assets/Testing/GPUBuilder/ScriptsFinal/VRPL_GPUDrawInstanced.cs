@@ -54,7 +54,7 @@ public class VRPL_GPUDrawInstanced {
 		}
 	}
 
-    private void UpdateBuffers(Vector4[] positions, Vector4[] quaternions, int instanceCount) {
+    private void UpdateBuffers(Vector4[] positions, Quaternion[] quaternions, int instanceCount) {
 
         ReleaseBuffer(_bufferPosition);
 		ReleaseBuffer(_bufferQuaternion);

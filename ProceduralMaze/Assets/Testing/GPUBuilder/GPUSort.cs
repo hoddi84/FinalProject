@@ -8,15 +8,7 @@ public class GPUSort : MonoBehaviour {
 	private List<VRPL_GPUDrawNodeGroup> nodeGroupList = new List<VRPL_GPUDrawNodeGroup>();
 	private bool nodeAdded = false;
 
-	public GameObject obj;
-
-	public Mesh mesh;
-	public Texture texture;
-	public int count;
-	public Vector4[] position;
-	public Bounds bounds;
-
-	private VRPL_GPUDrawInstanced draw = new VRPL_GPUDrawInstanced();
+	public GameObject[] obj;
 
 	void Start()
 	{
@@ -56,24 +48,26 @@ public class GPUSort : MonoBehaviour {
 
 	void PopulateNodeList()
 	{
-		Transform[] transforms = obj.GetComponentsInChildren<Transform>();
-
-		foreach (Transform transform in transforms)
+		foreach (GameObject g in obj)
 		{
-			MeshFilter filter = transform.GetComponent<MeshFilter>();
-			MeshRenderer renderer = transform.GetComponent<MeshRenderer>();
+			Transform[] transforms = g.GetComponentsInChildren<Transform>();
 
-			if (filter != null && renderer != null)
+			foreach (Transform transform in transforms)
 			{
-				string name = transform.name;
-				Mesh mesh = filter.sharedMesh;
-				Texture texture = renderer.sharedMaterial.mainTexture;
-				Vector3 worldPosition = transform.position;
-				Quaternion rotQ = transform.localRotation;
-				Vector4 worldRotation = new Vector4(rotQ.w, rotQ.x, rotQ.y, rotQ.z);
+				MeshFilter filter = transform.GetComponent<MeshFilter>();
+				MeshRenderer renderer = transform.GetComponent<MeshRenderer>();
 
-				VRPL_GPUDrawNode node = new VRPL_GPUDrawNode(name, mesh, texture, worldPosition, worldRotation);
-				nodeList.Add(node);
+				if (filter != null && renderer != null)
+				{
+					string name = transform.name;
+					Mesh mesh = filter.sharedMesh;
+					Texture texture = renderer.sharedMaterial.mainTexture;
+					Vector3 worldPosition = transform.position;
+					Quaternion worldRotation = transform.rotation;
+
+					VRPL_GPUDrawNode node = new VRPL_GPUDrawNode(name, mesh, texture, worldPosition, worldRotation);
+					nodeList.Add(node);
+				}
 			}
 		}
 	}
