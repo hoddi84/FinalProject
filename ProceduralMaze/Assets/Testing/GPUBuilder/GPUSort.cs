@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using GPUInstanced;
+
 public class GPUSort : MonoBehaviour {
 
-	private List<VRPL_GPUDrawNode> nodeList = new List<VRPL_GPUDrawNode>();
-	private List<VRPL_GPUDrawNodeGroup> nodeGroupList = new List<VRPL_GPUDrawNodeGroup>();
+	private List<GPUInstancedNode> instancedNodeList = new List<GPUInstancedNode>();
+	private List<GPUInstancedNodeGroup> instancedNodeGroupList = new List<GPUInstancedNodeGroup>();
 	private bool nodeAdded = false;
 
 	public GameObject[] obj;
@@ -18,17 +20,17 @@ public class GPUSort : MonoBehaviour {
 
 	void GroupNodes()
 	{
-		foreach (VRPL_GPUDrawNode node in nodeList)
+		foreach (GPUInstancedNode node in instancedNodeList)
 		{
 			nodeAdded = false;
-			if (nodeGroupList.Count == 0)
+			if (instancedNodeGroupList.Count == 0)
 			{
-				VRPL_GPUDrawNodeGroup nodeGroup = new VRPL_GPUDrawNodeGroup();
+				GPUInstancedNodeGroup nodeGroup = new GPUInstancedNodeGroup();
 				nodeGroup.AddNode(node);
-				nodeGroupList.Add(nodeGroup);
+				instancedNodeGroupList.Add(nodeGroup);
 			}
 
-			foreach (VRPL_GPUDrawNodeGroup nodeGroup in nodeGroupList)
+			foreach (GPUInstancedNodeGroup nodeGroup in instancedNodeGroupList)
 			{
 				if (nodeGroup.Compare(node))
 				{
@@ -39,9 +41,9 @@ public class GPUSort : MonoBehaviour {
 
 			if (!nodeAdded)
 			{
-				VRPL_GPUDrawNodeGroup nodeGroup = new VRPL_GPUDrawNodeGroup();
+				GPUInstancedNodeGroup nodeGroup = new GPUInstancedNodeGroup();
 				nodeGroup.AddNode(node);
-				nodeGroupList.Add(nodeGroup);
+				instancedNodeGroupList.Add(nodeGroup);
 			}
 		}
 	}
@@ -63,10 +65,10 @@ public class GPUSort : MonoBehaviour {
 					Mesh mesh = filter.sharedMesh;
 					Texture texture = renderer.sharedMaterial.mainTexture;
 					Vector3 worldPosition = transform.position;
-					Quaternion worldRotation = transform.rotation;
+					Quaternion worldQuaternion = transform.rotation;
 
-					VRPL_GPUDrawNode node = new VRPL_GPUDrawNode(name, mesh, texture, worldPosition, worldRotation);
-					nodeList.Add(node);
+					GPUInstancedNode node = new GPUInstancedNode(name, mesh, texture, worldPosition, worldQuaternion);
+					instancedNodeList.Add(node);
 				}
 			}
 		}
@@ -74,9 +76,17 @@ public class GPUSort : MonoBehaviour {
 
 	void Update()
 	{
-		foreach (VRPL_GPUDrawNodeGroup group in nodeGroupList)
+		foreach (GPUInstancedNodeGroup group in instancedNodeGroupList)
 		{
 			group.drawer.Draw(group);
+		}
+	}
+
+	void OnDisable()
+	{
+		foreach (GPUInstancedNodeGroup group in instancedNodeGroupList)
+		{
+			group.drawer.EmptyBuffers();
 		}
 	}
 }

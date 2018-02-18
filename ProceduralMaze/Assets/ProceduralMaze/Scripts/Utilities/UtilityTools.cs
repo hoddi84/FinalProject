@@ -205,6 +205,29 @@ namespace MazeUtiliy {
 			}
 			return randomized;
 		}
+
+		/// <summary>
+		/// Returns a new T[] with an added element.
+		/// </summary>
+		/// <param name="someElement">Element added to T[]</param>
+		/// <param name="oldList">The old T[].</param>
+		/// <returns></returns>
+		public static T[] IncrementArray<T>(T newElement, T[] oldArray)
+		{
+			T[] newArray;
+			if (oldArray.Length == 0)
+			{
+				newArray = new T[1];
+				newArray[0] = newElement;
+			}
+			else
+			{
+				newArray = new T[oldArray.Length + 1];
+				oldArray.CopyTo(newArray, 0);
+				newArray[oldArray.Length] = newElement;
+			}
+			return newArray;
+		}
 	}
 }
 
