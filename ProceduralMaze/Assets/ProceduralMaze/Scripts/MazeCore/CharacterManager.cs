@@ -14,7 +14,7 @@ public class CharacterManager : MonoBehaviour {
 
 	private GameObject _currentControlled = null;
 	private Animator _currentAnimator = null;
-	private NavMeshAgent _currentAgent = null;
+	public NavMeshAgent _currentAgent = null;
 	private HeadLookController _currentHeadLook = null;
 	private Vector3 _currentAgentPosition;
 	private Vector3 _currentHeadLookDirection;
@@ -75,7 +75,10 @@ public class CharacterManager : MonoBehaviour {
 
 		foreach (GameObject btn in characterBtns)
 		{
-			btn.GetComponent<CharacterButtonSelect>().onFrameSelected -= OnFrameSelected;
+			if (btn != null)
+			{
+				btn.GetComponent<CharacterButtonSelect>().onFrameSelected -= OnFrameSelected;
+			}
 		}
 	}
 
@@ -192,26 +195,6 @@ public class CharacterManager : MonoBehaviour {
 					_currentHeadLookDirection = hit.point;
 				}
 			}
-		}
-	}
-
-	private void SetupControlledCharacter(GameObject currentControlled = null)
-	{
-		if (currentControlled != null)
-		{
-			_currentAgent = currentControlled.GetComponent<NavMeshAgent>();
-			_currentAgentPosition = currentControlled.transform.position;
-			_currentAnimator = currentControlled.GetComponent<Animator>();
-			_currentHeadLook = currentControlled.GetComponent<HeadLookController>();
-			_currentHeadLookDirection = _currentControlled.transform.forward;
-		}
-		else
-		{
-			_currentAgent = null;
-			_currentAgentPosition = Vector3.zero;
-			_currentAnimator = null;
-			_currentHeadLook = null;
-			_currentHeadLookDirection = Vector3.zero;
 		}
 	}
 
@@ -393,6 +376,56 @@ public class CharacterManager : MonoBehaviour {
 
 		_isCharacterActive = true;
 		_isCharacterBeingSpawned = false;
+	}
+
+	public void SpawnCharacterSimple(int index, Vector3 spawnPosition)
+	{
+		_currentControlled = characters[index];
+		_currentControlled.SetActive(true);
+		_currentControlled.transform.position = spawnPosition;
+
+		SetupControlledCharacter(_currentControlled);
+	}
+
+	public void MoveCharacterSimple(Vector3 newPosition)
+	{
+		newPosition.y = 0;
+		_currentAgent.SetDestination(newPosition);
+		_currentAgentPosition = newPosition;
+	}
+
+	public void DespawnCharacterSimple()
+	{
+		if (_currentControlled != null)
+		{
+			_currentControlled.SetActive(false);
+			_currentControlled = null;
+
+			SetupControlledCharacter();
+
+			_isCharacterActive = false;
+			_isCharacterBeingSpawned = true;
+		}
+	}
+
+	private void SetupControlledCharacter(GameObject currentControlled = null)
+	{
+		if (currentControlled != null)
+		{
+			_currentAgent = currentControlled.GetComponent<NavMeshAgent>();
+			_currentAgentPosition = currentControlled.transform.position;
+			_currentAnimator = currentControlled.GetComponent<Animator>();
+			_currentHeadLook = currentControlled.GetComponent<HeadLookController>();
+			_currentHeadLookDirection = _currentControlled.transform.forward;
+		}
+		else
+		{
+			_currentAgent = null;
+			_currentAgentPosition = Vector3.zero;
+			_currentAnimator = null;
+			_currentHeadLook = null;
+			_currentHeadLookDirection = Vector3.zero;
+		}
 	}
 
 	public void DespawnCharacter()
