@@ -46,6 +46,8 @@ public class GPUSort : MonoBehaviour {
 				instancedNodeGroupList.Add(nodeGroup);
 			}
 		}
+
+		instancedNodeList.Clear();
 	}
 
 	void PopulateNodeList()
@@ -76,17 +78,9 @@ public class GPUSort : MonoBehaviour {
 
 	void Update()
 	{
-		foreach (GPUInstancedNodeGroup group in instancedNodeGroupList)
+		foreach (GPUInstancedNodeGroup instancedNodeGroup in instancedNodeGroupList)
 		{
-			group.drawer.Draw(group);
-		}
-	}
-
-	void OnDisable()
-	{
-		foreach (GPUInstancedNodeGroup group in instancedNodeGroupList)
-		{
-			group.drawer.EmptyBuffers();
+			GPUInstancedDrawer.DrawInstancedIndirect(instancedNodeGroup);
 		}
 	}
 }
