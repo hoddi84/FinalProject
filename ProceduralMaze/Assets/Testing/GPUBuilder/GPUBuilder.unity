@@ -27263,6 +27263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1115879488}
   - component: {fileID: 1115879490}
+  - component: {fileID: 1115879487}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -27270,6 +27271,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1115879487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1115879486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dab1f6883f67664288e8dded675c468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 697106952}
 --- !u!4 &1115879488
 Transform:
   m_ObjectHideFlags: 0
