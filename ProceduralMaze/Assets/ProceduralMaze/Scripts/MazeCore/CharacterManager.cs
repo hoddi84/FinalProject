@@ -382,7 +382,9 @@ public class CharacterManager : MonoBehaviour {
 	{
 		_currentControlled = characters[index];
 		_currentControlled.SetActive(true);
+		_currentControlled.GetComponent<NavMeshAgent>().enabled = false;
 		_currentControlled.transform.position = spawnPosition;
+		_currentControlled.GetComponent<NavMeshAgent>().enabled = true;
 
 		SetupControlledCharacter(_currentControlled);
 	}
