@@ -29,6 +29,12 @@ public class CharacterButtonSelect : MonoBehaviour {
 		}
 	}
 
+	public void DeselectFrame()
+	{
+		_frameSelected = false;
+		GetComponent<Outline>().enabled = _frameSelected;
+	}
+
 	public void ClickOnFrame()
 	{
 		_frameSelected = !_frameSelected;

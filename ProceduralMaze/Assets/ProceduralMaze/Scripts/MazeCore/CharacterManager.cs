@@ -44,6 +44,8 @@ public class CharacterManager : MonoBehaviour {
 	public GameObject[] characters;
 	public GameObject[] characterBtns;
 	public GameObject eyePlayer;
+
+	private GameObject _currentSelectedButton = null;
 	
 	private void Awake()
 	{
@@ -84,6 +86,16 @@ public class CharacterManager : MonoBehaviour {
 
 	private void OnFrameSelected(GameObject frame, bool selected)
 	{
+		if (_currentSelectedButton != null)
+		{
+			if (_currentSelectedButton.GetInstanceID() != frame.GetInstanceID())
+			{
+				_currentSelectedButton.GetComponent<CharacterButtonSelect>().DeselectFrame();
+				_frameSelected = false;
+			}
+		}
+		_currentSelectedButton = frame;
+
 		if (selected && !_frameSelected)
 		{
 			switch (frame.name)
