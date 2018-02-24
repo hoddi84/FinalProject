@@ -8,6 +8,8 @@ public class CharacterTrigger : MonoBehaviour {
 	private CharacterManager _characterManager;
 	private SimpleInterfaceController _simpleInterfaceController;
 	private const string PLAYER = "Player";
+	private const string SPAWN_START = "SpawnStart";
+	private const string SPAWN_END = "SpawnEnd";
 
 	private float _scaryValue = 0;
 	private float _presenceValue = 0;
@@ -43,11 +45,11 @@ public class CharacterTrigger : MonoBehaviour {
 
 	private void Start()
 	{
-		spawnStart = GameObject.Find("SpawnStart").transform.position;
-		spawnEnd = GameObject.Find("SpawnEnd").transform.position;
+		spawnStart = GameObject.Find(SPAWN_START).transform.position;
+		spawnEnd = GameObject.Find(SPAWN_END).transform.position;
 
-		GameObject.Find("SpawnStart").SetActive(false);
-		GameObject.Find("SpawnEnd").SetActive(false);
+		GameObject.Find(SPAWN_START).SetActive(false);
+		GameObject.Find(SPAWN_END).SetActive(false);
 	}
 
 	private void OnPresenceSliderChanged(float newValue)

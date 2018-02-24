@@ -9,8 +9,8 @@ using MazeUI;
 
 public class CharacterManager : MonoBehaviour {
 
-	private ProMouseInput _mouseInput;
-	private UIController _uiController;
+	private ProMouseInput _mouseInput = null;
+	private UIController _uiController = null;
 
 	private GameObject _currentControlled = null;
 	private Animator _currentAnimator = null;
