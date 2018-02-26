@@ -8,7 +8,7 @@ namespace MazeCore {
 		private enum EntryAxis { X,Y,Z, }
 		private const string PLAYER = "Player";
 		private const string EMPTY = "";
-		private const string PATH_TO_SURROUNDING_WALLS = "/Core/HospitalRoom/Contents/";
+		private const string PATH_TO_SURROUNDING_WALLS = "/Core/[HospitalRoom]/Contents/";
 		private const string CLONE = "(Clone)";
 		private EntryAxis _entryAxis;
 		private Vector3 _entryVector;

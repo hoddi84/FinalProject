@@ -20,7 +20,7 @@ namespace MazeCore.Door {
 	private float _currentDoorRotation;
 	private bool _isDoorOpen = false;
 	private bool _isDoorBusy = false;
-	private bool _isDoorLocked = true;
+	private bool _isDoorLocked = false;
 	private const float MAX_ROTATION_DIFF = 0.1f;
 
 	public GameObject doorLockMechanic;

@@ -18,6 +18,7 @@ public class CharacterTrigger : MonoBehaviour {
 	private Vector3 spawnEnd;
 	private int spawnIndex = 0;
 	public bool isWalking = true;
+	private bool hasSpawned = false;
 
 	private void Awake()
 	{
@@ -62,12 +63,12 @@ public class CharacterTrigger : MonoBehaviour {
 		_scaryValue = newValue;
 	}
 
-	private IEnumerator SpawnCharacter()
+	private IEnumerator SpawnCharacter(Vector3 spawnEnd)
 	{
 		if (_scaryValue <= .6f) { spawnIndex = Random.Range(3,4); }
 		else { spawnIndex = Random.Range(0,5); }
 
-		_characterManager.SpawnCharacterSimple(spawnIndex, spawnStart);
+		_characterManager.SpawnCharacterSimple(spawnIndex, spawnStart, spawnEnd);
 		if (!isWalking)
 		{
 			_characterManager.SetRunAnimationState();
@@ -81,12 +82,16 @@ public class CharacterTrigger : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == PLAYER)
+		if (!hasSpawned)
 		{
-			float rnd = Random.Range(0.0f, 1.0f);
-			if (rnd <= _presenceValue)
+			if (other.tag == PLAYER)
 			{
-				StartCoroutine(SpawnCharacter());
+				float rnd = Random.Range(0.0f, 1.0f);
+				if (rnd <= _presenceValue)
+				{
+					StartCoroutine(SpawnCharacter(spawnEnd));
+					hasSpawned = true;
+				}
 			}
 		}
 	}

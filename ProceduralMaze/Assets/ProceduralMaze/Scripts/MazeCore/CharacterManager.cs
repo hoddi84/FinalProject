@@ -154,26 +154,32 @@ public class CharacterManager : MonoBehaviour {
 
 	private void SetAgentDestination(Vector3 newDestination, RaycastHit hit, Camera camera)
 	{
-		if (_isCharacterBeingSpawned && _currentControlled == null)
+		if (_uiController.isFocusedCheckOn)
 		{
-			_currentAgentPosition = camera.ScreenToWorldPoint(newDestination);
-			SpawnCharacter(_spawnIndex, _currentAgentPosition);
-		}
-		if (_currentControlled != null)
-		{
-			_currentAgentPosition = camera.ScreenToWorldPoint(newDestination);
-			_currentAgentPosition.y = 0;
-			_currentAgent.SetDestination(_currentAgentPosition);
+			if (_isCharacterBeingSpawned && _currentControlled == null)
+			{
+				_currentAgentPosition = camera.ScreenToWorldPoint(newDestination);
+				SpawnCharacter(_spawnIndex, _currentAgentPosition);
+			}
+			if (_currentControlled != null)
+			{
+				_currentAgentPosition = camera.ScreenToWorldPoint(newDestination);
+				_currentAgentPosition.y = 0;
+				_currentAgent.SetDestination(_currentAgentPosition);
+			}
 		}
 	}
 
 	private void SetAgentLookDirection(Vector3 lookPosition, RaycastHit hit, Camera camera)
 	{
-		_lookAtPlayer = false;
-		if (_currentControlled != null)
+		if (_uiController.isFocusedCheckOn)
 		{
-			_currentHeadLookDirection = camera.ScreenToWorldPoint(lookPosition);
-			_currentHeadLookDirection.y = _currentHeadLookHeight;
+			_lookAtPlayer = false;
+			if (_currentControlled != null)
+			{
+				_currentHeadLookDirection = camera.ScreenToWorldPoint(lookPosition);
+				_currentHeadLookDirection.y = _currentHeadLookHeight;
+			}
 		}
 	}
 
@@ -390,12 +396,14 @@ public class CharacterManager : MonoBehaviour {
 		_isCharacterBeingSpawned = false;
 	}
 
-	public void SpawnCharacterSimple(int index, Vector3 spawnPosition)
+	public void SpawnCharacterSimple(int index, Vector3 spawnPosition, Vector3 spawnEndPosition)
 	{
+		Vector3 lookDir = spawnEndPosition - spawnPosition;
 		_currentControlled = characters[index];
 		_currentControlled.SetActive(true);
 		_currentControlled.GetComponent<NavMeshAgent>().enabled = false;
 		_currentControlled.transform.position = spawnPosition;
+		_currentControlled.transform.forward = lookDir;
 		_currentControlled.GetComponent<NavMeshAgent>().enabled = true;
 
 		SetupControlledCharacter(_currentControlled);
