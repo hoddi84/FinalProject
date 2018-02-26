@@ -13,6 +13,9 @@ namespace MazeCore.Decals {
 		public float bloodDecalAmount = 0;
 		private float _bloodDecalAmount = 0;
 
+		[Range(0.0f, 1.0f)]
+		public float decalSpawnMark = .6f;
+
 		public Action<float> onBloodDecalChanged = null;
 
 		void Awake()

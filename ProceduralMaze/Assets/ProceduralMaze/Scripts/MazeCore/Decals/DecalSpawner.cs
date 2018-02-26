@@ -30,9 +30,9 @@ namespace MazeCore.Decals {
 		/// <param name="value">Decal amount value.</param>
 		private void SpawnDecals(float value)
 		{
-			if (value >= 0)
+			if (value >= _decalManager.decalSpawnMark)
 			{
-				int decalAmount = (int)(bloodDecals.Length/2 * value);
+				int decalAmount = (int)(bloodDecals.Length * value/3);
 
 				List<GameObject> listOfDecals = new List<GameObject>(bloodDecals);
 				listOfDecals = UtilityTools.RandomizeList(listOfDecals);

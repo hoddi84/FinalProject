@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 8
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.41911763, g: 0.41911763, b: 0.41911763, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.03
@@ -98,7 +98,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.15
+    agentRadius: 0.1
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -106,7 +106,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.05
+    cellSize: 0.033333335
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -12317,6 +12317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodDecalAmount: 0
+  decalSpawnMark: 0.6
 --- !u!114 &793615199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28647,7 +28648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1847680811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29624,7 +29625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1904555509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29780,7 +29781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4987879, y: 0.34001774}
   m_AnchorMax: {x: 0.9890629, y: 0.83501774}
-  m_AnchoredPosition: {x: 4.8965607, y: -0.0053253174}
+  m_AnchoredPosition: {x: 4.896576, y: -0.0053253174}
   m_SizeDelta: {x: 9.85, y: 1.5742}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1923621877
