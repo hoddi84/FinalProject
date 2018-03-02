@@ -59,6 +59,7 @@ public class CharacterManager : MonoBehaviour {
 		{
 			_mouseInput.onRenderTextureClickDown += SetAgentDestination;
 			_mouseInput.onRenderTextureClickDownLeft += SetAgentLookDirection;
+			_mouseInput.onRenderTextureClickDownLeft += SetAgentTurnDirection;
 		}
 
 		foreach (GameObject btn in characterBtns)
@@ -166,6 +167,20 @@ public class CharacterManager : MonoBehaviour {
 				_currentAgentPosition = camera.ScreenToWorldPoint(newDestination);
 				_currentAgentPosition.y = 0;
 				_currentAgent.SetDestination(_currentAgentPosition);
+			}
+		}
+	}
+
+	private void SetAgentTurnDirection(Vector3 newDirection, RaycastHit hit, Camera camera)
+	{
+		if (_uiController.isFocusedCheckOn)
+		{
+			if (_currentControlled != null)
+			{
+				newDirection = camera.ScreenToWorldPoint(newDirection);
+				newDirection.y = 0;
+				Vector3 agentDirection = newDirection - _currentControlled.transform.position;
+				_currentControlled.transform.forward = agentDirection;
 			}
 		}
 	}

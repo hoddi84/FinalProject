@@ -230,6 +230,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 363817763}
   - {fileID: 1831536130}
   - {fileID: 941983421}
   - {fileID: 983803936}
@@ -4336,6 +4337,71 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 358905648}
+--- !u!1 &363817761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 363817763}
+  - component: {fileID: 363817762}
+  m_Layer: 0
+  m_Name: MapViewLighting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &363817762
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 363817761}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.2
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &363817763
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 363817761}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4102599}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &367872228
 GameObject:
   m_ObjectHideFlags: 0
@@ -6565,7 +6631,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4102599}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &528024586
 Mesh:
@@ -7630,7 +7696,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4663985480660518, guid: 761b34047676ae842985eabadf80c4cc, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114999398268464604, guid: 761b34047676ae842985eabadf80c4cc,
         type: 2}
@@ -12278,14 +12344,46 @@ MonoBehaviour:
   ambienceSoundAsset: {fileID: 11400000, guid: 6802fc26c91690f49bef17e4e0d74f90, type: 2}
   specialSoundsAsset: {fileID: 11400000, guid: 06ef5938e26a68146a8fd348a6a48eea, type: 2}
   effectSoundsAsset: {fileID: 11400000, guid: 91ea0cba33207ad49bb9f642f670cff8, type: 2}
-  audioUnits: []
+  audioUnits:
+  - audioSource: {fileID: 510748341}
+    audioStart: 0
+    audioEnd: 0.5
+    increasingAudio: 1
+    maxVolume: 1
+  - audioSource: {fileID: 1894509254}
+    audioStart: 0.3
+    audioEnd: 1
+    increasingAudio: 1
+    maxVolume: 1
+  - audioSource: {fileID: 1320296437}
+    audioStart: 0.5
+    audioEnd: 1
+    increasingAudio: 1
+    maxVolume: 0.2
+  - audioSource: {fileID: 43474555}
+    audioStart: 0.4
+    audioEnd: 1
+    increasingAudio: 1
+    maxVolume: 0.6
   ambienceSounds: []
   specialSounds: []
   effectSounds: []
   effectSpawnRange: 2.72
-  ambienceSoundList: []
-  specialSoundList: []
-  effectSoundList: []
+  ambienceSoundList:
+  - {fileID: 576725286}
+  - {fileID: 920304530}
+  - {fileID: 1403590175}
+  - {fileID: 1217809968}
+  - {fileID: 1596157540}
+  - {fileID: 1293293955}
+  specialSoundList:
+  - {fileID: 2004035847}
+  - {fileID: 577836322}
+  effectSoundList:
+  - {fileID: 1965636888}
+  - {fileID: 496036507}
+  - {fileID: 1163898221}
+  - {fileID: 577943169}
 --- !u!114 &793615197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13819,7 +13917,7 @@ Transform:
   - {fileID: 1109752502}
   - {fileID: 267994464}
   m_Father: {fileID: 4102599}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &945906950
 Prefab:
@@ -14915,7 +15013,7 @@ Transform:
   m_Children:
   - {fileID: 1852184182}
   m_Father: {fileID: 4102599}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &983803937
 MonoBehaviour:
@@ -18748,7 +18846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1207452736
 Transform:
   m_ObjectHideFlags: 0
@@ -18764,7 +18862,7 @@ Transform:
   - {fileID: 43474556}
   - {fileID: 1320296438}
   m_Father: {fileID: 4102599}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1217423704
 Prefab:
@@ -28306,7 +28404,7 @@ Transform:
   - {fileID: 72150854}
   - {fileID: 1468614608}
   m_Father: {fileID: 4102599}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1834408118
 GameObject:
@@ -33834,6 +33932,7 @@ GameObject:
   - component: {fileID: 2118718041}
   - component: {fileID: 2118718044}
   - component: {fileID: 2118718043}
+  - component: {fileID: 2118718045}
   - component: {fileID: 2118718042}
   m_Layer: 0
   m_Name: Camera (eye)
@@ -33861,8 +33960,7 @@ Transform:
 --- !u!114 &2118718042
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11411836, guid: 4d293c8e162f3874b982baadd71153d2,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2118718040}
   m_Enabled: 1
@@ -33918,6 +34016,18 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &2118718045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2118718040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a47049cb457dec4f9aed4219f05ea47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light: {fileID: 363817762}
 --- !u!1 &2132701795
 GameObject:
   m_ObjectHideFlags: 0
