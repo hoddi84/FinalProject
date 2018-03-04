@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 54215126356373008}
   - component: {fileID: 64700347353833006}
   - component: {fileID: 208977055671253574}
+  - component: {fileID: 114341735048824418}
   m_Layer: 10
   m_Name: '[WallSmall]'
   m_TagString: Wall
@@ -1367,6 +1368,18 @@ MonoBehaviour:
   quality: 1
   sharedMesh: {fileID: 0}
   instanceID: -357226
+--- !u!114 &114341735048824418
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1046866534473272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1128ea7ee86ef504ca184ac19ed25f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineMaterial: {fileID: 2100000, guid: e71bbca61a2062a4b9fb9c9f874c199e, type: 2}
 --- !u!114 &114398957230319570
 MonoBehaviour:
   m_ObjectHideFlags: 1

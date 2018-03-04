@@ -4,33 +4,62 @@ using UnityEngine;
 
 public class UnitPathDrawer : MonoBehaviour {
 
-	private Collider meshCollider;
-	private LineRenderer line;
-	private Vector3 leftPosition;
-	private Vector3 rightPosition;
+	private MeshCollider meshCollider;
+	private LineRenderer lineRenderer;
 
-	private float extentsX;
+	public Material lineMaterial;
+
+	private void Awake()
+	{
+		if (lineRenderer == null)
+		{
+			gameObject.AddComponent<LineRenderer>();
+			lineRenderer = GetComponent<LineRenderer>();
+		}
+
+		meshCollider = gameObject.GetComponent<MeshCollider>();
+	}
 
 	private void Start()
 	{
-		line = gameObject.GetComponent<LineRenderer>();
-		meshCollider = GetComponent<MeshCollider>();
+		Vector3 center = meshCollider.bounds.center;
 
-		extentsX = meshCollider.bounds.extents.x;
+		float lengthX = meshCollider.bounds.extents.x;
+		float lengthZ = meshCollider.bounds.extents.z;
 
-		leftPosition = new Vector3(transform.position.x + extentsX, transform.position.y, transform.position.z);
-		rightPosition = new Vector3(transform.position.x - extentsX, transform.position.y, transform.position.z);
+		float length;
 
-		leftPosition += transform.forward;
-		rightPosition += transform.forward;
+		length = (lengthX > lengthZ) ? lengthX : lengthZ;
+
+		Vector3 leftX = new Vector3(center.x - length, center.y, center.z);
+		Vector3 rightX = new Vector3(center.x + length, center.y, center.z);
+
+		Vector3 leftVec = leftX - center;
+		Vector3 rightVec = rightX - center;
+
+		leftVec = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0) * leftVec;
+		rightVec = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0) * rightVec;
+
+		Vector3 leftPoint = leftVec + center;
+		Vector3 rightPoint = rightVec + center;
+
+		leftPoint += transform.forward/5;
+		rightPoint += transform.forward/5;
+
+		SetUpLineRenderer(leftPoint, rightPoint);
+
 	}
 
-	private void Update()
+	private void SetUpLineRenderer(Vector3 leftPosition, Vector3 rightPosition)
 	{
-
-		line.SetPositions(
+		lineRenderer.positionCount = 2;
+		lineRenderer.receiveShadows = false;
+		lineRenderer.material = lineMaterial;
+		lineRenderer.startWidth = .05f;
+		lineRenderer.endWidth = .05f;
+		lineRenderer.SetPositions(
 			new Vector3[] {
-				leftPosition, 
+				leftPosition,
 				rightPosition
 			}
 		);

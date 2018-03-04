@@ -400,6 +400,7 @@ GameObject:
   - component: {fileID: 54468562811384702}
   - component: {fileID: 64336040650963806}
   - component: {fileID: 208027994469143862}
+  - component: {fileID: 114920370361933596}
   m_Layer: 10
   m_Name: '[WallLarge]'
   m_TagString: Wall
@@ -2109,6 +2110,18 @@ MonoBehaviour:
   quality: 1
   sharedMesh: {fileID: 0}
   instanceID: -261326
+--- !u!114 &114920370361933596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1860490548540644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1128ea7ee86ef504ca184ac19ed25f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineMaterial: {fileID: 2100000, guid: e71bbca61a2062a4b9fb9c9f874c199e, type: 2}
 --- !u!137 &137315976702722456
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

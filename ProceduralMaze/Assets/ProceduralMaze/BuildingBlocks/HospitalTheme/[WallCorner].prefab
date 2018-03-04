@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 54574245204829580}
   - component: {fileID: 64984871431274044}
   - component: {fileID: 208087446174370262}
+  - component: {fileID: 114382787595465186}
   m_Layer: 10
   m_Name: '[WallCorner]'
   m_TagString: Wall
@@ -2016,6 +2017,18 @@ MonoBehaviour:
   quality: 4
   sharedMesh: {fileID: 0}
   instanceID: -358154
+--- !u!114 &114382787595465186
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223455176061404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1128ea7ee86ef504ca184ac19ed25f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineMaterial: {fileID: 2100000, guid: e71bbca61a2062a4b9fb9c9f874c199e, type: 2}
 --- !u!114 &114535665047583148
 MonoBehaviour:
   m_ObjectHideFlags: 1
