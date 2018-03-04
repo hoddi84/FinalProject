@@ -6,8 +6,13 @@ public class UnitPathDrawer : MonoBehaviour {
 
 	private MeshCollider meshCollider;
 	private LineRenderer lineRenderer;
+	private UnitPathDrawerManager pathDrawerManager;
 
 	public Material lineMaterial;
+
+	private float _lineWidth;
+	private float _lineOffset;
+	private Color _lineColor;
 
 	private void Awake()
 	{
@@ -18,9 +23,50 @@ public class UnitPathDrawer : MonoBehaviour {
 		}
 
 		meshCollider = gameObject.GetComponent<MeshCollider>();
+		pathDrawerManager = FindObjectOfType<UnitPathDrawerManager>();
 	}
 
 	private void Start()
+	{
+		_lineWidth = pathDrawerManager.lineWidth;
+		_lineOffset = pathDrawerManager.lineOffset;
+		_lineColor = pathDrawerManager.lineColor;
+
+		Vector3 leftPoint;
+		Vector3 rightPoint;
+
+		SetUpLinePoints(out leftPoint, out rightPoint);
+		SetUpLineRenderer(leftPoint, rightPoint);
+
+	}
+
+	private void Update()
+	{
+		if (_lineWidth != pathDrawerManager.lineWidth)
+		{
+			lineRenderer.endWidth = pathDrawerManager.lineWidth;
+			lineRenderer.startWidth = pathDrawerManager.lineWidth;
+		}
+
+		if (_lineColor != pathDrawerManager.lineColor)
+		{
+			lineMaterial.color = pathDrawerManager.lineColor;
+			_lineColor = pathDrawerManager.lineColor;
+		}
+
+		if (_lineOffset != pathDrawerManager.lineOffset)
+		{
+			_lineOffset = pathDrawerManager.lineOffset;
+			
+			Vector3 leftPoint;
+			Vector3 rightPoint;
+
+			SetUpLinePoints(out leftPoint, out rightPoint);
+			SetUpLineRenderer(leftPoint, rightPoint);
+		}
+	}
+
+	private void SetUpLinePoints(out Vector3 leftPoint, out Vector3 rightPoint)
 	{
 		Vector3 center = meshCollider.bounds.center;
 
@@ -40,14 +86,11 @@ public class UnitPathDrawer : MonoBehaviour {
 		leftVec = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0) * leftVec;
 		rightVec = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0) * rightVec;
 
-		Vector3 leftPoint = leftVec + center;
-		Vector3 rightPoint = rightVec + center;
+		leftPoint = leftVec + center;
+		rightPoint = rightVec + center;
 
-		leftPoint += transform.forward/5;
-		rightPoint += transform.forward/5;
-
-		SetUpLineRenderer(leftPoint, rightPoint);
-
+		leftPoint += transform.forward/_lineOffset;
+		rightPoint += transform.forward/_lineOffset;
 	}
 
 	private void SetUpLineRenderer(Vector3 leftPosition, Vector3 rightPosition)
@@ -55,8 +98,8 @@ public class UnitPathDrawer : MonoBehaviour {
 		lineRenderer.positionCount = 2;
 		lineRenderer.receiveShadows = false;
 		lineRenderer.material = lineMaterial;
-		lineRenderer.startWidth = .05f;
-		lineRenderer.endWidth = .05f;
+		lineRenderer.startWidth = _lineWidth;
+		lineRenderer.endWidth = _lineWidth;
 		lineRenderer.SetPositions(
 			new Vector3[] {
 				leftPosition,

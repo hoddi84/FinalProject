@@ -12163,6 +12163,7 @@ GameObject:
   - component: {fileID: 793615198}
   - component: {fileID: 793615197}
   - component: {fileID: 793615199}
+  - component: {fileID: 793615200}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -12532,6 +12533,20 @@ MonoBehaviour:
   - {fileID: 2020249927}
   - {fileID: 196326725}
   eyePlayer: {fileID: 2118718040}
+--- !u!114 &793615200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 793615188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ca02a932a880e148b914b8f0aa01cde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineOffset: 20
+  lineWidth: 0.215
+  lineColor: {r: 0.28676468, g: 0.16740543, b: 0.059039794, a: 0.666}
 --- !u!1 &813904047
 GameObject:
   m_ObjectHideFlags: 0
