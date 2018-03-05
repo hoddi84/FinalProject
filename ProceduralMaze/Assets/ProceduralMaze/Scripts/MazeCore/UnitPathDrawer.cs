@@ -16,53 +16,61 @@ public class UnitPathDrawer : MonoBehaviour {
 
 	private void Awake()
 	{
-		if (lineRenderer == null)
-		{
-			gameObject.AddComponent<LineRenderer>();
-			lineRenderer = GetComponent<LineRenderer>();
-		}
-
 		meshCollider = gameObject.GetComponent<MeshCollider>();
 		pathDrawerManager = FindObjectOfType<UnitPathDrawerManager>();
+
+		if (pathDrawerManager.showPath)
+		{
+			if (lineRenderer == null)
+			{
+				gameObject.AddComponent<LineRenderer>();
+				lineRenderer = GetComponent<LineRenderer>();
+			}
+		}
 	}
 
 	private void Start()
 	{
-		_lineWidth = pathDrawerManager.lineWidth;
-		_lineOffset = pathDrawerManager.lineOffset;
-		_lineColor = pathDrawerManager.lineColor;
-
-		Vector3 leftPoint;
-		Vector3 rightPoint;
-
-		SetUpLinePoints(out leftPoint, out rightPoint);
-		SetUpLineRenderer(leftPoint, rightPoint);
-
-	}
-
-	private void Update()
-	{
-		if (_lineWidth != pathDrawerManager.lineWidth)
+		if (lineRenderer != null)
 		{
-			lineRenderer.endWidth = pathDrawerManager.lineWidth;
-			lineRenderer.startWidth = pathDrawerManager.lineWidth;
-		}
-
-		if (_lineColor != pathDrawerManager.lineColor)
-		{
-			lineMaterial.color = pathDrawerManager.lineColor;
-			_lineColor = pathDrawerManager.lineColor;
-		}
-
-		if (_lineOffset != pathDrawerManager.lineOffset)
-		{
+			_lineWidth = pathDrawerManager.lineWidth;
 			_lineOffset = pathDrawerManager.lineOffset;
-			
+			_lineColor = pathDrawerManager.lineColor;
+
 			Vector3 leftPoint;
 			Vector3 rightPoint;
 
 			SetUpLinePoints(out leftPoint, out rightPoint);
 			SetUpLineRenderer(leftPoint, rightPoint);
+		}
+	}
+
+	private void Update()
+	{
+		if (lineRenderer != null)
+		{
+			if (_lineWidth != pathDrawerManager.lineWidth)
+			{
+				lineRenderer.endWidth = pathDrawerManager.lineWidth;
+				lineRenderer.startWidth = pathDrawerManager.lineWidth;
+			}
+
+			if (_lineColor != pathDrawerManager.lineColor)
+			{
+				lineMaterial.color = pathDrawerManager.lineColor;
+				_lineColor = pathDrawerManager.lineColor;
+			}
+
+			if (_lineOffset != pathDrawerManager.lineOffset)
+			{
+				_lineOffset = pathDrawerManager.lineOffset;
+				
+				Vector3 leftPoint;
+				Vector3 rightPoint;
+
+				SetUpLinePoints(out leftPoint, out rightPoint);
+				SetUpLineRenderer(leftPoint, rightPoint);
+			}
 		}
 	}
 
@@ -100,6 +108,7 @@ public class UnitPathDrawer : MonoBehaviour {
 		lineRenderer.material = lineMaterial;
 		lineRenderer.startWidth = _lineWidth;
 		lineRenderer.endWidth = _lineWidth;
+		lineRenderer.numCapVertices = 2;
 		lineRenderer.SetPositions(
 			new Vector3[] {
 				leftPosition,
