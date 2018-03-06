@@ -9,12 +9,13 @@ using MazeUI;
 
 public class CharacterManager : MonoBehaviour {
 
+	public NavMeshAgent GetCurrentNavAgent() { return _currentAgent; }
+
 	private ProMouseInput _mouseInput = null;
 	private UIController _uiController = null;
-
 	private GameObject _currentControlled = null;
 	private Animator _currentAnimator = null;
-	public NavMeshAgent _currentAgent = null;
+	private NavMeshAgent _currentAgent = null;
 	private HeadLookController _currentHeadLook = null;
 	private Vector3 _currentAgentPosition;
 	private Vector3 _currentHeadLookDirection;
