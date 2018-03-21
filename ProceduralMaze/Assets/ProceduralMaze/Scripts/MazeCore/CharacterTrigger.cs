@@ -75,7 +75,7 @@ public class CharacterTrigger : MonoBehaviour {
 		}
 		_characterManager.MoveCharacterSimple(spawnEnd);
 
-		yield return new WaitUntil(() => _characterManager._currentAgent.isStopped);
+		yield return new WaitUntil(() => _characterManager.GetCurrentNavAgent().isStopped);
 
 		_characterManager.DespawnCharacterSimple();
 	}
